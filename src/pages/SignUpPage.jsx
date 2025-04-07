@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import styles from './SignUpPage.module.css';
+
 
 function SignUpPage() {
     const [form, setForm] = useState({
@@ -47,55 +49,79 @@ function SignUpPage() {
     };
 
     return (
-        <div style={{ maxWidth: '400px', margin: '0 auto', padding: '2rem' }}>
-            <h2 style={{ textAlign: 'center' }}>회원가입</h2>
-            <form onSubmit={handleSubmit}>
-                <label>아이디</label>
-                <input name="username" placeholder="아이디를 입력하세요" onChange={handleChange} />
-
-                <label>비밀번호</label>
-                <input name="password" type="password" placeholder="비밀번호를 입력하세요" onChange={handleChange} />
-
-                <label>비밀번호 확인</label>
-                <input name="confirmPassword" type="password" placeholder="비밀번호를 다시 입력하세요" onChange={handleChange} />
-
-                <label>이름</label>
-                <input name="name" placeholder="닉네임을 입력하세요" onChange={handleChange} />
-
-                <label>생년월일</label>
-                <input name="birth" placeholder="예: 2000-01-01" onChange={handleChange} />
-
-                <label>이메일</label>
-                <input name="email" type="email" placeholder="이메일 주소를 입력하세요" onChange={handleChange} />
-
-                <div style={{ margin: '1rem 0' }}>
+        <div className={styles.container}>
+            <h2 className={styles.title}>회원가입</h2>
+            <form className={styles.form} onSubmit={handleSubmit}>
+                <label className={styles.label}>아이디</label>
+                <input
+                    className={styles.input}
+                    name="username"
+                    placeholder="아이디를 입력하세요"
+                    onChange={handleChange}
+                />
+    
+                <label className={styles.label}>비밀번호</label>
+                <input
+                    className={styles.input}
+                    name="password"
+                    type="password"
+                    placeholder="비밀번호를 입력하세요"
+                    onChange={handleChange}
+                />
+    
+                <label className={styles.label}>비밀번호 확인</label>
+                <input
+                    className={styles.input}
+                    name="confirmPassword"
+                    type="password"
+                    placeholder="비밀번호를 다시 입력하세요"
+                    onChange={handleChange}
+                />
+    
+                <label className={styles.label}>이름</label>
+                <input
+                    className={styles.input}
+                    name="name"
+                    placeholder="닉네임을 입력하세요"
+                    onChange={handleChange}
+                />
+    
+                <label className={styles.label}>생년월일</label>
+                <input
+                    className={styles.input}
+                    name="birth"
+                    placeholder="예: 2000-01-01"
+                    onChange={handleChange}
+                />
+    
+                <label className={styles.label}>이메일</label>
+                <input
+                    className={styles.input}
+                    name="email"
+                    type="email"
+                    placeholder="이메일 주소를 입력하세요"
+                    onChange={handleChange}
+                />
+    
+                <div className={styles.checkboxContainer}>
                     <label>
                         <input
                             type="checkbox"
                             name="agree"
                             checked={form.agree}
                             onChange={handleChange}
-                        />{' '}
-                        약관에 동의합니다
+                        />
+                        &nbsp;약관에 동의합니다
                     </label>
                 </div>
-
-                <button
-                    type="submit"
-                    style={{
-                        width: '100%',
-                        padding: '0.5rem',
-                        background: 'black',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '5px',
-                    }}
-                >
+    
+                <button className={styles.button} type="submit">
                     계정 생성
                 </button>
             </form>
         </div>
     );
+    
 }
 
 export default SignUpPage;
