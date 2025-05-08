@@ -15,6 +15,7 @@ export default function FriendPage() {
   const requestsMock = [
     { name: '강감찬', birth: '1985-07-15' },
   ];
+  //
 
   return (
     <div className="friend-page">

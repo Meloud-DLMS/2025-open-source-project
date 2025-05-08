@@ -32,7 +32,6 @@ export default function SelectPage() {
         </nav>
       </header>
 
-      {/* — 메인 버튼 두 개 (동일 색상) */}
       <main className="sp-main">
         <button
           className="sp-main__btn"
