@@ -180,5 +180,5 @@ function SignUpPage() {
     );
 }
 
-// 이 컴포넌트를 다른 곳에서 사용할 수 있게 export
+
 export default SignUpPage;
