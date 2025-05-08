@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../css/Login.css';
 
 function Login() {
@@ -39,7 +39,10 @@ function Login() {
           </form>
           <div className="links">
             <a href="#!">ID/PW 찾기</a>
-            <a href="#!">회원가입</a>
+            <Link to="/signup" className="signup-link">
+            회원가입
+            </Link>
+
           </div>
         </div>
       </div>

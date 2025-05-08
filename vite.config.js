@@ -1,12 +1,15 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import path from 'path';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      react: path.resolve('./node_modules/react'),
-    },
+  root: 'my-app',
+  plugins: [ react() ],
+  publicDir: 'my-app/public',
+  server: {
+    port: 5173
   },
-});
+  build: {
+    outDir: '../dist',
+    emptyOutDir: true
+  }
+})
