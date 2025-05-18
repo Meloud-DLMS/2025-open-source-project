@@ -1,0 +1,258 @@
+/* ----------------------------------------------------
+   1. 전체 페이지 배경 + 오버레이
+---------------------------------------------------- */
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background:
+      linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url('/assets/main.jpg') center/cover no-repeat fixed;
+    font-family: Arial, sans-serif;
+    color: #fff;
+  }
+  
+  /* ----------------------------------------------------
+     2. 커스텀 폰트
+  ---------------------------------------------------- */
+  @font-face {
+    font-family: 'GeostarFill';
+    src: url('/assets/GeostarFill-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  /* ----------------------------------------------------
+     3. 내비게이션 (투명·고정)
+  ---------------------------------------------------- */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    padding: 8px 40px;
+    height: 20px;    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    z-index: 100;
+  }
+  .navbar .logo {
+    font-family: 'GeostarFill', serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+  }
+  .navbar .nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    list-style: none;
+    display: flex;
+    gap: 100px;
+  }
+  .navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 1px;
+    opacity: 0.9;
+  }
+  .navbar a:hover {
+    opacity: 1;
+  }
+  
+  /* ----------------------------------------------------
+     4. 히어로 섹션
+  ---------------------------------------------------- */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+  }
+  .hero-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    /* 상단만 짙게, 아래로 자연스럽게 투명해지는 그라데이션 */
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0) 60%
+    );
+  }
+  .hero-content {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 0 20px;
+  }
+  .hero-content h1 {
+    font-family: 'GeostarFill', serif;
+    font-size: 48px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    letter-spacing: 0.2em;
+  }
+  .hero-content p {
+    font-size: 18px;
+    color: #ddd;
+    margin-bottom: 30px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #000;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    /* 버튼 레이아웃 깨짐 방지 */
+    line-height: 1;
+    white-space: nowrap;
+  }
+  
+  /* ----------------------------------------------------
+     5. features 섹션 – Grid + 투명 배경
+  ---------------------------------------------------- */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 60px 40px;
+    background: transparent;
+  }
+  
+  /* ----------------------------------------------------
+     6. 카드 – 세로 길이 늘림
+  ---------------------------------------------------- */
+  .card {
+    position: relative;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 60px 20px;      /* 위아래 패딩 증가 */
+    min-height: 380px;       /* 충분히 긴 세로 높이 */
+    border-radius: 12px;
+    text-align: center;
+    transition: transform 0.3s;
+    cursor: pointer;
+  }
+  .card h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #ccc;
+  }
+  .card .icon img {
+    width: 60px;
+    height: 60px;
+    opacity: 0.7;
+    margin-bottom: 20px;
+  }
+  .card.highlight {
+    background: rgba(0, 0, 0, 0.8);
+    transform: scale(1.05);
+  }
+  
+  /* ----------------------------------------------------
+     7. 반응형 예시
+  ---------------------------------------------------- */
+  @media (max-width: 768px) {
+    .features {
+      grid-template-columns: 1fr;
+      padding: 40px 20px;
+    }
+  }
+  
+  /* ───────── Sidebar Styles ───────── */
+.sidebar {
+    position: fixed;
+    top: 0; right: -300px;
+    width: 280px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    transition: right 0.3s ease;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  .sidebar.open {
+    right: 0;
+  }
+  
+  /* 닫기 버튼 */
+  .close-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    align-self: flex-end;
+    cursor: pointer;
+  }
+  
+  /* 헤더 (로그인/유저 & 로그아웃) */
+  .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #444;
+  }
+  .username {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  .logout-btn,
+  .login-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  /* 로그인 시 보여질 메뉴 */
+  .sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    flex-grow: 1;
+  }
+  .sidebar-menu li {
+    margin-bottom: 16px;
+  }
+  .sidebar-menu a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  /* 항상 보이는 하단 메뉴 */
+  .sidebar-footer {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .sidebar-footer li {
+    margin-bottom: 16px;
+  }
+  .sidebar-footer a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  /* 프로필 버튼 (Navbar 우측) */
+  .profile-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 101;
+    margin-left: auto;       
+  }
+  .profile-btn:hover {
+    opacity: 0.8;
+  }
+  
