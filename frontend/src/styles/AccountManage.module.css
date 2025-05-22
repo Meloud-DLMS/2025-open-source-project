@@ -1,0 +1,198 @@
+/* ==== 공통 레이아웃 ==== */
+body {
+    margin: 0;
+    padding: 0;
+    background: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+}
+
+.background-overlay {
+    position: absolute;
+    width: 1920px;
+    height: 1080px;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #3E5879;
+}
+
+.background-image {
+    position: absolute;
+    width: 1934px;
+    height: 1290px;
+    top: -105px;
+    left: -14px;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+
+/* ==== 네비게이션 ==== */
+.navbar {
+    position: absolute;
+    top: 65px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    width: 545px;
+    height: 57px;
+}
+
+.nav-item {
+    font-family: 'Khula', sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 39px;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.logo {
+    position: absolute;
+    top: -59px;
+    left: 60px;
+    font-family: 'Geostar Fill', cursive;
+    font-size: 50px;
+    line-height: 85px;
+    letter-spacing: 0.12em;
+    color: #FFFFFF;
+}
+
+.profile {
+    position: absolute;
+    top: 65px;
+    right: 40px;
+    font-family: 'Khula', sans-serif;
+    font-size: 24px;
+    color: #FFFFFF;
+}
+
+/* ==== 텍스트 공통 ==== */
+.title {
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 48px;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.subtitle {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.text-label {
+    font-weight: 500;
+    font-size: 20px;
+    color: #FFFFFF;
+}
+
+.text-small {
+    font-weight: 500;
+    font-size: 15px;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+/* ==== 버튼 ==== */
+.main-button {
+    width: 208px;
+    height: 42px;
+    background: #D9D9D9;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    color: #000000;
+}
+
+.black-button {
+    width: 213px;
+    height: 35px;
+    background: #000000;
+    border: 1px solid #D9D9D9;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.gray-button {
+    width: 213px;
+    height: 35px;
+    background: #D9D9D9;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #000000;
+    cursor: pointer;
+}
+
+/* ==== 입력 필드 ==== */
+.input-box {
+    width: 179px;
+    height: 33px;
+    background: #FFFFFF;
+    border: 2px solid #D9D9D9;
+    border-radius: 10px;
+    padding: 4px 8px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+}
+
+.input-small {
+    width: 179px;
+    height: 24px;
+    background: #FFFFFF;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.black-input-box {
+    width: 179px;
+    height: 24px;
+    background: #000000;
+    border: 1px solid #D9D9D9;
+    border-radius: 5px;
+    color: #FFFFFF;
+}
+
+/* ==== 스크롤바 ==== */
+.scrollbar-track {
+    background: #535353;
+    border-radius: 100px;
+    width: 16px;
+}
+
+.scrollbar-thumb {
+    background: #D9D9D9;
+    border-radius: 100px;
+    width: 16px;
+}
+
+/* ==== 박스 (검정 배경) ==== */
+.black-box {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    border: 1px solid #D9D9D9;
+    padding: 24px;
+}
+
+/* ==== 템플릿 버튼 ==== */
+.template-button {
+    width: 156px;
+    height: 36px;
+    background: #D9D9D9;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #000000;
+    cursor: pointer;
+}
