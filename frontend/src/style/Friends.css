@@ -1,0 +1,136 @@
+/* 배경 이미지와 오버레이 */
+.page-background {
+    position: relative;
+    background-image: url('/assets/main.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    padding: 60px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 0;
+    overflow-x: hidden;
+    color: #ffffff;
+  }
+  
+  .page-background::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65); /* 어두운 오버레이 */
+    backdrop-filter: blur(2px);
+    z-index: -1;
+  }
+  
+  /* 타이틀 */
+  .page-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+  }
+  
+  /* 입력창 */
+  input[type="text"],
+  input[type="email"] {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    margin-bottom: 16px;
+    outline: none;
+    backdrop-filter: blur(4px);
+  }
+  
+  input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  
+  /* 버튼 */
+  button {
+    background-color: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.03);
+  }
+  
+  /* 친구 카드 리스트 - 반응형 그리드 */
+  .friend-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1000px;
+  }
+  
+  /* 친구 카드 */
+  .friend-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 16px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s ease;
+  }
+  
+  .friend-card:hover {
+    transform: translateY(-3px);
+  }
+  
+  .friend-card p {
+    margin: 0 0 6px;
+    font-size: 15px;
+  }
+  
+  /* 검색 결과 공통 스타일 */
+  .search-results {
+    width: 100%;
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  
+  .search-results li {
+    background-color: rgba(255, 255, 255, 0.08);
+    padding: 14px;
+    border-radius: 10px;
+  }
+  
+  /* ✅ 친구 요청 완료 애니메이션 */
+  .fade-in-slide {
+    animation: fadeSlide 0.6s ease forwards;
+  }
+  
+  @keyframes fadeSlide {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* 메시지 텍스트 스타일 */
+  .success-message {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #7bed9f;
+    animation: fadeSlide 0.6s ease forwards;
+  }
+  

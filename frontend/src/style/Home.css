@@ -1,0 +1,237 @@
+html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    url('/assets/main.jpg') center/cover no-repeat fixed;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #fff;
+  overflow-x: hidden;
+}
+  
+  /* 커스텀 폰트 */
+  @font-face {
+    font-family: 'GeostarFill';
+    src: url('/assets/GeostarFill-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  /* 헤더 (투명·고정·얇게) */
+  .home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background: transparent;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-sizing: border-box;
+  }
+  .home-header .logo,
+  .logo:link,
+  .logo:visited {
+    font-family: 'GeostarFill', serif;
+    font-size: 2em;
+    font-weight: normal;
+    color: #fff !important;
+    text-decoration: none !important;
+  }
+  .home-nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 30px;
+    font-size: 1em;
+    font-weight: 500;
+  }
+  .profile-button {
+    background: none;
+    color: #fff;
+    /* padding: 8px 18px; */
+    font-size: 0.9em;
+    cursor: pointer;
+    border-radius: 5px;
+    white-space: nowrap;
+  }
+  
+  /* 히어로 섹션 */
+  .hero-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background:  center/cover no-repeat fixed;;
+    
+  }
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
+  .hero-text {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+  }
+  .hero-text h1 {
+    font-family: 'GeostarFill', serif;
+    font-size: 3em;
+    line-height: 1.1;
+    margin-bottom: 25px;
+    letter-spacing: 0.2em;
+    text-shadow:
+      0 0 5px rgba(255, 255, 255, 0.4),
+      0 0 10px rgba(255, 255, 255, 0.3),
+      0 0 15px rgba(255, 255, 255, 0.2);
+    animation: glowPulse 2.5s ease-in-out infinite;
+  }
+  
+  @keyframes glowPulse {
+    0%, 100% {
+      text-shadow:
+        0 0 5px rgba(255, 255, 255, 0.4),
+        0 0 10px rgba(255, 255, 255, 0.3),
+        0 0 15px rgba(255, 255, 255, 0.2);
+    }
+    50% {
+      text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.6),
+        0 0 20px rgba(255, 255, 255, 0.4),
+        0 0 30px rgba(255, 255, 255, 0.3);
+    }
+  }
+  .hero-text p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin: 0 auto 40px;
+    max-width: 550px;
+    color: #ddd;
+  }
+  .share-button {
+    padding: 12px 28px;
+    background: rgba(255,255,255,0.9);
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .share-button:hover {
+    background: #fff;
+  }
+  
+
+  .cards-section {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 130px 40px;
+    background: rgba(0, 0, 0, 0.5);
+    margin-top: 0;
+  }
+  .card {
+    position: relative;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 60px 20px;
+    min-height: 380px;
+    border-radius: 12px;
+    text-align: center;
+    transition: transform 0.3s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-icon {
+    width: 60px;
+    height: 60px;
+    opacity: 0.7;
+    margin: 0 auto 20px;
+  }
+  .card h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #ccc;
+  }
+  .card p {
+    flex-grow: 1;
+    font-size: 1em;
+    color: #ccc;
+    margin-bottom: 30px;
+  }
+  .card:hover,
+  .card.highlight {
+    background: rgba(0, 0, 0, 0.8);
+    transform: scale(1.05);
+  }
+  
+  .card {
+    position: relative;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 60px 20px;
+    min-height: 500px;
+    border-radius: 12px;
+    text-align: center;
+    transition: transform 0.3s;
+    cursor: pointer;
+  }
+  .card-icon {
+    width: 60px;
+    height: 60px;
+    opacity: 0.7;
+    margin-bottom: 20px;
+  }
+  .card h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #ccc;
+  }
+  .card p {
+    font-size: 1em;
+    color: #ccc;
+    margin-bottom: 30px;
+    flex-grow: 1;
+  }
+  .card-arrow {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: #ccc;
+  }
+  .card:hover,
+  .card.highlight {
+    background: rgba(0, 0, 0, 0.8);
+    transform: scale(1.05);
+  }
+  
+  @media (max-width: 768px) {
+    .cards-section {
+      grid-template-columns: 1fr;
+      padding: 40px 20px;
+    }
+    .hero-text h1 {
+      font-size: 3em;
+    }
+  }

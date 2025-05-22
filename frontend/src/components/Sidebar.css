@@ -1,0 +1,116 @@
+.sidebar {
+    height: 100vh; /* 전체 화면 높이 */
+    width: 250px; /* 사이드바 너비 */
+    position: fixed; /* 화면에 고정 */
+    top: 0;
+    right: -280px; /* 처음에는 화면 오른쪽에 숨김 */
+    background-color: rgba(0,0,0,0.9); /* 사이드바 배경색 */
+    color: white;
+    padding: 20px;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+    transition: right 0.3s ease; /* 부드러운 슬라이드 효과 */
+    z-index: 1100; /* 다른 요소들 위에 표시 */
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+  
+  .sidebar.open {
+    right: 0; /* 사이드바가 열리면 오른쪽으로 나타남 */
+  }
+  
+  .close-sidebar-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    align-self: flex-end; /* 오른쪽 상단에 배치 */
+    margin-bottom: 20px;
+  }
+  
+  .sidebar-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* 남은 공간을 채움 */
+  }
+  
+  .sidebar-profile {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #444;
+  }
+  
+  .username {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  
+  .sidebar-button {
+    background-color: rgba(255,255,255,0.9);
+    color: #000;
+    border: none;
+    padding: 10px 15px;
+    font-size: 0.8em;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 5px;
+    box-sizing: border-box;
+  }
+  
+  .sidebar-button:hover {
+    background-color: #555;
+  }
+  
+  .login-button {
+    background-color: rgba(255,255,255,0.9); /* 로그인 버튼 강조 색상 */
+    margin-bottom: 20px;
+  }
+  
+  .login-button:hover {
+    background-color: #fff;
+  }
+  
+  
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: auto; /* 푸터를 하단에 고정하기 위해 사용 */
+  }
+  
+  .sidebar-nav a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 5px;
+    font-size: 1em;
+    border-bottom: 1px solid #333; /* 구분선 */
+  }
+  
+  .sidebar-nav a:last-child {
+    border-bottom: none; /* 마지막 항목은 구분선 제거 */
+  }
+  
+  .sidebar-nav a:hover {
+    background-color: #2a2a2a;
+    padding-left: 10px; /* 호버 시 약간의 들여쓰기 효과 */
+    transition: padding-left 0.2s ease;
+  }
+  
+  .sidebar-footer {
+    margin-top: auto; /* 푸터를 하단에 고정 */
+    padding-top: 20px;
+    border-top: 1px solid #444;
+  }
+  
+  .sidebar-footer a {
+    color: #aaa;
+    text-decoration: none;
+    display: block;
+    padding: 8px 0;
+    font-size: 0.9em;
+  }
+  
+  .sidebar-footer a:hover {
+    color: white;
+  }
