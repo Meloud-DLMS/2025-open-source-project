@@ -39,10 +39,14 @@ html, body {
     z-index: 1000;
     box-sizing: border-box;
   }
-  .home-header .logo {
+  .home-header .logo,
+  .logo:link,
+  .logo:visited {
     font-family: 'GeostarFill', serif;
     font-size: 2em;
     font-weight: normal;
+    color: #fff !important;
+    text-decoration: none !important;
   }
   .home-nav a {
     color: #fff;
@@ -94,6 +98,26 @@ html, body {
     line-height: 1.1;
     margin-bottom: 25px;
     letter-spacing: 0.2em;
+    text-shadow:
+      0 0 5px rgba(255, 255, 255, 0.4),
+      0 0 10px rgba(255, 255, 255, 0.3),
+      0 0 15px rgba(255, 255, 255, 0.2);
+    animation: glowPulse 2.5s ease-in-out infinite;
+  }
+  
+  @keyframes glowPulse {
+    0%, 100% {
+      text-shadow:
+        0 0 5px rgba(255, 255, 255, 0.4),
+        0 0 10px rgba(255, 255, 255, 0.3),
+        0 0 15px rgba(255, 255, 255, 0.2);
+    }
+    50% {
+      text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.6),
+        0 0 20px rgba(255, 255, 255, 0.4),
+        0 0 30px rgba(255, 255, 255, 0.3);
+    }
   }
   .hero-text p {
     font-size: 1.1em;
@@ -211,4 +235,3 @@ html, body {
       font-size: 3em;
     }
   }
-  
