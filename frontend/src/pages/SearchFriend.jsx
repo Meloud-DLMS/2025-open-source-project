@@ -32,7 +32,7 @@ export default function SearchFriend() {
         <button className="profile-button" onClick={() => setSidebarOpen(true)}>Profile</button>
       </header>
       <div style={{ paddingTop: '120px', textAlign: 'center' }}>
-        <h2 className="page-title">친구 검색</h2>
+        <h2 className="page-title">Search Friend</h2>
         <input
           type="text"
           value={query}

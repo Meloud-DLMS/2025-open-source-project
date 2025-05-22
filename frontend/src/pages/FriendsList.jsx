@@ -31,7 +31,7 @@ export default function FriendsList() {
         <button className="profile-button" onClick={() => setSidebarOpen(true)}>Profile</button>
       </header>
       <div style={{ paddingTop: '120px', textAlign: 'center' }}>
-        <h2 className="page-title">친구 목록</h2>
+        <h2 className="page-title">Friend List</h2>
         <ul className="friend-list">
           {dummyFriends.map((friend) => (
             <li key={friend.id} className="friend-card">

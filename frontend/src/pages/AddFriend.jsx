@@ -33,7 +33,7 @@ export default function AddFriend() {
         <button className="profile-button" onClick={() => setSidebarOpen(true)}>Profile</button>
       </header>
       <div style={{ paddingTop: '120px', textAlign: 'center' }}>
-        <h2 className="page-title">친구 추가</h2>
+        <h2 className="page-title">Add Friend</h2>
         <input
           type="text"
           value={friendId}
