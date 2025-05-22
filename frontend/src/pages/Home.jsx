@@ -63,11 +63,11 @@ const Home = () => {
           </div>
         </section>
         <section className="cards-section" ref={cardsSectionRef}> {/* ref 연결 */}
-          <div className="card">
+          <div className="card" onClick={() => navigate('/account-lookup')} style={{ cursor: 'pointer' }}>
             <img src={accountIcon} alt="Account Icon" className="card-icon" />
             <h3>Check My Account</h3>
             <p>서비스 설명 또는 추가 정보</p>
-            <a href="#" className="card-arrow">&gt;</a>
+            <span className="card-arrow">&gt;</span>
           </div>
           <div className="card">
             <img src={willIcon} alt="Will Icon" className="card-icon" />
