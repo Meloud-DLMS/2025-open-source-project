@@ -32,9 +32,8 @@
     text-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
   }
   
-  /* 입력창 */
-  input[type="text"],
-  input[type="email"] {
+  .page-background input[type="text"],
+  .page-background input[type="email"] {
     width: 100%;
     min-width: 500px;
     max-width: 600px;
@@ -48,7 +47,7 @@
     backdrop-filter: blur(4px);
   }
   
-  input::placeholder {
+  .page-background input::placeholder {
     color: rgba(255, 255, 255, 0.5);
   }
   

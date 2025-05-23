@@ -58,6 +58,7 @@
     margin-top: 5px;
     box-sizing: border-box;
   }
+
   
   .sidebar-button:hover {
     background-color: #555;
@@ -113,4 +114,20 @@
   
   .sidebar-footer a:hover {
     color: white;
+  }
+
+  .sidebar-nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 12px 5px;
+    font-size: 1em;
+    display: block;
+    border-bottom: 1px solid #333;
+  }
+  
+  .sidebar-nav-link:hover {
+    background-color: #2a2a2a;
+    padding-left: 10px;
+    transition: padding-left 0.2s ease;
+    color: #66ccff;
   }
