@@ -33,6 +33,16 @@ const Home = () => {
   };
 
 
+  // ⭐ 추가: 상단 메뉴 MEMORIAL 클릭 핸들러
+  const handleTopMemorialClick = () => {
+    navigate('/memorial'); // App.jsx에 정의된 DeathCertificate 경로로 이동
+  };
+
+  // ⭐ 추가: 하단 Memorial Space 카드 클릭 핸들러
+  const handleCardMemorialClick = () => {
+    navigate('/memorial'); // App.jsx에 정의된 DeathCertificate 경로로 이동
+  };
+
   return (
     <div className="home-container"> {/* 이 컨테이너가 전체 페이지를 감쌀 경우 여기에 배경 적용 고려 */}
       <Sidebar
@@ -48,7 +58,10 @@ const Home = () => {
           <nav className="home-nav">
             <a href="#">ACCOUNT</a>
             <a href="#">WILL</a>
-            <a href="#">MEMORIAL</a>
+            {/* ⭐ 수정: 상단 MEMORIAL을 button으로 변경하고 onClick 핸들러 연결 */}
+            <button onClick={handleTopMemorialClick} className="nav-item-button"> 
+              MEMORIAL
+            </button>
           </nav>
           <button className="profile-button" onClick={toggleSidebar}>Profile</button>
         </header>
@@ -75,7 +88,9 @@ const Home = () => {
             <p>서비스 설명 또는 추가 정보</p>
             <a href="#" className="card-arrow">&gt;</a>
           </div>
-          <div className="card">
+          {/* ⭐ 수정: 하단 Memorial Space 카드의 전체 div에 onClick 핸들러 연결 */}
+          {/* 하단 화살표 <a> 태그는 제거하거나 <Link>로 변경할 수도 있습니다. */}
+          <div className="card" onClick={handleCardMemorialClick} style={{ cursor: 'pointer' }}> {/* ⭐ 여기에 onClick 추가 */}
             <img src={memorialIcon} alt="Memorial Icon" className="card-icon" />
             <h3>Memorial Space</h3>
             <p>서비스 설명 또는 추가 정보</p>
