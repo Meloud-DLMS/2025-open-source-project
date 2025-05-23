@@ -37,7 +37,7 @@ export default function FriendsList() {
             <li key={friend.id} className="friend-card">
               <p>{friend.name}</p>
               <p>{friend.email}</p>
-              <button>삭제</button>
+              <button>delete</button>
             </li>
           ))}
         </ul>

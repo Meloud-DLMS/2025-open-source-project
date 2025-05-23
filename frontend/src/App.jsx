@@ -6,7 +6,6 @@ import Login from './pages/Login';
 import Join from './pages/Join';
 import FriendsList from './pages/FriendsList';
 import AddFriend from './pages/AddFriend';
-import SearchFriend from './pages/SearchFriend';
 import AccountLookupIntro from './pages/AccountLookupIntro';
 import RealNameVerificationPage from './pages/RealNameVerificationPage';
 
@@ -26,7 +25,6 @@ export default function App() {
         <Route path="/join" element={<Join {...authProps} />} />
         <Route path="/friends" element={<FriendsList {...authProps} />} />
         <Route path="/friends/add" element={<AddFriend {...authProps} />} />
-        <Route path="/friends/search" element={<SearchFriend {...authProps} />} />
         <Route path="*" element={<Navigate to="/" replace />} />
         <Route path="/account-lookup" element={<AccountLookupIntro />} />
         <Route path="/real-name" element={<RealNameVerificationPage />} />

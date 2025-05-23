@@ -22,7 +22,6 @@ const Sidebar = ({ isOpen, toggleSidebar, isLoggedIn, handleLogin, handleLogout 
           <nav className="sidebar-nav">
             <a><Link to="/friends/add">Add Friend</Link></a>
             <a><Link to="/friends">Friend List</Link></a>
-            <a><Link to="/friends/search">Friend Search</Link></a>
             <a href="#">Message Box</a>
           </nav>
           <div className="sidebar-footer">
