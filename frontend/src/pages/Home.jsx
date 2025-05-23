@@ -59,11 +59,11 @@ const Home = ({ isLoggedIn, setIsLoggedIn }) => {
             <p>서비스 설명 또는 추가 정보</p>
             <span className="card-arrow">&gt;</span>
           </div>
-          <div className="card">
+          <div className="card" onClick={() => navigate('/will/write')} style={{ cursor: 'pointer' }}>
             <img src={willIcon} alt="Will Icon" className="card-icon" />
             <h3>Preparation of Will</h3>
             <p>서비스 설명 또는 추가 정보</p>
-            <a href="#" className="card-arrow">&gt;</a>
+            <span className="card-arrow">&gt;</span>
           </div>
           <div className="card">
             <img src={memorialIcon} alt="Memorial Icon" className="card-icon" />
