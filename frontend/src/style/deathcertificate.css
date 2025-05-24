@@ -11,7 +11,7 @@
     box-sizing: border-box; /* 패딩이 전체 크기에 포함되도록 */
 
     /* 여기에 배경 이미지 속성을 추가합니다! */
-    background-image: url('./assets/우주.png'); /* '우주.png' 이미지로 변경 */
+    background-image: url('C:\Users\emong\OneDrive\바탕 화면\프론트\2025-open-source-project\frontend\src\assets\images\우주.png'); /* '우주.png' 이미지로 변경 */
     background-size: cover; /* 이미지가 전체를 덮도록 */
     background-position: center; /* 이미지를 중앙에 위치 */
     background-repeat: no-repeat; /* 이미지 반복 없음 */
@@ -27,7 +27,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* deathcertificate 페이지에만 적용되는 추가 투명도 */
+    background-color: rgba(0, 0, 0, 0.65); /* deathcertificate 페이지에만 적용되는 추가 투명도 */
     z-index: -1; /* 배경 이미지 위에, 실제 콘텐츠 아래에 위치. 하지만 .death-certificate-page가 z-index:3이므로 콘텐츠 아래로 갑니다. */
 }
 
@@ -54,7 +54,7 @@
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
-.form-instruction {
+.form-instruction { /*추억할 분의 이름과 주민등록번호를 입력해주세요요*/
     font-size: 18px; /* 글자 크기 조절 */
     color: #ccc; /* 글자 색상 조절 */
     margin-bottom: 60px; /* 폼 컨테이너와의 간격 조절 */
@@ -109,11 +109,11 @@
 .verification-form {
     display: flex;
     flex-direction: column;
-    gap: 30px; /* 입력 그룹 사이 간격 */
+    gap: 20px; /* 입력 그룹 사이 간격 */
     width: 100%;
     max-width: 450px; /* 폼의 최대 너비 */
     align-items: flex-start; /* 좌측 정렬 */
-    padding-top: 20px; /* 이미지와 상단 맞추기 */
+    padding-top: 0px; /* 이미지와 상단 맞추기 */
 }
 
 .input-group {
@@ -126,7 +126,7 @@
 .input-group label {
     font-size: 14px;
     color: #aaa;
-    margin-bottom: 8px;
+    margin-bottom: 15px;
     text-transform: uppercase; /* 대문자로 */
 }
 
@@ -134,7 +134,7 @@
     width: 100%;
     padding: 12px 15px;
     background-color: rgba(255, 255, 255, 0.08); /* 투명한 배경 */
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 4px;
     color: white;
     font-size: 16px;
@@ -155,16 +155,16 @@
 .ssn-input-group {
     display: flex;
     align-items: center;
-    gap: 10px; /* 주민등록번호 숫자 칸 사이 간격 */
+    gap: 8px; /* 주민등록번호 숫자 칸 사이 간격 */
     width: 100%;
 }
 
 .ssn-part {
     flex: 1; /* 가로 공간을 균등하게 분배 */
-    padding: 12px 15px;
+    padding: 12px 10px;
     background-color: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
+    border: 0px solid rgba(255, 255, 255, 0.08);
+    border-radius: 7px;
     color: white;
     font-size: 16px;
     box-sizing: border-box;
