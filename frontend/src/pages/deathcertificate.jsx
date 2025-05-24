@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // useNavigate 훅 임포트
 import '../style/deathcertificate.css'; // 해당 페이지의 CSS 파일 임포트
@@ -35,7 +34,7 @@ function DeathCertificate() {
         <div className="form-container">
           <div className="image-upload-area">
             <span className="upload-icon">+</span>
-            <p className="upload-text">사망 인증이 완료되지 않았습니다.사망 인증을 위한 파일을 업로드해주세요.</p>
+            <p className="upload-text">사망 인증이 완료되지 않았습니다.<p/>사망 인증을 위한 파일을 업로드해주세요.</p>
           </div>
 
           <form onSubmit={handleSubmit} className="verification-form">
