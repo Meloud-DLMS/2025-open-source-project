@@ -32,15 +32,32 @@ const Home = () => {
     }
   };
 
+    const checkMemorialAuthAndNavigate = () => {
+    const isMemorialAuth = localStorage.getItem('memorialAuth');
 
-  // ⭐ 추가: 상단 메뉴 MEMORIAL 클릭 핸들러
-  const handleTopMemorialClick = () => {
-    navigate('/memorial'); // App.jsx에 정의된 DeathCertificate 경로로 이동
+    // ⭐ lyl 추가: 추모 공간 들어갈 때 사망인증서 인증 한 번만 할 수 있도록
+    // kye값: 홍길동, 900101-1234567 (백엔드에서 수정 필요)
+    // 만약 제대로 수행하는지 알고 싶으면 
+    // 1. F12로 개발자 모드 열기
+    // 2. Application 탭 -> Local storage -> memorialAuth 삭제제
+    if (isMemorialAuth === 'true') {
+      // 인증된 경우, 바로 MemorialSpace로 이동
+      navigate('/memorialspace');
+    } else {
+      // 인증되지 않은 경우, DeathCertificate 페이지로 이동하여 인증 요청
+      alert('추모 공간에 입장하려면 사망인증서 인증이 필요합니다.');
+      navigate('/deathcertificate');
+    }
   };
 
-  // ⭐ 추가: 하단 Memorial Space 카드 클릭 핸들러
+  // ⭐ lyl 추가: 상단 메뉴 MEMORIAL 클릭 핸들러
+  const handleTopMemorialClick = () => {
+    checkMemorialAuthAndNavigate();
+  };
+
+  // ⭐ lyl 추가: 하단 Memorial Space 카드 클릭 핸들러
   const handleCardMemorialClick = () => {
-    navigate('/memorial'); // App.jsx에 정의된 DeathCertificate 경로로 이동
+   checkMemorialAuthAndNavigate();
   };
 
   return (

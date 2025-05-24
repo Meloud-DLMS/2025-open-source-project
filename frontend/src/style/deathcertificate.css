@@ -117,7 +117,7 @@
 }
 
 .input-group {
-    width: 200%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* 라벨과 입력 필드 좌측 정렬 */
@@ -163,7 +163,7 @@
     flex: 1; /* 가로 공간을 균등하게 분배 */
     padding: 12px 10px;
     background-color: rgba(255, 255, 255, 0.08);
-    border: 0px solid rgba(255, 255, 255, 0.2);
+    border: 0px solid rgba(255, 255, 255, 0.08);
     border-radius: 7px;
     color: white;
     font-size: 16px;
