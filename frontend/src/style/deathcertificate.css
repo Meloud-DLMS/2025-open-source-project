@@ -1,0 +1,235 @@
+/* 전체 페이지 컨테이너 */
+.death-certificate-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* 뷰포트 높이 전체 */
+    width: 100vw; /* 뷰포트 너비 전체 */
+    position: relative;
+    z-index: 3; /* App.css의 오버레이(z-index:2) 위에 표시 */
+    padding-top: 0px; /* 네비게이션 바 높이 고려하여 아래로 내림 */
+    box-sizing: border-box; /* 패딩이 전체 크기에 포함되도록 */
+
+    /* 여기에 배경 이미지 속성을 추가합니다! */
+    background-image: url('C:\Users\emong\OneDrive\바탕 화면\프론트\2025-open-source-project\frontend\src\assets\images\우주.png'); /* '우주.png' 이미지로 변경 */
+    background-size: cover; /* 이미지가 전체를 덮도록 */
+    background-position: center; /* 이미지를 중앙에 위치 */
+    background-repeat: no-repeat; /* 이미지 반복 없음 */
+    background-attachment: fixed; /* 스크롤 시 배경 고정 */
+}
+
+/* deathcertificate 페이지 전용 오버레이 (선택 사항: App.css의 오버레이 위에 추가 효과) */
+/* 만약 App.css의 오버레이만으로 충분하다면 이 부분은 필요 없을 수 있습니다. */
+.death-certificate-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.65); /* deathcertificate 페이지에만 적용되는 추가 투명도 */
+    z-index: -1; /* 배경 이미지 위에, 실제 콘텐츠 아래에 위치. 하지만 .death-certificate-page가 z-index:3이므로 콘텐츠 아래로 갑니다. */
+}
+
+
+/* 컨텐츠 래퍼 (중앙 정렬된 내용) */
+.dc-content-wrapper {
+    position: relative; /* 자식 요소의 z-index 기준 */
+    z-index: 3; /* 오버레이보다 위에 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 900px; /* 최대 너비 설정 */
+    width: 90%; /* 화면 너비에 반응 */
+    color: white;
+    text-align: center;
+}
+
+.page-title {
+    font-family: 'Geostar Fill', cursive; /* Geostar Fill 폰트 사용 */
+    font-size: 56px;
+    margin-bottom: 25px;
+    color: #ffffff;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.form-instruction { /*추억할 분의 이름과 주민등록번호를 입력해주세요요*/
+    font-size: 18px; /* 글자 크기 조절 */
+    color: #ccc; /* 글자 색상 조절 */
+    margin-bottom: 60px; /* 폼 컨테이너와의 간격 조절 */
+}
+
+/* 폼 컨테이너 */
+.form-container {
+    display: flex;
+    flex-direction: row; /* 이미지와 폼을 가로로 정렬 */
+    gap: 50px; /* 이미지와 폼 사이 간격 */
+    justify-content: center;
+    align-items: flex-start; /* 상단 정렬 */
+    width: 100%;
+    max-width: 900px;
+}
+
+/* 이미지 업로드 영역 (왼쪽) */
+.image-upload-area {
+    background-color: rgba(255, 255, 255, 0.05); /* 투명한 배경 */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* 테두리 */
+    border-radius: 8px;
+    width: 350px; /* 고정 너비 */
+    height: 450px; /* 고정 높이 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.image-upload-area:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.upload-icon {
+    font-size: 80px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 20px;
+}
+
+.upload-text {
+    font-size: 16px;
+    color: #ccc;
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* 폼 영역 (오른쪽) */
+.verification-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 입력 그룹 사이 간격 */
+    width: 100%;
+    max-width: 450px; /* 폼의 최대 너비 */
+    align-items: flex-start; /* 좌측 정렬 */
+    padding-top: 0px; /* 이미지와 상단 맞추기 */
+}
+
+.input-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 라벨과 입력 필드 좌측 정렬 */
+}
+
+.input-group label {
+    font-size: 14px;
+    color: #aaa;
+    margin-bottom: 15px;
+    text-transform: uppercase; /* 대문자로 */
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: rgba(255, 255, 255, 0.08); /* 투명한 배경 */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    color: white;
+    font-size: 16px;
+    box-sizing: border-box; /* 패딩이 전체 크기에 포함되도록 */
+    outline: none; /* 포커스 시 아웃라인 제거 */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.input-field::placeholder {
+    color: #777;
+}
+
+.input-field:focus {
+    border-color: #ccccff; /* 포커스 시 색상 변경 */
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.ssn-input-group {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* 주민등록번호 숫자 칸 사이 간격 */
+    width: 100%;
+}
+
+.ssn-part {
+    flex: 1; /* 가로 공간을 균등하게 분배 */
+    padding: 12px 10px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 0px solid rgba(255, 255, 255, 0.08);
+    border-radius: 7px;
+    color: white;
+    font-size: 16px;
+    box-sizing: border-box;
+    text-align: center; /* 주민등록번호는 가운데 정렬 */
+    outline: none;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.ssn-part:focus {
+    border-color: #ccccff;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.ssn-input-group span {
+    color: #ccc;
+    font-size: 18px;
+}
+
+.certify-button {
+    margin-top: 20px; /* 버튼 위 여백 */
+    padding: 12px 25px;
+    font-size: 16px;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    align-self: flex-start; /* 좌측 정렬 */
+}
+
+.certify-button:hover {
+    background-color: #eee;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* -------------------- 반응형 디자인 (선택 사항) -------------------- */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 30px;
+    }
+
+    .form-container {
+        flex-direction: column; /* 작은 화면에서 세로로 정렬 */
+        align-items: center; /* 중앙 정렬 */
+        gap: 30px;
+    }
+
+    .image-upload-area {
+        width: 80%; /* 작은 화면에서 너비 조정 */
+        height: 300px;
+    }
+
+    .verification-form {
+        width: 80%;
+        align-items: center; /* 폼 요소 중앙 정렬 */
+    }
+
+    .input-group label {
+        align-self: flex-start; /* 라벨은 계속 좌측 정렬 */
+    }
+
+    .certify-button {
+        align-self: center; /* 버튼도 중앙 정렬 */
+    }
+}

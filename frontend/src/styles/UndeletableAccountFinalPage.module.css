@@ -1,0 +1,107 @@
+.wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: 'Inter', sans-serif;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+
+.formContainer {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 120px auto;
+    background-color: rgba(20, 20, 20, 0.9);
+    padding: 40px;
+    border-radius: 12px;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+.title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.inputGroup label {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    color: #ccc;
+}
+
+.inputGroup input,
+.inputGroup textarea {
+    padding: 12px;
+    background-color: #111;
+    border: 1px solid #444;
+    border-radius: 8px;
+    color: #eee;
+    font-size: 1rem;
+    transition: border 0.2s;
+}
+
+.inputGroup input:focus,
+.inputGroup textarea:focus {
+    border-color: #888;
+    outline: none;
+}
+
+.buttonWrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+.nextButton {
+    padding: 12px 28px;
+    background-color: #fff;
+    color: #000;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.nextButton:disabled {
+    background-color: #999;
+    color: #444;
+    cursor: not-allowed;
+}
+
+.logo {
+    font-family: 'GeostarFill', serif;
+    font-size: 2em;
+    font-weight: normal;
+    color: #fff;
+    position: fixed;
+    top: 35px;     
+    left: 50px;
+    z-index: 1000;
+    cursor: pointer;
+    text-decoration: none;
+}

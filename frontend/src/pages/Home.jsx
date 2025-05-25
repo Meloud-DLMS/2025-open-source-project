@@ -23,6 +23,7 @@ const Home = ({ isLoggedIn, setIsLoggedIn }) => {
     }
   };
 
+
   return (
     <div className="home-container">
       <Sidebar
@@ -36,9 +37,14 @@ const Home = ({ isLoggedIn, setIsLoggedIn }) => {
         <header className="home-header">
           <div className="logo">MELOUD</div>
           <nav className="home-nav">
-            <a href="#">ACCOUNT</a>
+            <button onClick={handleAccountClick} className="nav-item-button"> 
+              ACCOUNT
+            </button>
             <a href="#">WILL</a>
-            <a href="#">MEMORIAL</a>
+            {/* ⭐ 수정: 상단 MEMORIAL을 button으로 변경하고 onClick 핸들러 연결 */}
+            <button onClick={handleTopMemorialClick} className="nav-item-button"> 
+              MEMORIAL
+            </button>
           </nav>
           <button className="profile-button" onClick={toggleSidebar}>Profile</button>
         </header>
@@ -53,7 +59,7 @@ const Home = ({ isLoggedIn, setIsLoggedIn }) => {
           </div>
         </section>
         <section className="cards-section" ref={cardsSectionRef}> {/* ref 연결 */}
-          <div className="card"  onClick={() => navigate('/account-lookup')} style={{ cursor: 'pointer' }}>
+          <div className="card" onClick={() => navigate('/account-lookup')} style={{ cursor: 'pointer' }}>
             <img src={accountIcon} alt="Account Icon" className="card-icon" />
             <h3>Check My Account</h3>
             <p>서비스 설명 또는 추가 정보</p>
@@ -65,7 +71,9 @@ const Home = ({ isLoggedIn, setIsLoggedIn }) => {
             <p>서비스 설명 또는 추가 정보</p>
             <span className="card-arrow">&gt;</span>
           </div>
-          <div className="card">
+          {/* ⭐ 수정: 하단 Memorial Space 카드의 전체 div에 onClick 핸들러 연결 */}
+          {/* 하단 화살표 <a> 태그는 제거하거나 <Link>로 변경할 수도 있습니다. */}
+          <div className="card" onClick={handleCardMemorialClick} style={{ cursor: 'pointer' }}> {/* ⭐ 여기에 onClick 추가 */}
             <img src={memorialIcon} alt="Memorial Icon" className="card-icon" />
             <h3>Memorial Space</h3>
             <p>서비스 설명 또는 추가 정보</p>

@@ -1,83 +1,77 @@
 import React, { useState } from 'react';
-import styles from '@/styles/AccountManage.module.css';
-import backgroundImage from '@/assets/images/backgroundAccountManage.jpg';
+import { useNavigate } from 'react-router-dom';
+import styles from '../styles/UndeletableAccountFinalPage.module.css';
+import backgroundImage from '../assets/images/main.jpg';
 
 const UndeletableAccountFinalPage = () => {
-    const [to, setTo] = useState('');
-    const [cc, setCc] = useState('');
-    const [subject, setSubject] = useState('');
-    const [body, setBody] = useState('');
+    const [formData, setFormData] = useState({
+        to: '',
+        subject: '',
+        body: ''
+    });
 
-    const handleSave = () => {
-        if (to && subject && body) {
-            alert('메일이 저장되었습니다.');
-        } else {
-            alert('모든 필드를 입력해주세요.');
-        }
+    const isFormFilled = Object.values(formData).every(value => value.trim() !== '');
+    const navigate = useNavigate();
+
+    const handleChange = (field, value) => {
+        setFormData({ ...formData, [field]: value });
     };
 
+    const handleNext = () => {
+    if (isFormFilled) {
+        navigate('/account/undeletable-complete');
+    }
+};
+
     return (
-        <div className={styles.wrapper}>
-            <img src={backgroundImage} alt="background" className={styles.backgroundImage} />
+        <div
+            className={styles.wrapper}
+            style={{ backgroundImage: `url(${backgroundImage})` }}
+        >
             <div className={styles.overlay}></div>
+            <div className={styles.logo} onClick={() => navigate('/')}>
+                MELOUD
+            </div>
+            <div className={styles.formContainer}>
+                <h2 className={styles.title}>계정 삭제 요청 메일</h2>
 
-            <header className={styles.header}>
-                <div className={styles.logo}>MELOUD</div>
-                <nav className={styles.navbar}>
-                    <span className={styles.navItem}>ACCOUNT</span>
-                    <span className={styles.navItem}>WILL</span>
-                    <span className={styles.navItem}>MEMORIAL</span>
-                </nav>
-                <div className={styles.profile}>Profile</div>
-            </header>
-
-            <main className={`${styles.blackBox}`} style={{ width: '700px', margin: '180px auto', padding: '30px' }}>
-                <h2 className={styles.title}>메일</h2>
-
-                <div style={{ margin: '20px 0' }}>
-                    <div className={styles['text-label']}>받는사람</div>
+                <div className={styles.inputGroup}>
+                    <label>받는사람</label>
                     <input
-                        className={styles['input-box']}
-                        type="email"
-                        value={to}
-                        onChange={(e) => setTo(e.target.value)}
-                        placeholder="example@example.com"
-                    />
-                </div>
-                <div style={{ margin: '20px 0' }}>
-                    <div className={styles['text-label']}>참조</div>
-                    <input
-                        className={styles['input-box']}
                         type="text"
-                        value={cc}
-                        onChange={(e) => setCc(e.target.value)}
-                        placeholder="참조할 이메일"
+                        value={formData.to}
+                        onChange={(e) => handleChange('to', e.target.value)}
                     />
                 </div>
-                <div style={{ margin: '20px 0' }}>
-                    <div className={styles['text-label']}>제목</div>
+
+                <div className={styles.inputGroup}>
+                    <label>제목</label>
                     <input
-                        className={styles['input-box']}
                         type="text"
-                        value={subject}
-                        onChange={(e) => setSubject(e.target.value)}
-                        placeholder="메일 제목"
+                        value={formData.subject}
+                        onChange={(e) => handleChange('subject', e.target.value)}
                     />
                 </div>
 
-                <button className={styles['gray-button']} style={{ marginBottom: '10px' }}>템플릿</button>
-
-                <textarea
-                    value={body}
-                    onChange={(e) => setBody(e.target.value)}
-                    placeholder="내용을 입력하세요"
-                    style={{ width: '100%', height: '200px', resize: 'none', backgroundColor: '#000', color: '#fff', padding: '10px', borderRadius: '8px', border: '1px solid #999', overflowY: 'auto' }}
-                />
-
-                <div style={{ textAlign: 'right', marginTop: '20px' }}>
-                    <button className={styles['main-button']} onClick={handleSave}>메일 저장</button>
+                <div className={styles.inputGroup}>
+                    <label>본문</label>
+                    <textarea
+                        value={formData.body}
+                        onChange={(e) => handleChange('body', e.target.value)}
+                        rows="10"
+                    />
                 </div>
-            </main>
+
+                <div className={styles.buttonWrapper}>
+                    <button
+                        className={styles.nextButton}
+                        onClick={handleNext}
+                        disabled={!isFormFilled}
+                    >
+                        메일 저장
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };
