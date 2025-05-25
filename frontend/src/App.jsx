@@ -8,6 +8,12 @@ import FriendsList from './pages/FriendsList';
 import AddFriend from './pages/AddFriend';
 import AccountLookupIntro from './pages/AccountLookupIntro';
 import RealNameVerificationPage from './pages/RealNameVerificationPage';
+import AccountDeleteRequestPage from './pages/AccountDeleteRequestPage';
+import AccountDeleteFinalPage from './pages/AccountDeleteFinalPage';
+import AccountDeleteComplete from './pages/AccountDeleteComplete';  
+import UndeletableAccountPage from './pages/UndeletableAccountPage';
+import UndeletableAccountFinalPage from './pages/UndeletableAccountFinalPage';
+import UndeletableAccountComplete from './pages/UndeletableAccountComplete';
 import WillWrite from './pages/WillWrite';
 import MemorialSpace from './pages/memorialspace';
 
@@ -29,6 +35,12 @@ export default function App() {
         <Route path="/friends/add" element={<AddFriend {...authProps} />} />
         <Route path="/account" element={<AccountLookupIntro />} />
         <Route path="/real-name" element={<RealNameVerificationPage />} />
+        <Route path="/account/delete-request" element={<AccountDeleteRequestPage />} />
+        <Route path="/account/delete-final" element={<AccountDeleteFinalPage />} />
+        <Route path="/account/delete-complete" element={<AccountDeleteComplete />} />
+        <Route path="/account/undeletable" element={<UndeletableAccountPage />} />
+        <Route path="/account/undeletable-final" element={<UndeletableAccountFinalPage />} />
+        <Route path="/account/undeletable-complete" element={<UndeletableAccountComplete />} />
         <Route path="/will/write" element={<WillWrite {...authProps} />} />
         <Route path="/memorial" element={<MemorialSpace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
