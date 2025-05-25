@@ -3,10 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
 import '../style/WillWrite.css';
 
-const WillWrite = () => {
+const WillWrite = ({ isLoggedIn, setIsLoggedIn }) => {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const WillWrite = ({ isLoggedIn, setIsLoggedIn }) => {
 
   const [activeTab, setActiveTab] = useState('letsWrite');
   const [recipient, setRecipient] = useState('');
@@ -15,10 +14,8 @@ const WillWrite = () => {
   const [drafts, setDrafts] = useState([]);
   const [editId, setEditId] = useState(null);
 
-  // 🔗 친구 목록 더미 데이터
   const friends = ['홍길동', '김영희', '이철수'];
 
-  // 저장
   const handleSave = () => {
     if (!content.trim()) return alert('내용을 입력해주세요.');
     if (!recipient) return alert('수신인을 선택해주세요.');
@@ -36,7 +33,6 @@ const WillWrite = () => {
     setContent('');
   };
 
-  // 초안 저장
   const handleDraftSave = () => {
     if (!content.trim()) return alert('내용을 입력해주세요.');
     if (!recipient) return alert('수신인을 선택해주세요.');
@@ -45,7 +41,6 @@ const WillWrite = () => {
     setContent('');
   };
 
-  // 저장 수정
   const handleModify = (id) => {
     const will = wills.find(w => w.id === id);
     if (will) {
@@ -56,23 +51,20 @@ const WillWrite = () => {
     }
   };
 
-  // 저장 삭제
   const handleDelete = (id) => {
     setWills(wills.filter(w => w.id !== id));
   };
 
-  // 초안 수정
   const handleDraftModify = (id) => {
     const draft = drafts.find(d => d.id === id);
     if (draft) {
       setRecipient(draft.recipient);
       setContent(draft.content);
-      setEditId(null); // 새로 저장
+      setEditId(null);
       setActiveTab('letsWrite');
     }
   };
 
-  // 초안 삭제
   const handleDraftDelete = (id) => {
     setDrafts(drafts.filter(d => d.id !== id));
   };
@@ -105,7 +97,6 @@ const WillWrite = () => {
         </aside>
 
         <section className="will-content">
-          {/* LET’S WRITE 탭 - 작성 폼만 */}
           {activeTab === 'letsWrite' && (
             <>
               <div className="recipient">
@@ -131,7 +122,6 @@ const WillWrite = () => {
             </>
           )}
 
-          {/* WRITTEN 탭 - 수신인만 표시, 수정/삭제 가능 */}
           {activeTab === 'written' && (
             <div className="will-list">
               {wills.length === 0 ? <p>No saved wills yet.</p> :
@@ -147,7 +137,6 @@ const WillWrite = () => {
             </div>
           )}
 
-          {/* WRITING 탭 - 초안 수신인만 표시 */}
           {activeTab === 'writing' && (
             <div className="will-list">
               {drafts.length === 0 ? <p>No drafts saved.</p> :
@@ -167,5 +156,5 @@ const WillWrite = () => {
     </div>
   );
 };
-};
+
 export default WillWrite;

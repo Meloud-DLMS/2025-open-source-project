@@ -23,6 +23,17 @@ const Home = ({ isLoggedIn, setIsLoggedIn }) => {
     }
   };
 
+  const handleAccountClick = () => {
+    navigate('/account');
+  };
+
+  const handleTopMemorialClick = () => {
+    navigate('/memorial');
+  };
+
+  const handleCardMemorialClick = () => {
+    navigate('/memorial');
+  };
 
   return (
     <div className="home-container">
@@ -40,8 +51,9 @@ const Home = ({ isLoggedIn, setIsLoggedIn }) => {
             <button onClick={handleAccountClick} className="nav-item-button"> 
               ACCOUNT
             </button>
-            <a href="#">WILL</a>
-            {/* ⭐ 수정: 상단 MEMORIAL을 button으로 변경하고 onClick 핸들러 연결 */}
+            <button onClick={() => navigate('/will/write')} className="nav-item-button">
+              WILL
+            </button>
             <button onClick={handleTopMemorialClick} className="nav-item-button"> 
               MEMORIAL
             </button>
@@ -58,8 +70,8 @@ const Home = ({ isLoggedIn, setIsLoggedIn }) => {
             </button>
           </div>
         </section>
-        <section className="cards-section" ref={cardsSectionRef}> {/* ref 연결 */}
-          <div className="card" onClick={() => navigate('/account-lookup')} style={{ cursor: 'pointer' }}>
+        <section className="cards-section" ref={cardsSectionRef}>
+          <div className="card" onClick={() => navigate('/account')} style={{ cursor: 'pointer' }}>
             <img src={accountIcon} alt="Account Icon" className="card-icon" />
             <h3>Check My Account</h3>
             <p>서비스 설명 또는 추가 정보</p>
@@ -71,9 +83,7 @@ const Home = ({ isLoggedIn, setIsLoggedIn }) => {
             <p>서비스 설명 또는 추가 정보</p>
             <span className="card-arrow">&gt;</span>
           </div>
-          {/* ⭐ 수정: 하단 Memorial Space 카드의 전체 div에 onClick 핸들러 연결 */}
-          {/* 하단 화살표 <a> 태그는 제거하거나 <Link>로 변경할 수도 있습니다. */}
-          <div className="card" onClick={handleCardMemorialClick} style={{ cursor: 'pointer' }}> {/* ⭐ 여기에 onClick 추가 */}
+          <div className="card" onClick={handleCardMemorialClick} style={{ cursor: 'pointer' }}>
             <img src={memorialIcon} alt="Memorial Icon" className="card-icon" />
             <h3>Memorial Space</h3>
             <p>서비스 설명 또는 추가 정보</p>

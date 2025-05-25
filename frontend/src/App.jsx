@@ -8,6 +8,8 @@ import FriendsList from './pages/FriendsList';
 import AddFriend from './pages/AddFriend';
 import AccountLookupIntro from './pages/AccountLookupIntro';
 import RealNameVerificationPage from './pages/RealNameVerificationPage';
+import WillWrite from './pages/WillWrite';
+import MemorialSpace from './pages/memorialspace';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -25,9 +27,11 @@ export default function App() {
         <Route path="/join" element={<Join {...authProps} />} />
         <Route path="/friends" element={<FriendsList {...authProps} />} />
         <Route path="/friends/add" element={<AddFriend {...authProps} />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
         <Route path="/account" element={<AccountLookupIntro />} />
         <Route path="/real-name" element={<RealNameVerificationPage />} />
+        <Route path="/will/write" element={<WillWrite {...authProps} />} />
+        <Route path="/memorial" element={<MemorialSpace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

@@ -10,7 +10,7 @@
     align-items: center;
 
     /* 여기에 배경 이미지 속성을 추가합니다! */
-    background-image: url('../assets/images/우주.png'); /* '우주.png' 이미지로 변경 */
+    background-image: url('../../public/assets/memorial.jpg'); /* '우주.png' 이미지로 변경 */
     background-size: cover; /* 이미지가 전체를 덮도록 */
     background-position: center; /* 이미지를 중앙에 위치 */
     background-repeat: no-repeat; /* 이미지 반복 없음 */
