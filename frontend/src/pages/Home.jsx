@@ -50,6 +50,10 @@ const Home = () => {
     }
   };
 
+  const handleAccountClick = () => {
+    navigate('/account');
+  };
+
   // ⭐ lyl 추가: 상단 메뉴 MEMORIAL 클릭 핸들러
   const handleTopMemorialClick = () => {
     checkMemorialAuthAndNavigate();
@@ -73,7 +77,9 @@ const Home = () => {
         <header className="home-header">
           <div className="logo">MELOUD</div>
           <nav className="home-nav">
-            <a href="#">ACCOUNT</a>
+            <button onClick={handleAccountClick} className="nav-item-button"> 
+              ACCOUNT
+            </button>
             <a href="#">WILL</a>
             {/* ⭐ 수정: 상단 MEMORIAL을 button으로 변경하고 onClick 핸들러 연결 */}
             <button onClick={handleTopMemorialClick} className="nav-item-button"> 
@@ -93,7 +99,7 @@ const Home = () => {
           </div>
         </section>
         <section className="cards-section" ref={cardsSectionRef}> {/* ref 연결 */}
-          <div className="card" onClick={() => navigate('/account-lookup')} style={{ cursor: 'pointer' }}>
+          <div className="card" onClick={() => navigate('/account')} style={{ cursor: 'pointer' }}>
             <img src={accountIcon} alt="Account Icon" className="card-icon" />
             <h3>Check My Account</h3>
             <p>서비스 설명 또는 추가 정보</p>
