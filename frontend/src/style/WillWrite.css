@@ -1,0 +1,183 @@
+.will-page {
+  position: relative;
+  min-height: 100vh;
+  background: url('/assets/will.jpg') center/cover no-repeat fixed;
+  color: #fff;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+.will-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5); /* ✅ 오버레이 */
+  z-index: 0;
+}
+
+.will-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background: none;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.logo {
+  font-family: 'GeostarFill', serif;
+  font-size: 2em;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.navbar {
+  background: none;
+}
+.navbar span {
+  margin: 0 30px;
+  font-size: 1em;
+  cursor: pointer;
+  color: #fff;
+}
+
+.profile {
+  font-size: 0.9em;
+  cursor: pointer;
+  color: #fff;
+}
+
+/* 메인 영역 */
+.will-main {
+  display: flex;
+  padding-top: 100px;
+  position: relative;
+  z-index: 1;
+}
+
+/* 왼쪽 탭 */
+.will-sidebar {
+  width: 200px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.side-item {
+  color: #aaa;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.side-item.active {
+  font-weight: bold;
+  color: white;
+}
+
+/* 본문 */
+.will-content {
+  flex: 1;
+  padding: 40px;
+}
+
+.recipient {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 250px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  padding: 20px;
+  font-size: 16px;
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+  resize: none;
+}
+
+select {
+  margin-left: 10px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+/* 버튼들 */
+.save-buttons {
+  margin-top: 20px;
+  text-align: right;
+}
+
+button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #000; /* ✅ 검은 텍스트 */
+}
+
+/* 카드 스타일 */
+.will-list {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.will-card {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 20px;
+  color: white;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.will-card:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.will-recipient {
+  font-size: 16px;
+  margin: 0;
+}
+
+.will-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.modify-btn,
+.delete-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: #eee;
+}
+
+.modify-btn:hover {
+  color: #00bfff;
+}
+
+.delete-btn:hover {
+  color: #ff4d4d;
+}

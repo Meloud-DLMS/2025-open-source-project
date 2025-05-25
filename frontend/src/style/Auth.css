@@ -69,60 +69,71 @@
   .auth-form {
     width: 100%;
     max-width: 400px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 15px;
-  }
+    align-items: center;
+    }
   
-  .auth-form input[type="text"],
-  .auth-form input[type="password"],
-  .auth-form input[type="email"],
-  .auth-form input[type="tel"] {
-    width: 100%;
-    padding: 12px 16px;
-    border: none;
-    border-radius: 6px;
-    background: rgba(50, 50, 50, 0.5); /* ✅ 회색 반투명 */
-    color: #fff;
-    font-size: 14px;
-    outline: none;
-    box-sizing: border-box;
-    transition: background-color 0.2s ease;
+    .auth-form input[type="text"],
+    .auth-form input[type="password"],
+    .auth-form input[type="email"],
+    .auth-form input[type="tel"] {
+      width: 100%;
+      min-width: 450px;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 6px;
+      background: rgba(50, 50, 50, 0.5); /* 회색 반투명 */
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      box-sizing: border-box;
+      display: block;
+    }
+    
+    .auth-form input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .auth-form input:focus {
+      outline: 2px solid rgba(255,255,255,0.4);
+      background: rgba(80, 80, 80, 0.6);
     }
 
-  .auth-form input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
 
-  .auth-form input:focus {
-  outline: 2px solid rgba(255,255,255,0.4);
-  background: rgba(80, 80, 80, 0.6);
-}
+    .stay-logged {
+        width: 100%;
+        min-width: 450px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        color: #ddd;
+        font-size: 14px;
+      }
 
-  
-  .stay-logged {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #ddd;
-  }
-  
-  .auth-btn {
+    .auth-btn {
     padding: 12px 0;
     background: #333;
     border: none;
     border-radius: 6px;
     color: #fff;
     cursor: pointer;
-  }
-  
-  .auth-links {
+    min-width: 450px;
+    }
+
+    
+
+    .auth-links {
     display: flex;
     justify-content: center;
     gap: 10px;
     margin-top: 10px;
-  }
-  
-  .auth-links a {
+    }
+
+    .auth-links a {
     color: #ddd;
-  }
+    }
