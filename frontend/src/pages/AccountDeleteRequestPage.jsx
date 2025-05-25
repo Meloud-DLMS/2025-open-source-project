@@ -1,56 +1,68 @@
-// 삭제 요청 가능한 계정 선택 페이지 (다중 선택 가능)
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '@/styles/AccountManage.module.css';
-import backgroundImage from '@/assets/images/backgroundAccountManage.jpg';
-
-const deletableAccounts = [
-    { url: 'eis.cbnu.ac.kr', provider: '충북대학교', note: '' },
-    { url: 'millie.co.kr', provider: '밀리의서재', note: '' },
-    { url: 'playstation.co.kr', provider: '플레이스테이션', note: '' }
-];
+import styles from '../styles/AccountDeleteRequestPage.module.css';
+import backgroundImage from '../assets/images/main.jpg';
 
 const AccountDeleteRequestPage = () => {
-    const navigate = useNavigate();
-    const [selected, setSelected] = useState([]);
+    const [selectedTab, setSelectedTab] = useState('deletable');
+    const [checkedItems, setCheckedItems] = useState([]);
 
-    const toggleSelect = (url) => {
-        setSelected(prev =>
-            prev.includes(url) ? prev.filter(u => u !== url) : [...prev, url]
+    const accounts = [ //패치로 바꿔야함
+        { id: 1, url: 'eis.cbnu.ac.kr', company: '충북대학교', note: '' },
+        { id: 2, url: 'millie.co.kr', company: '밀리의서재', note: '' },
+        { id: 3, url: 'playstation.co.kr', company: '플레이스테이션', note: '' }
+    ];
+
+
+    const navigate = useNavigate();
+    const handleNavigate = (tab) => {
+    if (tab === 'undeletable') {
+        navigate('/account/undeletable'); 
+        }
+    };
+
+    const handleCheck = (id) => {
+        setCheckedItems((prev) =>
+            prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
         );
     };
 
+    const handleSubmit = () => {
+        if (checkedItems.length > 0) {
+            navigate('/account/delete-final'); 
+        }
+    };
+
+
     return (
-        <div className={styles.wrapper}>
-            <img src={backgroundImage} alt="background" className={styles.backgroundImage} />
+        <div
+            className={styles.wrapper}
+            style={{ backgroundImage: `url(${backgroundImage})` }}
+        >
             <div className={styles.overlay}></div>
-
-            <header className={styles.header}>
-                <div className={styles.logo}>MELOUD</div>
-                <nav className={styles.navbar}>
-                    <span className={styles.navItem}>ACCOUNT</span>
-                    <span className={styles.navItem}>WILL</span>
-                    <span className={styles.navItem}>MEMORIAL</span>
-                </nav>
-                <div className={styles.profile}>Profile</div>
-            </header>
-
-            <main className={styles.mainContent}>
+            <div className={styles.logo} onClick={() => navigate('/')}>
+                MELOUD
+            </div>
+            <div className={styles.innerContent}>
                 <h2 className={styles.title}>사후 웹사이트 회원 탈퇴 신청</h2>
 
-                <div className={styles.buttonRow}>
-                    <button className={styles.grayButton}>회원 탈퇴 신청 가능</button>
+                <div className={styles.tabContainer}>
                     <button
-                        className={styles.blackButton}
-                        onClick={() => navigate('/account-delete-email')}
+                        className={`${styles.tab} ${selectedTab === 'deletable' ? styles.active : ''}`}
+                        onClick={() => setSelectedTab('deletable')}
+                    >
+                        회원 탈퇴 신청 가능
+                    </button>
+                    <button
+                        className={`${styles.tab} ${selectedTab === 'undeletable' ? styles.active : ''}`}
+                        onClick={() => handleNavigate('undeletable')}
                     >
                         회원 탈퇴 신청 불가
                     </button>
                 </div>
 
-                <div className={`${styles.blackBox} ${styles.accountBox}`}>
-                    <table className={styles.accountTable}>
+                <div className={styles.container}>
+                    <table className={styles.table}>
                         <thead>
                             <tr>
                                 <th></th>
@@ -60,34 +72,33 @@ const AccountDeleteRequestPage = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {deletableAccounts.map(({ url, provider, note }) => (
-                                <tr key={url}>
+                            {accounts.map((acc) => (
+                                <tr key={acc.id}>
                                     <td>
                                         <input
                                             type="checkbox"
-                                            checked={selected.includes(url)}
-                                            onChange={() => toggleSelect(url)}
+                                            checked={checkedItems.includes(acc.id)}
+                                            onChange={() => handleCheck(acc.id)}
                                         />
                                     </td>
-                                    <td>{url}</td>
-                                    <td>{provider}</td>
-                                    <td>{note}</td>
+                                    <td>{acc.url}</td>
+                                    <td>{acc.company}</td>
+                                    <td>{acc.note}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
-
-                <div className={styles.buttonRow}>
+                <div className={styles.buttonWrapper}>
                     <button
-                        className={styles.mainButton}
-                        onClick={() => navigate('/account-delete-result')}
-                        disabled={selected.length === 0}
+                        className={styles.submitButton}
+                        disabled={checkedItems.length === 0}
+                        onClick={handleSubmit}
                     >
                         삭제 요청
                     </button>
-                </div>
-            </main>
+</div>
+            </div>
         </div>
     );
 };

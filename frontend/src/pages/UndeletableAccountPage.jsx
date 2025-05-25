@@ -1,53 +1,67 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '@/styles/AccountManage.module.css';
-import backgroundImage from '@/assets/images/backgroundAccountManage.jpg';
+import styles from '../styles/AccountDeleteRequestPage.module.css';
+import backgroundImage from '../assets/images/main.jpg';
 
-const UndeletableAccountPage = ({ undeletableAccounts }) => {
+const UndeletableAccountPage = () => {
+    const [selectedTab, setSelectedTab] = useState('undeletable');
+    const [selectedItem, setSelectedItem] = useState(null);
     const navigate = useNavigate();
-    const [selectedIndex, setSelectedIndex] = useState(null);
 
-    const handleRadioChange = (index) => {
-        setSelectedIndex(index);
+    const accounts = [
+        { id: 1, url: 'accounts.kakao.com', company: '(주)카카오', note: '민원처리 시 불이익 발생 웹사이트' },
+        { id: 2, url: 'baemin.com', company: '(주)우아한형제들', note: '개인정보 미수집 웹사이트' },
+        { id: 3, url: 'card.nonghyup.com', company: 'NH농협카드', note: '민원처리 시 불이익 발생 웹사이트' }
+    ];
+
+    const handleNavigate = (tab) => {
+        setSelectedTab(tab);
+        if (tab === 'deletable') {
+            navigate('/account/delete-request');
+        } else if (tab === 'undeletable') {
+            navigate('/account/undeletable');
+        }
     };
 
-    const handleEmailWrite = () => {
-        if (selectedIndex !== null) {
-            navigate('/account-delete-email');
+    const handleSelect = (id) => {
+        setSelectedItem(id);
+    };
+
+    const handleSubmit = () => {
+        if (selectedItem) {
+            navigate('/account/undeletable-final');
         }
     };
 
     return (
-        <div className={styles.wrapper}>
-            <img src={backgroundImage} alt="background" className={styles.backgroundImage} />
+        <div
+            className={styles.wrapper}
+            style={{ backgroundImage: `url(${backgroundImage})` }}
+        >
             <div className={styles.overlay}></div>
-
-            <header className={styles.header}>
-                <div className={styles.logo}>MELOUD</div>
-                <nav className={styles.navbar}>
-                    <span className={styles.navItem}>ACCOUNT</span>
-                    <span className={styles.navItem}>WILL</span>
-                    <span className={styles.navItem}>MEMORIAL</span>
-                </nav>
-                <div className={styles.profile}>Profile</div>
-            </header>
-
-            <main className={styles.mainContent}>
+            <div className={styles.logo} onClick={() => navigate('/')}>
+                MELOUD
+            </div>
+            <div className={styles.innerContent}>
                 <h2 className={styles.title}>사후 웹사이트 회원 탈퇴 신청</h2>
 
-                <div className={styles.buttonRow}>
+                <div className={styles.tabContainer}>
                     <button
-                        className={styles.blackButton}
-                        onClick={() => navigate('/account-delete-request')}
+                        className={`${styles.tab} ${selectedTab === 'deletable' ? styles.active : ''}`}
+                        onClick={() => handleNavigate('deletable')}
                     >
                         회원 탈퇴 신청 가능
                     </button>
-                    <button className={styles.grayButton}>회원 탈퇴 신청 불가</button>
+                    <button
+                        className={`${styles.tab} ${selectedTab === 'undeletable' ? styles.active : ''}`}
+                        onClick={() => handleNavigate('undeletable')}
+                    >
+                        회원 탈퇴 신청 불가
+                    </button>
                 </div>
 
-                <div className={`${styles.blackBox} ${styles.accountBox}`}>
-                    <table className={styles.accountTable}>
+                <div className={styles.container}>
+                    <table className={styles.table}>
                         <thead>
                             <tr>
                                 <th></th>
@@ -57,35 +71,34 @@ const UndeletableAccountPage = ({ undeletableAccounts }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {undeletableAccounts?.map(({ url, provider, note }, index) => (
-                                <tr key={url}>
+                            {accounts.map((acc) => (
+                                <tr key={acc.id}>
                                     <td>
                                         <input
-                                            type="radio"
-                                            name="account"
-                                            checked={selectedIndex === index}
-                                            onChange={() => handleRadioChange(index)}
+                                            type="checkbox"
+                                            checked={selectedItem === acc.id}
+                                            onChange={() => handleSelect(acc.id)}
                                         />
                                     </td>
-                                    <td>{url}</td>
-                                    <td>{provider}</td>
-                                    <td>{note}</td>
+                                    <td>{acc.url}</td>
+                                    <td>{acc.company}</td>
+                                    <td>{acc.note}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
 
-                <div className={styles.buttonRow}>
+                <div className={styles.buttonWrapper}>
                     <button
-                        className={styles.mainButton}
-                        onClick={handleEmailWrite}
-                        disabled={selectedIndex === null}
+                        className={styles.submitButton}
+                        disabled={!selectedItem}
+                        onClick={handleSubmit}
                     >
                         삭제 요청 메일 작성
                     </button>
                 </div>
-            </main>
+            </div>
         </div>
     );
 };

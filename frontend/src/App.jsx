@@ -9,6 +9,12 @@ import AddFriend from './pages/AddFriend';
 import SearchFriend from './pages/SearchFriend';
 import AccountLookupIntro from './pages/AccountLookupIntro';
 import RealNameVerificationPage from './pages/RealNameVerificationPage';
+import AccountDeleteRequestPage from './pages/AccountDeleteRequestPage';
+import AccountDeleteFinalPage from './pages/AccountDeleteFinalPage';
+import AccountDeleteComplete from './pages/AccountDeleteComplete';  
+import UndeletableAccountPage from './pages/UndeletableAccountPage';
+import UndeletableAccountFinalPage from './pages/UndeletableAccountFinalPage';
+import UndeletableAccountComplete from './pages/UndeletableAccountComplete';
 import DeathCertificate from './pages/deathcertificate'; // lyl 사망인증서 진입 링크
 import MemorialSpace from './pages/memorialspace'; //lyl 추모 공간 진입 링크
 
@@ -30,8 +36,14 @@ export default function App() {
         <Route path="/friends/add" element={<AddFriend {...authProps} />} />
         <Route path="/friends/search" element={<SearchFriend {...authProps} />} />
         <Route path="*" element={<Navigate to="/" replace />} />
-        <Route path="/account-lookup" element={<AccountLookupIntro />} />
+        <Route path="/account" element={<AccountLookupIntro />} />
         <Route path="/real-name" element={<RealNameVerificationPage />} />
+        <Route path="/account/delete-request" element={<AccountDeleteRequestPage />} />
+        <Route path="/account/delete-final" element={<AccountDeleteFinalPage />} />
+        <Route path="/account/delete-complete" element={<AccountDeleteComplete />} />
+        <Route path="/account/undeletable" element={<UndeletableAccountPage />} />
+        <Route path="/account/undeletable-final" element={<UndeletableAccountFinalPage />} />
+        <Route path="/account/undeletable-complete" element={<UndeletableAccountComplete />} />
         <Route path="/deathcertificate" element={<DeathCertificate />} />
         <Route path="/memorialspace" element={<MemorialSpace />} />
       </Routes>

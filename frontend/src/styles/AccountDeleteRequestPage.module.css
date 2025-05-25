@@ -1,0 +1,123 @@
+.wrapper {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 0;
+}
+
+.innerContent {
+    position: relative;
+    z-index: 1;
+    width: 80%;
+    max-width: 1100px;
+    margin: 60px auto 0;
+    color: white;
+}
+
+.title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.tabContainer {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: #222;
+    color: white;
+    border: 1px solid #888;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.active {
+    background-color: #d9d9d9;
+    color: black;
+}
+
+.container {
+    background-color: rgba(0, 0, 0, 0.85);
+    border-radius: 20px;
+    padding: 40px 60px 80px 60px;
+
+    width: 1100px;        /* ✅ 명시적 고정 너비 */
+    height: 600px;        /* ✅ 필요한 깊이(세로) */
+    
+    margin: 0 auto;
+    margin-top: 30px;
+
+    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+}
+
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #555;
+    text-align: left;
+    color: white;
+    font-size: 14px;
+}
+
+.submitButton {
+    margin-top: 20px;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 8px;
+    background-color: #d9d9d9;
+    color: black;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submitButton:disabled {
+    background-color: #777;
+    cursor: not-allowed;
+}
+
+.buttonWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.logo {
+    font-family: 'GeostarFill', serif;
+    font-size: 2em;
+    font-weight: normal;
+    color: #fff !important;
+    text-decoration: none !important;
+    position: fixed;
+    top: 35px;     
+    left: 50px;    
+    z-index: 1000;
+    cursor: pointer;
+}

@@ -1,106 +1,134 @@
-
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import styles from '@/styles/AccountManage.module.css';
-import backgroundImage from '@/assets/images/backgroundAccountManage.jpg';
+import { useNavigate } from 'react-router-dom';
+import styles from '../styles/AccountDeleteFinalPage.module.css';
+import backgroundImage from '../assets/images/main.jpg';
 
 const AccountDeleteFinalPage = () => {
-    const location = useLocation();
+    const [formData, setFormData] = useState({
+        name: '',
+        birth: '',
+        phone: '',
+        email1: '',
+        email2: '',
+        code: ''
+    });
+
+    const [emailSent, setEmailSent] = useState(false);
+
     const navigate = useNavigate();
-    const { selectedAccounts, userInfo } = location.state || {};
+    
+    const accounts = [
+        { id: 1, url: 'eis.cbnu.ac.kr', company: '충북대학교' },
+        { id: 2, url: 'millie.co.kr', company: '밀리의서재' },
+        { id: 3, url: 'playstation.co.kr', company: '플레이스테이션' },
+    ];
 
-    const [phone, setPhone] = useState('');
-    const [emailId, setEmailId] = useState('');
-    const [emailDomain, setEmailDomain] = useState('');
-    const [authCode, setAuthCode] = useState('');
+    const handleChange = (field, value) => {
+        setFormData({ ...formData, [field]: value });
+    };
 
-    const isAuthValid = authCode.length === 6;
+    const isFormFilled = Object.values(formData).every((value) => value.trim() !== '');
+    const isEmailFormFilled = formData.name && formData.birth && formData.phone && formData.email1 && formData.email2;
 
-    const handleSubmit = () => {
-        if (isAuthValid) {
-            // 이후 서버로 제출하는 로직 추가 예정
-            alert('삭제 요청이 완료되었습니다.');
-            navigate('/');
+    const handleEmailVerification = () => {
+        if (isEmailFormFilled) {
+            setEmailSent(true);
+            alert('인증번호가 발송되었습니다.');
         }
     };
 
     return (
-        <div className={styles.wrapper}>
-            <img src={backgroundImage} alt="background" className={styles.backgroundImage} />
+        <div
+            className={styles.wrapper}
+            style={{ backgroundImage: `url(${backgroundImage})` }}
+        >
             <div className={styles.overlay}></div>
+            <div className={styles.logo} onClick={() => window.location.href = '/'}>
+                MELOUD
+            </div>
 
-            <header className={styles.header}>
-                <div className={styles.logo}>MELOUD</div>
-                <nav className={styles.navbar}>
-                    <span className={styles.navItem}>ACCOUNT</span>
-                    <span className={styles.navItem}>WILL</span>
-                    <span className={styles.navItem}>MEMORIAL</span>
-                </nav>
-                <div className={styles.profile}>Profile</div>
-            </header>
-
-            <main className={styles.mainContent}>
+            <div className={styles.innerContent}>
                 <h2 className={styles.title}>사후 웹사이트 회원 탈퇴 신청</h2>
 
-                <div className={`${styles.blackBox} ${styles.accountBox}`}>
-                    <table className={styles.accountTable}>
-                        <thead>
-                            <tr>
-                                <th>NO.</th>
-                                <th>웹사이트 URL</th>
-                                <th>사업자</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {selectedAccounts?.map(({ url, provider }, index) => (
-                                <tr key={url}>
-                                    <td>{index + 1}</td>
-                                    <td>{url}</td>
-                                    <td>{provider}</td>
+                <div className={styles.container}>
+                    <div className={styles.scrollContainer}>
+                        <table className={styles.table}>
+                            <thead>
+                                <tr>
+                                    <th>NO.</th>
+                                    <th>웹사이트 URL</th>
+                                    <th>사업자</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {accounts.map((acc, index) => (
+                                    <tr key={acc.id}>
+                                        <td>{index + 1}</td>
+                                        <td>{acc.url}</td>
+                                        <td>{acc.company}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
 
-                    <div style={{ marginTop: '30px' }}>
-                        <h3 className={styles['text-label']}>요구인</h3>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '12px' }}>
-                            <div style={{ display: 'flex', gap: '24px' }}>
-                                <span className={styles['text-small']}>이름</span>
-                                <span className={styles['text-small']}>{userInfo?.name || '홍길동'}</span>
-                            </div>
-                            <div style={{ display: 'flex', gap: '24px' }}>
-                                <span className={styles['text-small']}>생년월일</span>
-                                <span className={styles['text-small']}>{userInfo?.birth || 'YYYYMMDD'}</span>
-                            </div>
+                    <div className={styles.inputSection}>
+                        <div className={styles.inputGroup}>
+                            <label>이름</label>
+                            <input type="text" value={formData.name} onChange={(e) => handleChange('name', e.target.value)} />
+                        </div>
 
-                            <div style={{ display: 'flex', gap: '24px' }}>
-                                <span className={styles['text-small']}>전화번호</span>
-                                <input className={styles['input-box']} type="text" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                            </div>
+                        <div className={styles.inputGroup}>
+                            <label>생년월일</label>
+                            <input type="text" placeholder="예: 20030628" value={formData.birth} onChange={(e) => handleChange('birth', e.target.value)} />
+                        </div>
 
-                            <div style={{ display: 'flex', gap: '12px' }}>
-                                <span className={styles['text-small']}>메일</span>
-                                <input className={styles['input-box']} type="text" value={emailId} onChange={(e) => setEmailId(e.target.value)} />
+                        <div className={styles.inputGroup}>
+                            <label>전화번호</label>
+                            <input type="text" value={formData.phone} onChange={(e) => handleChange('phone', e.target.value)} />
+                        </div>
+
+                        <div className={styles.inputGroup}>
+                            <label>메일</label>
+                            <div className={styles.emailGroup}>
+                                <input type="text" value={formData.email1} onChange={(e) => handleChange('email1', e.target.value)} />
                                 <span>@</span>
-                                <input className={styles['input-box']} type="text" value={emailDomain} onChange={(e) => setEmailDomain(e.target.value)} />
-                                <button className={styles['black-button']}>인증요청</button>
-                                <input className={styles['input-box']} placeholder="인증번호 입력" value={authCode} onChange={(e) => setAuthCode(e.target.value)} />
+                                <input type="text" value={formData.email2} onChange={(e) => handleChange('email2', e.target.value)} />
                             </div>
+                        </div>
+
+                        <div className={styles.inputGroup}>
+                            <button
+                                className={`${styles.verifyButton} ${!isEmailFormFilled ? styles.disabledVerifyButton : ''}`}
+                                disabled={!isEmailFormFilled}
+                                onClick={handleEmailVerification}
+                            >
+                                인증요청
+                            </button>
+                        </div>
+
+                        <div className={styles.inputGroup}>
+                            <input
+                                type="text"
+                                placeholder="인증번호 입력"
+                                value={formData.code}
+                                onChange={(e) => handleChange('code', e.target.value)}
+                                className={styles.verificationInput}
+                            />
                         </div>
                     </div>
                 </div>
 
-                <div className={styles.buttonRow}>
+                <div className={styles.buttonWrapper}>
                     <button
-                        className={styles.mainButton}
-                        onClick={handleSubmit}
-                        disabled={!isAuthValid}
+                        className={styles.submitButton}
+                        disabled={!isFormFilled}
+                        onClick={() => navigate('/account/delete-complete')}
                     >
                         삭제 요청
                     </button>
                 </div>
-            </main>
+            </div>
         </div>
     );
 };
