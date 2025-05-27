@@ -1,7 +1,7 @@
 // src/pages/AccountLookupIntro.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../styles/AccountLookupIntro.module.css';
+import styles from '../style/AccountLookupIntro.module.css';
 import backgroundImage from '../assets/images/main.jpg';
 
 const AccountLookupIntro = () => {
