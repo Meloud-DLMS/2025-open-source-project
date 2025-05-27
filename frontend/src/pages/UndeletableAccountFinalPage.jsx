@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../styles/UndeletableAccountFinalPage.module.css';
+import styles from '../style/UndeletableAccountFinalPage.module.css';
 import backgroundImage from '../assets/images/main.jpg';
 
 const UndeletableAccountFinalPage = () => {

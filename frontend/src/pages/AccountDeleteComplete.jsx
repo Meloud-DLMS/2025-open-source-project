@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../styles/complete.module.css';
+import styles from '../style/complete.module.css';
 import backgroundImage from '../assets/images/main.jpg';
 import checkImage from '../assets/images/Check.png';
 

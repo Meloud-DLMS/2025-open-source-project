@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../styles/AccountDeleteRequestPage.module.css';
+import styles from '../style/AccountDeleteRequestPage.module.css';
 import backgroundImage from '../assets/images/main.jpg';
 
 const AccountDeleteRequestPage = () => {
