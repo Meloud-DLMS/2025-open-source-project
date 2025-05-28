@@ -4,7 +4,7 @@ import Sidebar from '../components/SideBar';
 import '../style/Home.css';
 import '../style/Friends.css';
 
-export default function AddFriend({ isLoggedIn, setIsLoggedIn }) {
+export default function AddFriend({ isLoggedIn, setIsLoggedIn, username }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
@@ -35,6 +35,7 @@ export default function AddFriend({ isLoggedIn, setIsLoggedIn }) {
         isLoggedIn={isLoggedIn}
         handleLogin={() => setIsLoggedIn(true)}
         handleLogout={() => setIsLoggedIn(false)}
+        username={username}
       />
 
       <header className="home-header">

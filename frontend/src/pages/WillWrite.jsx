@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
 import '../style/WillWrite.css';
 
-const WillWrite = ({ isLoggedIn, setIsLoggedIn }) => {
+const WillWrite = ({ isLoggedIn, setIsLoggedIn, username }) => {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -77,6 +77,7 @@ const WillWrite = ({ isLoggedIn, setIsLoggedIn }) => {
         isLoggedIn={isLoggedIn}
         handleLogin={() => setIsLoggedIn(true)}
         handleLogout={() => setIsLoggedIn(false)}
+        username={username}
       />
 
       <header className="will-header">

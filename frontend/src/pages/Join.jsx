@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
 import '../style/Auth.css';
 
-export default function Join({ isLoggedIn, setIsLoggedIn }) {
+export default function Join({ isLoggedIn, setIsLoggedIn, username, setUsername }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [form, setForm] = useState({ id: '', name: '', pw: '', confirmPw: '', email: '', phone: '' });
   const [error, setError] = useState('');
@@ -26,6 +26,7 @@ export default function Join({ isLoggedIn, setIsLoggedIn }) {
       setError('유효한 이메일 주소를 입력하세요.');
     } else {
       setIsLoggedIn(true);
+      setUsername(form.name);  // 사용자 이름 저장
       setSidebarOpen(false);
       navigate('/');
     }

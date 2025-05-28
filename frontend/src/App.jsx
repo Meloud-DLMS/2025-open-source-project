@@ -20,10 +20,13 @@ import MessageBox from './pages/MessageBox';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
 
   const authProps = {
     isLoggedIn,
     setIsLoggedIn,
+    username,
+    setUsername
   };
 
   return (
@@ -45,7 +48,7 @@ export default function App() {
         <Route path="/will/write" element={<WillWrite {...authProps} />} />
         <Route path="/memorial" element={<MemorialSpace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
-        <Route path="/messages" element={<MessageBox isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/messages" element={<MessageBox {...authProps} />} />
       </Routes>
     </BrowserRouter>
   );

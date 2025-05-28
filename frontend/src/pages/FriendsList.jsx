@@ -20,6 +20,7 @@ export default function FriendsList() {
         isLoggedIn={true}
         handleLogin={() => {}}
         handleLogout={() => {}}
+        username={username}
       />
       <header className="home-header">
         <Link to="/" className="logo">MELOUD</Link>

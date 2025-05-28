@@ -8,7 +8,7 @@ import accountIcon from '../../public/assets/account.png';
 import memorialIcon from '../../public/assets/memorial.png';
 import willIcon from '../../public/assets/will.png';
 
-const Home = ({ isLoggedIn, setIsLoggedIn }) => {
+const Home = ({ isLoggedIn, setIsLoggedIn, username }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
   const cardsSectionRef = useRef(null);
@@ -43,6 +43,7 @@ const Home = ({ isLoggedIn, setIsLoggedIn }) => {
         isLoggedIn={isLoggedIn}
         handleLogin={() => setIsLoggedIn(true)}
         handleLogout={() => setIsLoggedIn(false)}
+        username={username}
       />
       <div className="main-content">
         <header className="home-header">
