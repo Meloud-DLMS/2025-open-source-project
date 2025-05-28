@@ -22,19 +22,19 @@ export default function Join({ isLoggedIn, setIsLoggedIn }) {
       } else if (pw !== confirmPw) {
         setError('비밀번호가 일치하지 않습니다.');
       } else {
+        console.log("Hi");
         try {
-          const response = await fetch('/join', {
+          const response = await fetch('http://localhost:8000/join', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              id,
-              name,
-              pw,
+              user_id: id,
+              name: name,
+              password: pw,
             }),
           });
-
           if (response.ok) {
             setIsLoggedIn(true);
             setSidebarOpen(false);
@@ -44,6 +44,7 @@ export default function Join({ isLoggedIn, setIsLoggedIn }) {
             setError(data.message || '회원가입에 실패했습니다.');
           }
         } catch (err) {
+          console.log(err);
           setError('서버와 통신 중 오류가 발생했습니다.');
         }
       }

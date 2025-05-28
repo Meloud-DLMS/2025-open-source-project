@@ -13,11 +13,9 @@ CREATE TABLE IF NOT EXISTS users (
 """
 
 class SignUpForm(BaseModel):
-    username: str
+    user_id: str
     password: str
     name: str
-    birth: str
-    email: str
 
 FriendList = """
 CREATE TABLE IF NOT EXISTS friend_list (

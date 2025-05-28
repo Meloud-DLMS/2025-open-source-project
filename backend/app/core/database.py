@@ -7,7 +7,7 @@ def get_db_connection():
         conn = mysql.connector.connect(
             host='localhost',
             user='root',
-            password='m458rhtkdgur:'
+            password='English124*'
         )
         if conn.is_connected():
             print("MySQL connection succeed")
@@ -19,7 +19,7 @@ def get_db_connection():
             conn2 = mysql.connector.connect(
                 host='localhost',
                 user='root',
-                password='m458rhtkdgur:',
+                password='English124*',
                 database=db_name
             )
             return conn2
