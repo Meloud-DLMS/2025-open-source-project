@@ -17,56 +17,122 @@
     background-attachment: fixed; /* 스크롤 시 배경 고정 */
 }
 
+/* 배경 이미지 위에 어둡게 깔리는 오버레이 */
 .memorialspace-page::before {
     content: '';
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* 50% 투명도의 검정색 오버레이 */
+    background-color: rgba(0, 0, 0, 0.7); /* 70% 투명도의 검정색 오버레이 */
     z-index: 3; /* 배경 이미지와 콘텐츠 사이에 위치하도록 조정 */
 }
 
-/* -------------------- 별 애니메이션 -------------------- */
+
+/* -------------------- 별 애니메이션 및 스타일 -------------------- */
 @keyframes twinkle {
     0%, 100% { opacity: 0.5; }
     50% { opacity: 1; }
 }
 
-.star {
-    position: absolute;
+/* 각 별 이미지와 텍스트를 감싸는 컨테이너 */
+.star-container {
+    position: absolute; /* 이 컨테이너가 별의 위치를 제어 */
+    display: flex;
+    flex-direction: column; /* 이미지를 위에, 텍스트를 아래에 배치 */
+    align-items: center; /* 가로 중앙 정렬 */
+    z-index: 4; /* 기본 별 컨테이너의 z-index */
+    cursor: pointer; /* 클릭 가능한 커서 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    transition: transform 0.2s ease-out; /* 호버 시 확대 애니메이션 */
+}
+
+.star-container:hover {
+    transform: scale(1.1); /* 호버 시 별 컨테이너 확대 */
+}
+
+/* 별 이미지 자체 */
+.star-image {
     object-fit: contain; /* 이미지 비율 유지하며 요소에 맞춤 */
     animation: twinkle 2s infinite alternate ease-in-out;
-    z-index: 1;
-    /* filter: drop-shadow를 사용하여 별 모양에 맞게 그림자 효과 적용 */
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5)) brightness(1.2);
-    cursor: pointer;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5)) brightness(1.2); /* 별 모양에 맞게 그림자 효과 적용 */
+    margin-bottom: 5px; /* 이미지와 작성자 이름 사이 간격 */
 }
 
-/* 추모글 작성 시 추가되는 별 (기존 별보다 조금 더 밝게) */
-.new-star {
+/* 별 바로 아래에 표시될 작성자 이름 */
+.star-author {
+    color: rgba(255, 255, 255, 0.8); /* 좀 더 밝은 색상 */
+    font-size: 13px; /* 글자 크기 조정 */
+    white-space: nowrap; /* 줄바꿈 방지 */
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8); /* 가독성을 위한 그림자 */
+    opacity: 0.8; /* 기본 투명도 */
+    transition: opacity 0.3s ease, text-shadow 0.3s ease; /* 호버 시 투명도 변화 애니메이션 */
+    margin: 0; /* 기본 마진 제거 */
+    pointer-events: none; /* 작성자 이름을 클릭해도 별이 클릭되도록 */
+}
+
+.star-container:hover .star-author {
+    opacity: 1; /* 호버 시 더 선명하게 */
+    text-shadow: 0 0 8px rgba(255, 255, 255, 1); /* 호버 시 발광 효과 강화 */
+}
+
+
+/* 추모글 작성 시 추가되는 별 컨테이너 */
+.new-star-container {
+    z-index: 5; /* 새로운 별이 기존 별보다 위에 표시되도록 */
+}
+
+.new-star-container .star-image {
     filter: drop-shadow(0 0 10px rgba(170, 221, 255, 0.8)) drop-shadow(0 0 20px rgba(170, 221, 255, 0.5)) brightness(1.5);
     animation: twinkle 1.5s infinite alternate ease-in-out; /* 더 빠른 반짝임 */
-    z-index: 2;
+}
+.new-star-container .star-author {
+    color: rgba(170, 221, 255, 0.9); /* 새로운 별 작성자 색상 */
+    text-shadow: 0 0 8px rgba(170, 221, 255, 0.7);
 }
 
-/* 비공개 별 스타일 */
-.private-star {
-    filter: grayscale(100%) brightness(0.8);
-    opacity: 0.3;
-    cursor: default;
+
+/* 비공개 별 컨테이너 스타일 */
+.private-star-container {
+    z-index: 1; /* 비공개 별은 다른 별과 같은 z-index 유지 */
+    cursor: default; /* 클릭 불가 커서 */
 }
-.private-star:hover {
+
+.private-star-container .star-image {
     filter: grayscale(100%) brightness(0.8);
     opacity: 0.3;
 }
 
-/* 추모글이 없는 별 스타일 (클릭 불가 시각적 표현) */
-.empty-star {
+.private-star-container:hover .star-image {
+    filter: grayscale(100%) brightness(0.8);
+    opacity: 0.3; /* 호버해도 변화 없음 */
+}
+
+.private-star-container .star-author {
+    opacity: 0.4; /* 비공개 별의 작성자 이름은 더 흐리게 */
+    text-shadow: none; /* 비공개 별 작성자는 그림자 약화 */
+}
+
+.private-star-container:hover .star-author {
+    opacity: 0.4; /* 호버해도 변화 없음 */
+    text-shadow: none;
+}
+
+
+/* 추모글이 없는 빈 별 컨테이너 스타일 (클릭 불가 시각적 표현) */
+.empty-star-container {
+    z-index: 0; /* 가장 아래에 위치 */
+    cursor: default !important; /* 클릭 불가 */
+}
+
+.empty-star-container .star-image {
     filter: grayscale(100%) opacity(0.2); /* 더 희미하고 어둡게 */
     animation: none; /* 반짝임 효과 제거 */
-    cursor: default !important; /* 클릭 불가 */
+}
+
+.empty-star-container .star-author {
+    display: none; /* 빈 별은 작성자 이름 표시 안 함 */
 }
 
 
@@ -132,8 +198,8 @@
 /* -------------------- 추모글 작성 폼 (window-like) -------------------- */
 .memorialspace-form-window {
     background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 7px;
     padding: 30px;
     padding-top: 100px; /* 상단 패딩 늘림 (X 버튼 공간 확보) */
     width: 90%;
@@ -148,6 +214,7 @@
     z-index: 5;
     display: flex;
     flex-direction: column;
+    text-align: center; /* 폼 내부의 텍스트(제목, 버튼 등) 가운데 정렬 */
     gap: 20px;
 
     opacity: 0;
@@ -162,7 +229,8 @@
 
 .window-header {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; (기존) */
+    justify-content: center; /* 헤더의 내용을 가로축 중앙에 정렬 */
     align-items: center;
     position: absolute; /* 절대 위치로 변경 */
     top: 0; /* 상단 고정 */
@@ -172,14 +240,16 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     margin-bottom: 0; /* 마진 제거 */
     background-color: rgba(0, 0, 0, 0.3); /* 헤더 배경색 추가 */
-    border-top-left-radius: 8px; /* 폼의 둥근 모서리에 맞춤 */
-    border-top-right-radius: 8px; /* 폼의 둥근 모서리에 맞춤 */
+    border-top-left-radius: 7px; /* 폼의 둥근 모서리에 맞춤 */
+    border-top-right-radius: 7px; /* 폼의 둥근 모서리에 맞춤 */
 }
 
 .window-title {
     font-size: 24px;
     color: white;
     font-weight: bold;
+    flex-grow: 1; /* 제목이 가능한 공간을 차지하게 하여 중앙 정렬에 기여 */
+    text-align: center; /* 제목 텍스트를 가운데 정렬 */
 }
 
 .close-button {
@@ -192,24 +262,25 @@
     transition: opacity 0.2s ease, transform 0.2s ease;
     position: absolute; /* 절대 위치로 변경 */
     top: 20px; /* 상단 위치 조정 */
-    right: 3px; /* 우측 위치 조정 */
+    right: 20px; /* 우측 위치 조정 */
     z-index: 10; /* 다른 요소 위에 표시되도록 z-index 높임 */
-    padding: 1 ;
+    padding: 1px;
 }
 
 .close-button:hover {
     color: white;
     opacity: 1;
     transform: rotate(90deg); /* 호버 시 90도 회전 */
-
-    outline: none; 
-    box-shadow: none;
+    outline: none;
+    box-shadow: none; /* box-shadow 대신 filter: drop-shadow()를 사용하는 경우 */
     background-color: transparent;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
+    /* 폼 그룹 내 라벨, input은 기본적으로 좌측 정렬 유지 */
+    text-align: left; /* 하위 텍스트 정렬을 위해 추가 */
 }
 
 .form-group label {
@@ -229,6 +300,7 @@
     font-size: 16px;
     outline: none;
     resize: vertical; /* textarea만 세로 크기 조절 가능 */
+    text-align: left; /* 입력 필드 내 텍스트는 좌측 정렬 */
 }
 
 .memorialspace-input-field::placeholder,
@@ -271,6 +343,7 @@
 .privacy-options {
     display: flex;
     flex-direction: column;
+    text-align: left; /* 라디오 버튼 그룹도 좌측 정렬 */
 }
 
 .radio-group {
@@ -336,8 +409,6 @@
     z-index: 1001; /* 오버레이보다 위에 */
     display: flex;
     flex-direction: column;
-    gap: 15px; /* 요소 간격 증가 */
-    font-family: 'Noto Sans KR', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; /* 한국어 폰트 추가 및 보편적인 폰트 명시 */
     position: relative; /* 닫기 버튼 absolute 배치를 위해 */
     transform: scale(0.9); /* 초기 크기 (애니메이션 시작) */
     opacity: 0; /* 초기 투명도 (애니메이션 시작) */
@@ -357,6 +428,7 @@
 
 .memorial-popup h3 {
     margin: 0; /* 기존 0 0 10px; 에서 수정 */
+    margin-bottom: 5px; /* 작성자 이름과의 간격 */
     font-size: 1.5em;
     color: #ffffff;
     text-align: center;
@@ -366,37 +438,37 @@
 .memorial-popup .popup-author {
     font-size: 0.95em;
     color: #ccc;
-    margin-top: -5px; /* 제목과의 간격 조정 */
-    margin-bottom: 10px; /* 내용과의 간격 */
+    margin-top: 0; /* 제목 바로 아래로 이동했으므로 상단 마진 제거 */
+    margin-bottom: 20px; /* 내용과의 간격 (기존 10px에서 늘림) */
     font-style: italic;
-    text-align: right;
-    padding-right: 30px; /* 닫기 버튼과의 간격 확보 */
+    text-align: center; /* 작성자도 가운데 정렬 */
 }
 
-.memorial-popup p {
+/* 팝업 내용 텍스트 */
+.memorial-popup .popup-content-text {
     margin: 0;
     font-size: 1.05em;
     line-height: 1.7;
-    text-align: justify;
+    text-align: justify; /* 내용은 양쪽 정렬 */
     max-height: 250px; /* 스크롤 생길 수 있도록 최대 높이 증가 */
     overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #ffffff transparent;
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #ffffff transparent; /* Firefox */
     padding-right: 10px; /* 스크롤바와 내용 겹치지 않도록 */
     text-shadow: 0 0 3px rgba(255, 255, 255, 0.1); /* 텍스트에 약한 그림자 */
     word-break: keep-all; /* 단어 단위 줄바꿈 (한국어) */
 }
 
 /* Webkit (Chrome, Safari) 스크롤바 스타일 */
-.memorial-popup p::-webkit-scrollbar {
-  width: 10px; /* 스크롤바 너비 증가 */
+.memorial-popup .popup-content-text::-webkit-scrollbar {
+    width: 10px; /* 스크롤바 너비 증가 */
 }
-.memorial-popup p::-webkit-scrollbar-thumb {
-  background-color: #fbfbfb;
-  border-radius: 10px;
+.memorial-popup .popup-content-text::-webkit-scrollbar-thumb {
+    background-color: #fbfbfb;
+    border-radius: 10px;
 }
-.memorial-popup p::-webkit-scrollbar-track {
-  background-color: rgba(255, 255, 255, 0.1); /* 스크롤바 트랙 색상 */
+.memorial-popup .popup-content-text::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.1); /* 스크롤바 트랙 색상 */
 }
 
 .popup-photos {
@@ -422,11 +494,12 @@
     color: rgb(255, 255, 255);
     font-size: 2.2em; /* 크기 더 키움 */
     position: absolute;
-    top: -40px; /* 상단 위치 조정 */
-    right: -5px; /* 오른쪽 위치 조정 */
+    top: 15px; /* 상단 위치 조정 */
+    right: 15px; /* 오른쪽 위치 조정 */
     cursor: pointer;
     transition: color 0.2s, transform 0.2s;
     z-index: 10;
+    padding: 5px; /* 클릭 영역 확보 */
 }
 .popup-close-button:hover {
     color: #ff5050;
@@ -452,16 +525,17 @@
     .memorial-popup {
         max-width: 95%;
         padding: 20px;
-        gap: 10px;
+        /* gap: 10px; */
     }
     .memorial-popup h3 {
         font-size: 1.3em;
+        margin-bottom: 3px;
     }
     .memorial-popup .popup-author {
         font-size: 0.85em;
-        padding-right: 20px;
+        margin-bottom: 15px;
     }
-    .memorial-popup p {
+    .memorial-popup .popup-content-text {
         font-size: 0.95em;
         max-height: 180px;
     }
