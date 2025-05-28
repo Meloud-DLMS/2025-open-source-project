@@ -10,7 +10,7 @@ const AccountDeleteRequestPage = () => {
     const accounts = [ //패치로 바꿔야함
         { id: 1, url: 'eis.cbnu.ac.kr', company: '충북대학교', note: '' },
         { id: 2, url: 'millie.co.kr', company: '밀리의서재', note: '' },
-        { id: 3, url: 'playstation.co.kr', company: '플레이스테이션', note: '' }
+        { id: 3, url: 'playstation.co.kr', company: '플레이스테이션', note: '' }        
     ];
 
 
