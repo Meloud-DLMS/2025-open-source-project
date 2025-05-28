@@ -42,7 +42,7 @@ async def signup(form: SignUpForm):
         raise HTTPException(status_code=500, detail="DB 연결 실패")
     try:
         cur = conn.cursor(dictionary=True)
-        cur.execute("SELECT * FROM users WHERE username=%s", (form.username,))
+        cur.execute("SELECT * FROM users WHERE user_id=%s", (form.username,))
         if cur.fetchone():
             raise HTTPException(status_code=400, detail="이미 존재하는 아이디입니다.")
 
@@ -51,7 +51,7 @@ async def signup(form: SignUpForm):
 
         # 3. DB 저장
         cur.execute(
-            "INSERT INTO users (username, email, full_name, hashed_password, disabled) VALUES (%s, %s, %s, %s, %s)",
+            "INSERT INTO users (username, full_name, hashed_password) VALUES (%s, %s, %s)",
             (form.username, form.email, form.name, hashed_pw, False)
         )
         conn.commit()
