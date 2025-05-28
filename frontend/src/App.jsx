@@ -16,6 +16,7 @@ import UndeletableAccountFinalPage from './pages/UndeletableAccountFinalPage';
 import UndeletableAccountComplete from './pages/UndeletableAccountComplete';
 import WillWrite from './pages/WillWrite';
 import MemorialSpace from './pages/memorialspace';
+import DeathCertificate from './pages/deathcertificate';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -43,6 +44,7 @@ export default function App() {
         <Route path="/account/undeletable-complete" element={<UndeletableAccountComplete />} />
         <Route path="/will/write" element={<WillWrite {...authProps} />} />
         <Route path="/memorial" element={<MemorialSpace />} />
+        <Route path="/deathcertificate" element={<DeathCertificate />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
