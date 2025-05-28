@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../style/memorialspace.css';
-import moonImage from '../assets/images/달.png'; 
+import moonImage from '../../public/assets/moon.png'; 
 import starImage from '../assets/images/별.png'; 
 
 // MOON 관련 상수들을 컴포넌트 외부에 정의하여 generateStar 함수가 접근 가능하게 합니다.
