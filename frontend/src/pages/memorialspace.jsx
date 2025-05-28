@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../style/memorialspace.css';
-import moonImage from '../../public/assets/moon.png'; 
-import starImage from '../assets/images/별.png'; 
+import moonImage from '../../public/assets/moon.png';
+import starImage from '../assets/images/공개별.png'; // 모든 별에 이 이미지 사용
 
 // MOON 관련 상수들을 컴포넌트 외부에 정의하여 generateStar 함수가 접근 가능하게 합니다.
 const MOON_CENTER_X_PERCENT = 50;
@@ -59,47 +59,8 @@ const generateStar = (isNew = false, starData = {}) => {
     };
 };
 
-// 초기 별 데이터: 테스트를 위해 실제 내용이 있는 별들을 포함시킵니다.
-const initialStars = [
-    // 공개 별 (클릭하면 바로 팝업)
-    generateStar(false, {
-        title: '사랑하는 우리 엄마',
-        content: '엄마, 보고 싶어요. 항상 저를 지켜봐 주세요.\n사랑해요.',
-        author: '딸 은진',
-        isPublic: true,
-    }),
-    generateStar(false, {
-        title: '나의 친구에게',
-        content: '함께했던 모든 추억들 영원히 기억할게. 편히 쉬렴.',
-        author: '오랜 친구',
-        isPublic: true,
-    }),
-    // 비공개 별 (아직 비밀번호 입력창 없이 팝업 안 뜨게)
-    generateStar(false, {
-        title: '비밀스러운 이야기',
-        content: '이 글은 비공개로 설정된 추모글입니다. 비밀번호를 입력해야 볼 수 있습니다.',
-        author: '익명',
-        isPublic: false,
-        password: 'testpassword', // 임시 비밀번호
-    }),
-    // 내용이 없는 빈 별 (클릭해도 팝업 안 뜨게)
-    generateStar(false, {
-        title: '', content: '', author: '', isPublic: true,
-    }),
-    generateStar(false, {
-        title: '우리 강아지 별이',
-        content: '별아, 하늘에서도 행복하게 뛰어놀렴. 항상 기억할게.',
-        author: '별이 엄마',
-        isPublic: true,
-    }),
-    generateStar(false, {
-        title: '소중한 선생님께',
-        content: '선생님의 가르침 잊지 않겠습니다. 편안히 잠드소서.',
-        author: '제자 일동',
-        isPublic: true,
-    }),
-];
-
+// 초기 별 데이터 (여기서 실제 저장된 별 데이터를 불러오는 백엔드 연동 로직이 필요)
+const initialStars = [];
 
 function MemorialSpace() {
     const [stars, setStars] = useState(initialStars); // 초기 별 데이터를 설정
@@ -109,11 +70,15 @@ function MemorialSpace() {
     const [content, setContent] = useState('');
     const [author, setAuthor] = useState('');
     const [photos, setPhotos] = useState([]);
-    const [isPublic, setIsPublic] = useState(true);
+    const [isPublic, setIsPublic] = useState(true); // 공개/비공개 상태
     const [password, setPassword] = useState(''); // 비밀번호 설정 상태
 
     // 선택된 별의 데이터 (추모글 팝업에 표시될 내용)
     const [selectedStar, setSelectedStar] = useState(null);
+    // 비밀번호 입력 팝업 관련 상태
+    const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
+    const [passwordAttempt, setPasswordAttempt] = useState(''); // 사용자가 입력한 비밀번호
+    const [currentPrivateStar, setCurrentPrivateStar] = useState(null); // 현재 비밀번호를 입력해야 하는 비공개 별
 
     // 새로운 별을 생성하고 별 배열에 추가
     const addStar = () => {
@@ -160,31 +125,58 @@ function MemorialSpace() {
         setContent('');
         setAuthor('');
         setPhotos([]);
-        setIsPublic(true);
+        setIsPublic(true); // 기본값으로 초기화
         setPassword('');
         setShowForm(false); // 폼 닫기
     };
 
-    // 별 클릭 핸들러: 별 클릭 시 추모글 팝업 표시
+    // 별 클릭 핸들러: 별 클릭 시 추모글 팝업 표시 또는 비밀번호 팝업 표시
     const handleStarClick = (star) => {
         // 팝업이 이미 열려있고, 같은 별을 다시 클릭하면 팝업 닫기
         if (selectedStar && selectedStar.id === star.id) {
             setSelectedStar(null);
             return;
         }
+        // 비밀번호 팝업이 이미 열려있고, 같은 별을 다시 클릭하면 팝업 닫기
+        if (showPasswordPrompt && currentPrivateStar && currentPrivateStar.id === star.id) {
+            setShowPasswordPrompt(false);
+            setCurrentPrivateStar(null);
+            setPasswordAttempt(''); // 입력 필드 초기화
+            return;
+        }
 
-        // 별에 제목이나 내용이 있어야 팝업을 띄움
-        if (star.title || star.content) {
-            // 비공개 별 처리 (현재는 비밀번호 입력 없이 그냥 띄움 - 추후 비밀번호 입력 로직 추가 예정)
-            // if (!star.isPublic) {
-            //   alert('이 추모글은 비공개입니다. 비밀번호를 입력해야 합니다.');
-            //   // 여기에 비밀번호 입력 모달 등을 띄우는 로직 추가
-            //   return;
-            // }
-            setSelectedStar(star); // 선택된 별 상태 업데이트 -> 팝업 표시
+
+        if (star.isPublic) {
+            // 공개 별이면 바로 내용 표시
+            if (star.title || star.content || star.photos.length > 0) {
+                setSelectedStar(star);
+            } else {
+                setSelectedStar(null); // 내용이 없으면 팝업 안 띄움
+            }
+            setShowPasswordPrompt(false); // 혹시 열려있을 비밀번호 팝업 닫기
         } else {
-            // 내용이 없는 별은 팝업을 띄우지 않음
-            setSelectedStar(null);
+            // 비공개 별이면 비밀번호 입력 팝업 표시
+            setShowPasswordPrompt(true);
+            setCurrentPrivateStar(star); // 현재 비공개 별 저장
+            setPasswordAttempt(''); // 입력 필드 초기화
+            setSelectedStar(null); // 추모글 팝업이 혹시 열려있다면 닫기
+        }
+    };
+
+    // 비밀번호 입력 팝업 제출 핸들러
+    const handlePasswordSubmit = (e) => {
+        e.preventDefault(); // 기본 폼 제출 동작 방지
+
+        if (currentPrivateStar && passwordAttempt === currentPrivateStar.password) {
+            // 비밀번호 일치
+            setSelectedStar(currentPrivateStar); // 추모글 내용 표시
+            setShowPasswordPrompt(false); // 비밀번호 팝업 닫기
+            setCurrentPrivateStar(null); // 상태 초기화
+            setPasswordAttempt(''); // 입력 필드 초기화
+        } else {
+            // 비밀번호 불일치
+            alert('비밀번호가 올바르지 않습니다.');
+            setPasswordAttempt(''); // 다시 입력하도록 필드 초기화
         }
     };
 
@@ -202,14 +194,13 @@ function MemorialSpace() {
                     style={{
                         left: `${star.x}%`,
                         top: `${star.y}%`,
-                        // 커서는 이제 star-container에 의해 제어됩니다.
                     }}
-                    onClick={() => handleStarClick(star)} // 컨테이너에 클릭 이벤트 적용
+                    onClick={() => handleStarClick(star)}
                 >
                     <img
-                        src={starImage}
+                        src={starImage} // ⭐ 모든 별은 starImage를 사용합니다.
                         alt={star.isPublic ? "공개 별" : "비공개 별"}
-                        className="star-image" // 별 이미지 자체에 대한 클래스
+                        className="star-image"
                         style={{
                             width: star.size,
                             height: star.size,
@@ -234,10 +225,10 @@ function MemorialSpace() {
             </div>
 
             {/* 추모글 내용 표시 팝업 (오버레이 및 중앙 정렬) */}
-            {/* selectedStar가 있고, 내용이 있을 때만 팝업을 띄움 (사진이 있으면 띄움) */}
             {selectedStar && (selectedStar.title || selectedStar.content || selectedStar.photos.length > 0) && (
                 <div className="memorial-popup-overlay">
-                    <div className="memorial-popup">
+                    {/* selectedStar.isPublic 값에 따라 클래스 추가 */}
+                    <div className={`memorial-popup ${selectedStar.isPublic ? 'public-memorial-popup' : 'private-memorial-popup'}`}>
                         {/* 팝업 닫기 버튼 */}
                         <button onClick={() => setSelectedStar(null)} className="popup-close-button">&times;</button>
                         {/* 팝업 제목 */}
@@ -250,10 +241,37 @@ function MemorialSpace() {
                         {selectedStar.photos.length > 0 && (
                             <div className="popup-photos">
                                 {selectedStar.photos.map((photo, index) => (
+                                    // URL.createObjectURL은 File 객체에만 유효합니다.
+                                    // 만약 백엔드에서 이미지 URL을 받는다면 photo 자체가 URL이 될 수 있습니다.
+                                    // 여기서는 임시로 File 객체로 가정합니다.
                                     <img key={index} src={URL.createObjectURL(photo)} alt={`추모 사진 ${index + 1}`} className="popup-photo" />
                                 ))}
                             </div>
                         )}
+                    </div>
+                </div>
+            )}
+
+            {/* 비밀번호 입력 팝업 */}
+            {showPasswordPrompt && (
+                <div className="memorial-popup-overlay"> {/* 오버레이 재사용 */}
+                    {/* 비밀번호 입력 팝업은 자체적으로 다른 그림자/배경을 가질 수 있도록 password-prompt-popup 클래스를 유지 */}
+                    <div className="memorial-popup password-prompt-popup">
+                        <button onClick={() => { setShowPasswordPrompt(false); setCurrentPrivateStar(null); setPasswordAttempt(''); }} className="popup-close-button">&times;</button>
+                        <h3>비공개 추모글입니다.</h3>
+                        <p>비밀번호를 입력해주세요.</p>
+                        <form onSubmit={handlePasswordSubmit} className="password-form">
+                            <input
+                                type="password"
+                                className="memorialspace-input-field password-input"
+                                value={passwordAttempt}
+                                onChange={(e) => setPasswordAttempt(e.target.value)}
+                                placeholder="비밀번호"
+                                required
+                                autoFocus // 팝업 열리면 바로 입력 포커스
+                            />
+                            <button type="submit" className="memorialspace-submit-button password-submit-button">확인</button>
+                        </form>
                     </div>
                 </div>
             )}
