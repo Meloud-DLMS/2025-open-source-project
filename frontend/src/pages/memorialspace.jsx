@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import '../style/memorialspace.css'; // CSS 파일 임포트
-import moonImage from '../assets/images/달.png'; // 달 이미지 경로 (public 폴더 기준)
-import starImage from '../assets/images/별.png'; // 별 이미지 경로 (public 폴더 기준)
+import '../style/memorialspace.css';
+import moonImage from '../../public/assets/moon.png'; 
+import starImage from '../assets/images/별.png'; 
 
 // MOON 관련 상수들을 컴포넌트 외부에 정의하여 generateStar 함수가 접근 가능하게 합니다.
 const MOON_CENTER_X_PERCENT = 50;
