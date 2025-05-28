@@ -16,6 +16,7 @@ import UndeletableAccountFinalPage from './pages/UndeletableAccountFinalPage';
 import UndeletableAccountComplete from './pages/UndeletableAccountComplete';
 import WillWrite from './pages/WillWrite';
 import MemorialSpace from './pages/memorialspace';
+import MessageBox from './pages/MessageBox';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -44,6 +45,7 @@ export default function App() {
         <Route path="/will/write" element={<WillWrite {...authProps} />} />
         <Route path="/memorial" element={<MemorialSpace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/messages" element={<MessageBox isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
       </Routes>
     </BrowserRouter>
   );

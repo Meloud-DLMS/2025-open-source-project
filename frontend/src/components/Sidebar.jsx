@@ -30,7 +30,7 @@ const Sidebar = ({ isOpen, toggleSidebar, isLoggedIn, handleLogin, handleLogout 
           <nav className="sidebar-nav">
             <Link to="/friends/add" className="sidebar-nav-link">Add Friend</Link>
             <Link to="/friends" className="sidebar-nav-link">Friend List</Link>
-            <a href="#" className="sidebar-nav-link">Message Box</a>
+            <a onClick={() => { navigate('/messages'); toggleSidebar(); }}>Message Box</a>
           </nav>
 
           <div className="sidebar-footer">
