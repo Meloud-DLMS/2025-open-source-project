@@ -23,7 +23,7 @@ export default function Join({ isLoggedIn, setIsLoggedIn }) {
         setError('비밀번호가 일치하지 않습니다.');
       } else {
         try {
-          const response = await fetch('/signup', {
+          const response = await fetch('/join', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
