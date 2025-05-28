@@ -2,7 +2,7 @@ from pydantic import BaseModel,EmailStr
 from typing import Optional
 
 User_SCHEMA = """
-    CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS users (
     user_id VARCHAR(50) NOT NULL PRIMARY KEY,
     full_name VARCHAR(100) NOT NULL,
     hashed_password VARCHAR(255) NOT NULL,
@@ -55,7 +55,7 @@ AccountList = """
     REFERENCES `user_auth_db`.`users` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
-)"""
+);"""
 
 Will = """
     CREATE TABLE IF NOT EXISTS Will(
@@ -74,8 +74,8 @@ Will = """
     FOREIGN KEY (`friend_id`)
     REFERENCES `user_auth_db`.`users` (`user_id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-)"""
+    ON UPDATE NO ACTION
+);"""
 
 Memorial = """
     CREATE TABLE IF NOT EXISTS Memorial (
@@ -87,8 +87,8 @@ Memorial = """
     FOREIGN KEY (`user_id`)
     REFERENCES `user_auth_db`.`users` (`user_id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-)"""
+    ON UPDATE NO ACTION
+);"""
 
 QuestionList = """
 CREATE TABLE IF NOT EXISTS question_list (
