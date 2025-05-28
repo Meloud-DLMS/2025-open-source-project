@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Sidebar from '../components/SideBar';
 import styles from '../style/AccountDeleteRequestPage.module.css';
 import backgroundImage from '../assets/images/main.jpg';
 
-const UndeletableAccountPage = () => {
+const UndeletableAccountPage = ({ isLoggedIn, setIsLoggedIn }) => {
     const [selectedTab, setSelectedTab] = useState('undeletable');
     const [selectedItem, setSelectedItem] = useState(null);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
     const navigate = useNavigate();
 
     const accounts = [
@@ -15,7 +19,6 @@ const UndeletableAccountPage = () => {
     ];
 
     const handleNavigate = (tab) => {
-        setSelectedTab(tab);
         if (tab === 'deletable') {
             navigate('/account/delete-request');
         } else if (tab === 'undeletable') {
@@ -38,10 +41,25 @@ const UndeletableAccountPage = () => {
             className={styles.wrapper}
             style={{ backgroundImage: `url(${backgroundImage})` }}
         >
+            <Sidebar
+                isOpen={isSidebarOpen}
+                toggleSidebar={toggleSidebar}
+                isLoggedIn={isLoggedIn}
+                handleLogin={() => setIsLoggedIn(true)}
+                handleLogout={() => setIsLoggedIn(false)}
+            />
+
             <div className={styles.overlay}></div>
-            <div className={styles.logo} onClick={() => navigate('/')}>
-                MELOUD
+
+            <div className={styles.header}>
+                <div className={styles.logo} onClick={() => navigate('/')}>
+                    MELOUD
+                </div>
+                <div className={styles.profileButton} onClick={toggleSidebar}>
+                    Profile
+                </div>
             </div>
+
             <div className={styles.innerContent}>
                 <h2 className={styles.title}>사후 웹사이트 회원 탈퇴 신청</h2>
 

@@ -33,14 +33,14 @@ export default function App() {
         <Route path="/join" element={<Join {...authProps} />} />
         <Route path="/friends" element={<FriendsList {...authProps} />} />
         <Route path="/friends/add" element={<AddFriend {...authProps} />} />
-        <Route path="/account" element={<AccountLookupIntro />} />
-        <Route path="/real-name" element={<RealNameVerificationPage />} />
-        <Route path="/account/delete-request" element={<AccountDeleteRequestPage />} />
-        <Route path="/account/delete-final" element={<AccountDeleteFinalPage />} />
-        <Route path="/account/delete-complete" element={<AccountDeleteComplete />} />
-        <Route path="/account/undeletable" element={<UndeletableAccountPage />} />
-        <Route path="/account/undeletable-final" element={<UndeletableAccountFinalPage />} />
-        <Route path="/account/undeletable-complete" element={<UndeletableAccountComplete />} />
+        <Route path="/account" element={<AccountLookupIntro {...authProps} />} />
+        <Route path="/real-name" element={<RealNameVerificationPage {...authProps} />} />
+        <Route path="/account/delete-request" element={<AccountDeleteRequestPage {...authProps} />} />
+        <Route path="/account/delete-final" element={<AccountDeleteFinalPage {...authProps} />} />
+        <Route path="/account/delete-complete" element={<AccountDeleteComplete {...authProps} />} />
+        <Route path="/account/undeletable" element={<UndeletableAccountPage {...authProps} />} />
+        <Route path="/account/undeletable-final" element={<UndeletableAccountFinalPage {...authProps} />} />
+        <Route path="/account/undeletable-complete" element={<UndeletableAccountComplete {...authProps} />} />
         <Route path="/will/write" element={<WillWrite {...authProps} />} />
         <Route path="/memorial" element={<MemorialSpace />} />
         <Route path="*" element={<Navigate to="/" replace />} />

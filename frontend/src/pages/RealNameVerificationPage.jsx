@@ -1,10 +1,13 @@
-// src/pages/RealNameVerificationPage.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Sidebar from '../components/SideBar';
 import styles from '../style/RealNameVerificationPage.module.css';
 import backgroundImage from '../assets/images/main.jpg';
 
-const RealNameVerificationPage = () => {
+const RealNameVerificationPage = ({ isLoggedIn, setIsLoggedIn }) => {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
     const navigate = useNavigate();
 
     const [name, setName] = useState('');
@@ -24,10 +27,21 @@ const RealNameVerificationPage = () => {
             className={styles.wrapper}
             style={{ backgroundImage: `url(${backgroundImage})` }}
         >
+            <Sidebar
+                isOpen={isSidebarOpen}
+                toggleSidebar={toggleSidebar}
+                isLoggedIn={isLoggedIn}
+                handleLogin={() => setIsLoggedIn(true)}
+                handleLogout={() => setIsLoggedIn(false)}
+            />
+
             <div className={styles.overlay}></div>
-            <div className={styles.logo} onClick={() => navigate('/')}>
-                MELOUD
+
+            <div className={styles.header}>
+                <div className={styles.logo} onClick={() => navigate('/')}>MELOUD</div>
+                <div className={styles.profileButton} onClick={toggleSidebar}>Profile</div>
             </div>
+
             <div className={styles.contentBox}>
                 <h1 className={styles.title}>실명 인증</h1>
                 <p className={styles.desc}>
