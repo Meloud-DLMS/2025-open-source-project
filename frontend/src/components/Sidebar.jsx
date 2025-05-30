@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './Sidebar.css';
 
-const Sidebar = ({ isOpen, toggleSidebar, isLoggedIn, handleLogin, handleLogout }) => {
+const Sidebar = ({ isOpen, toggleSidebar, isLoggedIn, handleLogin, handleLogout, username }) => {
   const navigate = useNavigate();
 
   const goToLogin = () => {
@@ -23,14 +23,14 @@ const Sidebar = ({ isOpen, toggleSidebar, isLoggedIn, handleLogin, handleLogout 
       {isLoggedIn ? (
         <div className="sidebar-content">
           <div className="sidebar-profile">
-            <p className="username">Welcome!</p>
+            <p className="username">Welcome, {username || 'Guest'}!</p>
             <button onClick={logoutAndRedirect} className="sidebar-button">Logout</button>
           </div>
 
           <nav className="sidebar-nav">
             <Link to="/friends/add" className="sidebar-nav-link">Add Friend</Link>
             <Link to="/friends" className="sidebar-nav-link">Friend List</Link>
-            <a href="#" className="sidebar-nav-link">Message Box</a>
+            <a onClick={() => { navigate('/messages'); toggleSidebar(); }}>Message Box</a>
           </nav>
 
           <div className="sidebar-footer">

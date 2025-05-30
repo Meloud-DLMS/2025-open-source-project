@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
+import Header from '../components/Header';
 import '../style/WillWrite.css';
 
-const WillWrite = ({ isLoggedIn, setIsLoggedIn }) => {
-  const navigate = useNavigate();
+const WillWrite = ({ isLoggedIn, setIsLoggedIn, username, setUsername }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
   const [activeTab, setActiveTab] = useState('letsWrite');
   const [recipient, setRecipient] = useState('');
   const [content, setContent] = useState('');
   const [wills, setWills] = useState([]);
   const [drafts, setDrafts] = useState([]);
   const [editId, setEditId] = useState(null);
+  const navigate = useNavigate();
 
   const friends = ['홍길동', '김영희', '이철수'];
 
@@ -69,6 +69,12 @@ const WillWrite = ({ isLoggedIn, setIsLoggedIn }) => {
     setDrafts(drafts.filter(d => d.id !== id));
   };
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    }
+  }, [isLoggedIn, navigate]);
+
   return (
     <div className="will-page">
       <Sidebar
@@ -77,17 +83,14 @@ const WillWrite = ({ isLoggedIn, setIsLoggedIn }) => {
         isLoggedIn={isLoggedIn}
         handleLogin={() => setIsLoggedIn(true)}
         handleLogout={() => setIsLoggedIn(false)}
+        username={username}
       />
 
-      <header className="will-header">
-        <div className="logo" onClick={() => navigate('/')}>MELOUD</div>
-        <nav className="navbar">
-          <span>ACCOUNT</span>
-          <span>WILL</span>
-          <span>MEMORIAL</span>
-        </nav>
-        <div className="profile" onClick={() => setIsSidebarOpen(true)}>Profile</div>
-      </header>
+      <Header
+        toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+        isLoggedIn={isLoggedIn}
+        username={username}
+      />
 
       <main className="will-main">
         <aside className="will-sidebar">

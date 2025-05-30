@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
+import Header from '../components/Header';
 import '../style/Auth.css';
 
-export default function Join({ isLoggedIn, setIsLoggedIn }) {
+export default function Join({ isLoggedIn, setIsLoggedIn, username, setUsername }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [form, setForm] = useState({ id: '', name: '', pw: '', confirmPw: '', email: '', phone: '' });
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -26,8 +25,8 @@ export default function Join({ isLoggedIn, setIsLoggedIn }) {
       setError('유효한 이메일 주소를 입력하세요.');
     } else {
       setIsLoggedIn(true);
+      setUsername(form.name);
       setSidebarOpen(false);
-      navigate('/');
     }
   };
 
@@ -39,12 +38,14 @@ export default function Join({ isLoggedIn, setIsLoggedIn }) {
         isLoggedIn={isLoggedIn}
         handleLogin={() => setIsLoggedIn(true)}
         handleLogout={() => setIsLoggedIn(false)}
+        username={username}
       />
 
-      <header className="auth-header">
-        <Link to="/" className="logo">MELOUD</Link>
-        <button className="profile-btn" onClick={() => setSidebarOpen(true)}>Profile</button>
-      </header>
+      <Header
+        toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+        isLoggedIn={isLoggedIn}
+        username={username}
+      />
 
       <section className="auth-section">
         <h2>Join Us</h2>

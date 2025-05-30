@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
+import Header from '../components/Header';
 import styles from '../style/UndeletableAccountFinalPage.module.css';
 import backgroundImage from '../assets/images/main.jpg';
 
-const UndeletableAccountFinalPage = ({ isLoggedIn, setIsLoggedIn }) => {
+const UndeletableAccountFinalPage = ({ isLoggedIn, setIsLoggedIn, username, setUsername }) => {
     const [formData, setFormData] = useState({
         to: '',
         subject: '',
@@ -39,16 +40,14 @@ const UndeletableAccountFinalPage = ({ isLoggedIn, setIsLoggedIn }) => {
                 isLoggedIn={isLoggedIn}
                 handleLogin={() => setIsLoggedIn(true)}
                 handleLogout={() => setIsLoggedIn(false)}
+                username={username}
             />
 
-            <div className={styles.header}>
-                <div className={styles.logo} onClick={() => navigate('/')}>
-                    MELOUD
-                </div>
-                <div className={styles.profileButton} onClick={toggleSidebar}>
-                    Profile
-                </div>
-            </div>
+            <Header
+                toggleSidebar={toggleSidebar}
+                isLoggedIn={isLoggedIn}
+                username={username}
+            />
 
             <div className={styles.formContainer}>
                 <h2 className={styles.title}>계정 삭제 요청 메일</h2>

@@ -1,11 +1,11 @@
-// src/pages/AccountLookupIntro.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
+import Header from '../components/Header';
 import styles from '../style/AccountLookupIntro.module.css';
 import backgroundImage from '../assets/images/main.jpg';
 
-const AccountLookupIntro = ({ isLoggedIn, setIsLoggedIn }) => {
+const AccountLookupIntro = ({ isLoggedIn, setIsLoggedIn, username, setUsername }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
@@ -14,6 +14,13 @@ const AccountLookupIntro = ({ isLoggedIn, setIsLoggedIn }) => {
     const handleClick = () => {
         navigate('/real-name');
     };
+    
+    useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    }
+  }, [isLoggedIn, navigate]);
+
 
     return (
         <div
@@ -26,20 +33,16 @@ const AccountLookupIntro = ({ isLoggedIn, setIsLoggedIn }) => {
                 isLoggedIn={isLoggedIn}
                 handleLogin={() => setIsLoggedIn(true)}
                 handleLogout={() => setIsLoggedIn(false)}
+                username={username}
+            />
+
+            <Header
+                toggleSidebar={toggleSidebar}
+                isLoggedIn={isLoggedIn}
+                username={username}
             />
 
             <div className={styles.overlay}></div>
-
-            
-            <div className={styles.header}>
-                <div className={styles.logo} onClick={() => navigate('/')}>
-                    MELOUD
-                </div>
-                <div className={styles.profileButton} onClick={toggleSidebar}>
-                    Profile
-                </div>
-
-            </div>
 
             <div className={styles.centered}>
                 <h1 className={styles.title}>계정 조회</h1>
