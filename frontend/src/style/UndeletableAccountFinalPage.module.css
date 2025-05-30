@@ -1,31 +1,62 @@
 .wrapper {
     position: relative;
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     font-family: 'Inter', sans-serif;
+    overflow: hidden;
 }
 
 .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 0;
+}
+
+.header {
     position: fixed;
     top: 0;
     left: 0;
-    bottom: 0;
-    right: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 1;
+    width: 100%;
+    padding: 25px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1001;
 }
 
+.logo {
+    font-family: 'GeostarFill', serif;
+    font-size: 2em;
+    font-weight: normal;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.profileButton {
+    background: none;
+    color: #fff;
+    font-size: 0.9em;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    white-space: nowrap;
+    z-index: 1002;
+}
 
 .formContainer {
     position: relative;
     z-index: 1;
     max-width: 1200px;
-    margin: 120px auto;
+    margin: 120px auto 0;
     background-color: rgba(20, 20, 20, 0.9);
     padding: 40px;
     border-radius: 12px;
@@ -91,17 +122,4 @@
     background-color: #999;
     color: #444;
     cursor: not-allowed;
-}
-
-.logo {
-    font-family: 'GeostarFill', serif;
-    font-size: 2em;
-    font-weight: normal;
-    color: #fff;
-    position: fixed;
-    top: 35px;     
-    left: 50px;
-    z-index: 1000;
-    cursor: pointer;
-    text-decoration: none;
 }

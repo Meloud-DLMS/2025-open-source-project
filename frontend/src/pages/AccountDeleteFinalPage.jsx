@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Sidebar from '../components/SideBar';
 import styles from '../style/AccountDeleteFinalPage.module.css';
 import backgroundImage from '../assets/images/main.jpg';
 
-const AccountDeleteFinalPage = () => {
+const AccountDeleteFinalPage = ({ isLoggedIn, setIsLoggedIn }) => {
+    const navigate = useNavigate();
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
     const [formData, setFormData] = useState({
         name: '',
         birth: '',
@@ -15,12 +21,10 @@ const AccountDeleteFinalPage = () => {
 
     const [emailSent, setEmailSent] = useState(false);
 
-    const navigate = useNavigate();
-    
     const accounts = [
         { id: 1, url: 'eis.cbnu.ac.kr', company: '충북대학교' },
         { id: 2, url: 'millie.co.kr', company: '밀리의서재' },
-        { id: 3, url: 'playstation.co.kr', company: '플레이스테이션' },
+        { id: 3, url: 'playstation.co.kr', company: '플레이스테이션' }
     ];
 
     const handleChange = (field, value) => {
@@ -42,9 +46,19 @@ const AccountDeleteFinalPage = () => {
             className={styles.wrapper}
             style={{ backgroundImage: `url(${backgroundImage})` }}
         >
+            <Sidebar
+                isOpen={isSidebarOpen}
+                toggleSidebar={toggleSidebar}
+                isLoggedIn={isLoggedIn}
+                handleLogin={() => setIsLoggedIn(true)}
+                handleLogout={() => setIsLoggedIn(false)}
+            />
+
             <div className={styles.overlay}></div>
-            <div className={styles.logo} onClick={() => window.location.href = '/'}>
-                MELOUD
+
+            <div className={styles.header}>
+                <div className={styles.logo} onClick={() => navigate('/')}>MELOUD</div>
+                <div className={styles.profileButton} onClick={toggleSidebar}>Profile</div>
             </div>
 
             <div className={styles.innerContent}>

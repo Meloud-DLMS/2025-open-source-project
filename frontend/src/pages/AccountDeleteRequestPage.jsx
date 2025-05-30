@@ -1,23 +1,26 @@
+// src/pages/AccountDeleteRequestPage.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Sidebar from '../components/SideBar';
 import styles from '../style/AccountDeleteRequestPage.module.css';
 import backgroundImage from '../assets/images/main.jpg';
 
-const AccountDeleteRequestPage = () => {
+const AccountDeleteRequestPage = ({ isLoggedIn, setIsLoggedIn }) => {
     const [selectedTab, setSelectedTab] = useState('deletable');
     const [checkedItems, setCheckedItems] = useState([]);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
-    const accounts = [ //패치로 바꿔야함
+    const accounts = [    // fetch
         { id: 1, url: 'eis.cbnu.ac.kr', company: '충북대학교', note: '' },
         { id: 2, url: 'millie.co.kr', company: '밀리의서재', note: '' },
         { id: 3, url: 'playstation.co.kr', company: '플레이스테이션', note: '' }
     ];
 
-
     const navigate = useNavigate();
     const handleNavigate = (tab) => {
-    if (tab === 'undeletable') {
-        navigate('/account/undeletable'); 
+        if (tab === 'undeletable') {
+            navigate('/account/undeletable');
         }
     };
 
@@ -29,20 +32,30 @@ const AccountDeleteRequestPage = () => {
 
     const handleSubmit = () => {
         if (checkedItems.length > 0) {
-            navigate('/account/delete-final'); 
+            navigate('/account/delete-final');
         }
     };
-
 
     return (
         <div
             className={styles.wrapper}
             style={{ backgroundImage: `url(${backgroundImage})` }}
         >
+            <Sidebar
+                isOpen={isSidebarOpen}
+                toggleSidebar={toggleSidebar}
+                isLoggedIn={isLoggedIn}
+                handleLogin={() => setIsLoggedIn(true)}
+                handleLogout={() => setIsLoggedIn(false)}
+            />
+
             <div className={styles.overlay}></div>
-            <div className={styles.logo} onClick={() => navigate('/')}>
-                MELOUD
+
+            <div className={styles.header}>
+                <div className={styles.logo} onClick={() => navigate('/')}>MELOUD</div>
+                <div className={styles.profileButton} onClick={toggleSidebar}>Profile</div>
             </div>
+
             <div className={styles.innerContent}>
                 <h2 className={styles.title}>사후 웹사이트 회원 탈퇴 신청</h2>
 
@@ -89,6 +102,7 @@ const AccountDeleteRequestPage = () => {
                         </tbody>
                     </table>
                 </div>
+
                 <div className={styles.buttonWrapper}>
                     <button
                         className={styles.submitButton}
@@ -97,7 +111,7 @@ const AccountDeleteRequestPage = () => {
                     >
                         삭제 요청
                     </button>
-</div>
+                </div>
             </div>
         </div>
     );
