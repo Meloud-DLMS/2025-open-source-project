@@ -1,0 +1,64 @@
+/* src/style/AppGlobal.css */
+
+/* 챗봇 토글 버튼의 스타일 */
+.chatbot-toggle-button {
+    position: fixed; /* 화면에 고정되어 스크롤해도 따라다님 */
+    bottom: 30px;    /* 화면 하단에서 30px 위 */
+    left: 30px;      /* 화면 왼쪽에서 30px 안쪽 */
+    width: 60px;
+    height: 60px;
+    border-radius: 50%; /* 원형 모양 */
+    background-color: #007bff; /* 파란색 배경 */
+    color: white; /* 텍스트 색상 (이미지 사용 시에는 텍스트 없음) */
+    font-size: 2em; /* 물음표 크기 (이미지 사용 시에는 영향 없음) */
+    font-weight: bold;
+    border: none;
+    cursor: pointer; /* 마우스 오버 시 포인터 변경 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 다른 UI 요소들 위에 표시 */
+    overflow: hidden; /* 이미지가 버튼 밖으로 나가지 않도록 */
+    padding: 0; /* 내부 패딩 제거 (이미지 크기 조절 용이) */
+
+    /* ⭐ 기본 은은한 빛 효과 ⭐ */
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.7); /* 기존 box-shadow 제거하고 은은한 빛으로 변경 */
+
+    /* ⭐ 호버 시 부드러운 전환 효과를 위해 transition 추가/수정 ⭐ */
+    transition: box-shadow 0.3s ease-in-out, background-color 0.3s ease;
+    /* box-shadow도 transition 대상에 추가하여 부드럽게 변하도록 */
+}
+
+/* ⭐ 호버 시 더 밝게 빛나는 효과 ⭐ */
+.chatbot-toggle-button:hover {
+    background-color: #f3ff0b; /* 호버 시 배경색 변경 (선택 사항) */
+    box-shadow: 0 0 30px rgb(255, 217, 0); /* 그림자 더 밝고 넓게 퍼지도록 */
+    /* 또는 아이콘 이미지 색상에 맞춰 빛나게: */
+    /* box-shadow: 0 0 30px rgba(255, 223, 0, 1);  // 노란색 별 아이콘이라면 */
+}
+
+/* 챗봇 토글 버튼 내부 이미지 스타일 */
+.chatbot-toggle-button img {
+    width: 100%; /* 버튼 크기에 맞춰 이미지 채우기 */
+    height: 100%;
+    object-fit: cover; /* 이미지를 잘라내더라도 버튼을 꽉 채움 */
+    border-radius: 50%; /* 이미지도 원형으로 잘라내기 */
+    display: block; /* 이미지의 하단 공백 제거 */
+}
+
+/* ⭐ 애니메이션 (일렁임) 코드는 이제 필요 없으므로 제거합니다 ⭐ */
+/* @keyframes pulse-shadow {
+    ...
+} */
+
+
+/* 작은 화면 반응형 (모바일 등) */
+@media (max-width: 600px) {
+    .chatbot-toggle-button {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        left: 20px;
+        font-size: 1.8em;
+    }
+}

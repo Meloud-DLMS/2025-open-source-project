@@ -27,12 +27,28 @@ const Home = ({ isLoggedIn, setIsLoggedIn, username }) => {
     navigate('/account');
   };
 
-  const handleTopMemorialClick = () => {
-    navigate('/memorial');
+const handleTopMemorialClick = () => {
+    const isMemorialAuthenticated = localStorage.getItem('memorialAuth');
+
+    if (isMemorialAuthenticated === 'true') {
+      console.log('Home(상단): 사망 인증 완료 상태 감지. /memorial로 바로 이동합니다.');
+      navigate('/memorial');
+    } else {
+      console.log('Home(상단): 사망 인증 필요. /deathcertificate 페이지로 이동합니다.');
+      navigate('/deathcertificate');
+    }
   };
 
   const handleCardMemorialClick = () => {
-    navigate('/memorial');
+    const isMemorialAuthenticated = localStorage.getItem('memorialAuth');
+
+    if (isMemorialAuthenticated === 'true') {
+      console.log('Home(카드): 사망 인증 완료 상태 감지. /memorial로 바로 이동합니다.');
+      navigate('/memorial');
+    } else {
+      console.log('Home(카드): 사망 인증 필요. /deathcertificate 페이지로 이동합니다.');
+      navigate('/deathcertificate');
+    }
   };
 
   return (
