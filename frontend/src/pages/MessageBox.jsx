@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
+import Header from '../components/Header';
 import '../style/Home.css';
 import '../style/MessageBox.css';
 
-export default function MessageBox({ isLoggedIn, setIsLoggedIn, username }) {
+export default function MessageBox({ isLoggedIn, setIsLoggedIn, username, setUsername }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState(null);
 
@@ -33,7 +33,6 @@ export default function MessageBox({ isLoggedIn, setIsLoggedIn, username }) {
   ]);
 
   const handleCardClick = (msg) => {
-    // 읽음 처리
     setMessages(prev =>
       prev.map(m => m.id === msg.id ? { ...m, isRead: true } : m)
     );
@@ -51,15 +50,11 @@ export default function MessageBox({ isLoggedIn, setIsLoggedIn, username }) {
         username={username}
       />
 
-      <header className="home-header">
-        <Link to="/" className="logo">MELOUD</Link>
-        <nav className="home-nav">
-          <a href="#">ACCOUNT</a>
-          <a href="#">WILL</a>
-          <a href="#">MEMORIAL</a>
-        </nav>
-        <button className="profile-button" onClick={() => setSidebarOpen(true)}>Profile</button>
-      </header>
+      <Header
+        toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+        isLoggedIn={isLoggedIn}
+        username={username}
+      />
 
       <main className="message-container">
         <h2 className="message-title">Message Box</h2>
@@ -82,7 +77,6 @@ export default function MessageBox({ isLoggedIn, setIsLoggedIn, username }) {
         </div>
       </main>
 
-      {/* 팝업 */}
       {selectedMessage && (
         <div className="popup-overlay" onClick={() => setSelectedMessage(null)}>
           <div className="popup-card" onClick={(e) => e.stopPropagation()}>

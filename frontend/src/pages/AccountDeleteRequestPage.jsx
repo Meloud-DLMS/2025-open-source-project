@@ -1,17 +1,17 @@
-// src/pages/AccountDeleteRequestPage.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
+import Header from '../components/Header';
 import styles from '../style/AccountDeleteRequestPage.module.css';
 import backgroundImage from '../assets/images/main.jpg';
 
-const AccountDeleteRequestPage = ({ isLoggedIn, setIsLoggedIn }) => {
+const AccountDeleteRequestPage = ({ isLoggedIn, setIsLoggedIn, username, setUsername }) => {
     const [selectedTab, setSelectedTab] = useState('deletable');
     const [checkedItems, setCheckedItems] = useState([]);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
-    const accounts = [    // fetch
+    const accounts = [
         { id: 1, url: 'eis.cbnu.ac.kr', company: '충북대학교', note: '' },
         { id: 2, url: 'millie.co.kr', company: '밀리의서재', note: '' },
         { id: 3, url: 'playstation.co.kr', company: '플레이스테이션', note: '' }
@@ -47,14 +47,16 @@ const AccountDeleteRequestPage = ({ isLoggedIn, setIsLoggedIn }) => {
                 isLoggedIn={isLoggedIn}
                 handleLogin={() => setIsLoggedIn(true)}
                 handleLogout={() => setIsLoggedIn(false)}
+                username={username}
+            />
+
+            <Header
+                toggleSidebar={toggleSidebar}
+                isLoggedIn={isLoggedIn}
+                username={username}
             />
 
             <div className={styles.overlay}></div>
-
-            <div className={styles.header}>
-                <div className={styles.logo} onClick={() => navigate('/')}>MELOUD</div>
-                <div className={styles.profileButton} onClick={toggleSidebar}>Profile</div>
-            </div>
 
             <div className={styles.innerContent}>
                 <h2 className={styles.title}>사후 웹사이트 회원 탈퇴 신청</h2>

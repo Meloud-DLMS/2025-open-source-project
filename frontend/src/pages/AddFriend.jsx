@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
+import Header from '../components/Header';
 import '../style/Home.css';
 import '../style/Friends.css';
 
-export default function AddFriend({ isLoggedIn, setIsLoggedIn, username }) {
+export default function AddFriend({ isLoggedIn, setIsLoggedIn, username, setUsername }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [message, setMessage] = useState('');
 
   const handleSearch = () => {
-    // TODO: 실제 API로 대체
     const dummy = [
       { id: 1, name: '홍길동', email: 'hong@example.com' },
       { id: 2, name: '김철수', email: 'kim@example.com' },
@@ -24,7 +23,7 @@ export default function AddFriend({ isLoggedIn, setIsLoggedIn, username }) {
 
   const handleRequest = (name) => {
     setMessage(`Sent a friend request to ${name}`);
-    setTimeout(() => setMessage(''), 3000); // 3초 후 메시지 제거
+    setTimeout(() => setMessage(''), 3000);
   };
 
   return (
@@ -38,17 +37,13 @@ export default function AddFriend({ isLoggedIn, setIsLoggedIn, username }) {
         username={username}
       />
 
-      <header className="home-header">
-        <Link to="/" className="logo">MELOUD</Link>
-        <nav className="home-nav">
-          <a href="#">ACCOUNT</a>
-          <a href="#">WILL</a>
-          <a href="#">MEMORIAL</a>
-        </nav>
-        <button className="profile-button" onClick={() => setSidebarOpen(true)}>Profile</button>
-      </header>
+      <Header
+        toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+        isLoggedIn={isLoggedIn}
+        username={username}
+      />
 
-      <div style={{ paddingTop: '120px', textAlign: 'center' }}>
+      <main className="content-body" style={{ paddingTop: '120px', textAlign: 'center' }}>
         <h2 className="page-title">Add Friend</h2>
         <input
           type="text"
@@ -69,7 +64,7 @@ export default function AddFriend({ isLoggedIn, setIsLoggedIn, username }) {
             </li>
           ))}
         </ul>
-      </div>
+      </main>
     </div>
   );
 }
