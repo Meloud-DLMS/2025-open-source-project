@@ -21,6 +21,38 @@
     z-index: 0;
 }
 
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 25px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1001;
+}
+
+.logo {
+    font-family: 'GeostarFill', serif;
+    font-size: 2em;
+    font-weight: normal;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.profileButton {
+    background: none;
+    color: #fff;
+    font-size: 0.9em;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    white-space: nowrap;
+    z-index: 1002;
+}
+
 .contentBox {
     position: relative;
     z-index: 1;
@@ -111,17 +143,4 @@
 .button:disabled {
     background-color: #888;
     cursor: not-allowed;
-}
-
-.logo {
-    font-family: 'GeostarFill', serif;
-    font-size: 2em;
-    font-weight: normal;
-    color: #fff;
-    position: fixed;
-    top: 35px;     
-    left: 50px;
-    z-index: 1000;
-    cursor: pointer;
-    text-decoration: none;
 }
