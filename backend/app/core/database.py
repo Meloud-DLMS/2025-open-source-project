@@ -7,7 +7,7 @@ def get_db_connection():
         conn = mysql.connector.connect(
             host='localhost',
             user='root',
-            password='mysql패스워드 입력공간'  ##################### mysql password 입력하세요!!!!!!!!!!!!!!!!!!!!!!!
+            password='password'  ##################### mysql password 입력하세요!!!!!!!!!!!!!!!!!!!!!!!
         )
         if conn.is_connected():
             print("MySQL connection succeed")
@@ -19,7 +19,7 @@ def get_db_connection():
             conn2 = mysql.connector.connect(
                 host='localhost',
                 user='root',
-                password='mysql패스워드 입력공간',  ##################### mysql password 입력하세요!!!!!!!!!!!!!!!!!!!!!!!
+                password='password',  ##################### mysql password 입력하세요!!!!!!!!!!!!!!!!!!!!!!!
                 database=db_name
             )
             return conn2
@@ -58,8 +58,6 @@ def init_db():
         print(f"데이터베이스 초기화 에러: {e}")
     finally:
         connection.close()
-
-
 
 # uvicorn server:app --reload
 # source venv/bin/activate
