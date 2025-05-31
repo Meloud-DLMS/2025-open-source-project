@@ -11,9 +11,10 @@ const Sidebar = ({ isOpen, toggleSidebar, isLoggedIn, handleLogin, handleLogout,
   };
 
   const logoutAndRedirect = () => {
-    handleLogout();
-    toggleSidebar();
-    navigate('/');
+    handleLogout();               // 상태 업데이트
+    alert('로그아웃되었습니다.');    // ✅ 알림창 추가
+    toggleSidebar();              // 사이드바 닫기
+    navigate('/');                // 홈으로 이동
   };
 
   return (

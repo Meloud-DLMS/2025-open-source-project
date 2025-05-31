@@ -2,11 +2,10 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../style/Home.css';
 import Sidebar from '../components/SideBar';
-
-import mainImage from '../../public/assets/main.jpg';
-import accountIcon from '../../public/assets/account.png';
-import memorialIcon from '../../public/assets/memorial.png';
-import willIcon from '../../public/assets/will.png';
+import mainImage from '../assets/images/main.jpg';
+import accountIcon from '../assets/images/account.png';
+import memorialIcon from '../assets/images/memorial.png';
+import willIcon from '../assets/images/will.png';
 
 const Home = ({ isLoggedIn, setIsLoggedIn, username }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

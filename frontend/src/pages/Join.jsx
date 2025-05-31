@@ -5,7 +5,7 @@ import '../style/Auth.css';
 
 export default function Join({ isLoggedIn, setIsLoggedIn, username, setUsername }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [form, setForm] = useState({ id: '', name: '', pw: '', confirmPw: '', email: '', phone: '' });
+  const [form, setForm] = useState({ id: '', name: '', pw: '', confirmPw: ''});
   const [error, setError] = useState('');
 
   const handleChange = e => {
@@ -13,22 +13,42 @@ export default function Join({ isLoggedIn, setIsLoggedIn, username, setUsername 
     setForm(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    const { pw, confirmPw, email } = form;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (pw.length < 6) {
-      setError('비밀번호는 최소 6자리 이상이어야 합니다.');
-    } else if (pw !== confirmPw) {
-      setError('비밀번호가 일치하지 않습니다.');
-    } else if (!emailRegex.test(email)) {
-      setError('유효한 이메일 주소를 입력하세요.');
-    } else {
-      setIsLoggedIn(true);
-      setUsername(form.name);
-      setSidebarOpen(false);
-    }
-  };
+    const { id, name, pw, confirmPw } = form;
+      if (pw.length < 6) {
+        setError('비밀번호는 최소 6자리 이상이어야 합니다.');
+      } else if (pw !== confirmPw) {
+        setError('비밀번호가 일치하지 않습니다.');
+      } else {
+        console.log("Hi");
+        try {
+          const response = await fetch('http://localhost:8000/join', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              user_id: id,
+              name: name,
+              password: pw,
+            }),
+          });
+          if (response.ok) {
+            setIsLoggedIn(true);
+            setSidebarOpen(false);
+            navigate('/');
+          } else {
+            const data = await response.json();
+            setError(data.message || '회원가입에 실패했습니다.');
+          }
+        } catch (err) {
+          console.log(err);
+          setError('서버와 통신 중 오류가 발생했습니다.');
+        }
+      }
+};
+
 
   return (
     <div className="auth-page">
@@ -54,8 +74,6 @@ export default function Join({ isLoggedIn, setIsLoggedIn, username, setUsername 
           <input type="text" name="name" placeholder="Name" value={form.name} onChange={handleChange} required />
           <input type="password" name="pw" placeholder="PW (6자리 이상)" value={form.pw} onChange={handleChange} required />
           <input type="password" name="confirmPw" placeholder="Confirm PW" value={form.confirmPw} onChange={handleChange} required />
-          <input type="email" name="email" placeholder="E-Mail" value={form.email} onChange={handleChange} required />
-          <input type="tel" name="phone" placeholder="Phone Number" value={form.phone} onChange={handleChange} required />
           {error && <p className="error-message">{error}</p>}
           <button type="submit" className="auth-btn">Sign Up</button>
         </form>
