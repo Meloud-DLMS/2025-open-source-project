@@ -4,7 +4,7 @@ import Sidebar from '../components/SideBar';
 import Header from '../components/Header';
 import '../style/WillWrite.css';
 
-const WillWrite = ({ isLoggedIn, setIsLoggedIn, username, setUsername }) => {
+const WillWrite = ({ isLoggedIn, setIsLoggedIn, username, setUsername,setAuthChecked }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('letsWrite');
   const [recipient, setRecipient] = useState('');
@@ -70,7 +70,7 @@ const WillWrite = ({ isLoggedIn, setIsLoggedIn, username, setUsername }) => {
   };
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!setAuthChecked) {
       navigate('/login');
     }
   }, [isLoggedIn, navigate]);

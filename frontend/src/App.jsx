@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // modified
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import { ChatbotProvider, useChatbot } from './contexts/ChatbotContext';
@@ -35,12 +35,38 @@ const ChatbotToggleButton = () => {
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
+  const [authChecked, setAuthChecked] = useState(false); // ✅ 인증 확인 완료 여부
+
+  useEffect(() => {
+    // 서버에 인증 상태 확인 요청 (쿠키 기반)
+    fetch('http://localhost:8000/auth/me', {
+      method: 'GET',
+      credentials: 'include', // ✅ 쿠키 포함
+    })
+      .then(res => {
+        console.log("auth sccueed")
+        if (res.ok) return res.json();
+        throw new Error('Not authenticated');
+      })
+      .then(data => {
+        setIsLoggedIn(true);
+        setUsername(data.user_id); // 서버에서 반환한 user_id 등
+        setAuthChecked(true); // ✅ 인증 확인 완료
+      })
+      .catch(() => {
+        console.log("auth failed")
+        setIsLoggedIn(false);
+        setUsername('');
+        setAuthChecked(true); // ✅ 인증 확인 완료
+      });
+  }, []);
 
   const authProps = {
     isLoggedIn,
     setIsLoggedIn,
     username,
-    setUsername
+    setUsername,
+    setAuthChecked
   };
 
   return (
