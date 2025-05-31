@@ -11,12 +11,43 @@ export default function Login({ isLoggedIn, setIsLoggedIn }) {
 
   const navigate = useNavigate();
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    setIsLoggedIn(true);
-    setSidebarOpen(false);
-    navigate('/');
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    alert('👋 로그아웃되었습니다.');
   };
+  
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const response = await fetch('http://localhost:8000/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: id,
+          password: pw,
+        }),
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log('✅ 로그인 성공:', data);
+        alert(`${data.full_name}님 환영합니다!`);
+        setIsLoggedIn(true);
+        navigate('/');
+      } else {
+        const errorData = await response.json();
+        alert(`❌ 로그인 실패: ${errorData.detail}`);
+      }
+    } catch (error) {
+      alert('⚠️ 서버 오류 또는 네트워크 에러');
+      console.error('Login error:', error);
+    }
+  };
+  
 
   return (
     <div className="auth-page">
@@ -25,7 +56,7 @@ export default function Login({ isLoggedIn, setIsLoggedIn }) {
         toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
         isLoggedIn={isLoggedIn}
         handleLogin={() => setIsLoggedIn(true)}
-        handleLogout={() => setIsLoggedIn(false)}
+        handleLogout={handleLogout}
       />
 
       <header className="auth-header">

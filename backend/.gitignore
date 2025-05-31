@@ -1,0 +1,14 @@
+# Python 가상환경
+ourbase/
+
+# 파이썬 캐시 파일
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 환경 변수 파일
+.env
+.env.*
+
+# SQL 파일
+*.sql

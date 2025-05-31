@@ -17,6 +17,10 @@ class SignUpForm(BaseModel):
     password: str
     name: str
 
+class LoginForm(BaseModel):
+    user_id: str
+    password: str
+
 FriendList = """
 CREATE TABLE IF NOT EXISTS friend_list (
     user_id VARCHAR(50) NOT NULL,
@@ -115,7 +119,7 @@ CREATE TABLE IF NOT EXISTS answer_list (
     
 # --- Pydantic 모델 ---
 class User(BaseModel):
-    username: str
+    user_id: str
     email: Optional[str] = None
     full_name: Optional[str] = None
     disabled: Optional[bool] = None
@@ -128,4 +132,4 @@ class Token(BaseModel):
     token_type: str
 
 class TokenData(BaseModel):
-    username: Optional[str] = None
+    user_id: Optional[str] = None
