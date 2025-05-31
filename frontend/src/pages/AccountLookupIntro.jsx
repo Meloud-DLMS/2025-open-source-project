@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import styles from '../style/AccountLookupIntro.module.css';
 import backgroundImage from '../assets/images/main.jpg';
 
-const AccountLookupIntro = ({ isLoggedIn, setIsLoggedIn, username, setUsername }) => {
+const AccountLookupIntro = ({ isLoggedIn, setIsLoggedIn, username, setUsername,setAuthChecked }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
@@ -16,7 +16,9 @@ const AccountLookupIntro = ({ isLoggedIn, setIsLoggedIn, username, setUsername }
     };
     
     useEffect(() => {
-    if (!isLoggedIn) {
+    // App.jsx에서 authChecked가 false일 때는 이 컴포넌트가 렌더링되지 않으므로,
+    // isLoggedIn만 체크하면 됨
+    if (!setAuthChecked) {
       navigate('/login');
     }
   }, [isLoggedIn, navigate]);

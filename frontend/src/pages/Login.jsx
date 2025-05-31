@@ -19,34 +19,44 @@ export default function Login({ isLoggedIn, setIsLoggedIn, username, setUsername
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
     try {
-      const response = await fetch('http://localhost:8000/users/login', {
+      // ✅ 반드시 form data 방식으로 전송해야 함
+      const formData = new URLSearchParams();
+      formData.append('username', id);
+      formData.append('password', pw);
+
+      const response = await fetch('http://localhost:8000/auth/token', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user_id: id,
-          password: pw,
-        }),
+        credentials: 'include', // ✅ 쿠키 포함
+        body: formData,
       });
-  
+
       if (response.ok) {
         const data = await response.json();
-        console.log('✅ 로그인 성공:', data);
-        alert(`${data.full_name}님 환영합니다!`);
+        alert(`${id}님 환영합니다!`);
         setIsLoggedIn(true);
+        setUsername(id);
         navigate('/');
       } else {
         const errorData = await response.json();
-        alert(`❌ 로그인 실패: ${errorData.detail}`);
+        let msg = '';
+        if (typeof errorData.detail === 'string') {
+          msg = errorData.detail;
+        } else if (Array.isArray(errorData.detail)) {
+          msg = errorData.detail.map(d => d.msg || JSON.stringify(d)).join(', ');
+        } else if (typeof errorData.detail === 'object') {
+          msg = JSON.stringify(errorData.detail);
+        } else {
+          msg = JSON.stringify(errorData);
+        }
+        alert(`❌ 로그인 실패: ${msg}`);
       }
     } catch (error) {
       alert('⚠️ 서버 오류 또는 네트워크 에러');
       console.error('Login error:', error);
     }
   };
+
   
 
   return (

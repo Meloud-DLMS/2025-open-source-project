@@ -30,6 +30,7 @@ export default function Join({ isLoggedIn, setIsLoggedIn, username, setUsername 
           headers: {
             'Content-Type': 'application/json',
           },
+          credentials: 'include',
           body: JSON.stringify({
             user_id: id,
             name: name,
