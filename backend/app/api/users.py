@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from app.core.models import SignUpForm, LoginForm
 from app.src.user_service import create_user, is_user_id_taken, authenticate_user
 from app.core.database import get_db_connection
@@ -38,4 +38,27 @@ async def login(form: LoginForm):
         }
 
     raise HTTPException(status_code=401, detail="아이디 또는 비밀번호가 일치하지 않습니다.")
+
+@router.get("/search")
+async def search_users(query: str = "", exclude_user_id: str = ""):
+    conn = get_db_connection()
+    if not conn:
+        raise HTTPException(status_code=500, detail="DB 연결 실패")
+    
+    try:
+        cur = conn.cursor(dictionary=True)
+        cur.execute(
+            """
+            SELECT user_id, full_name
+            FROM users
+            WHERE (user_id LIKE %s OR full_name LIKE %s)
+              AND user_id != %s
+            """,
+            (f"%{query}%", f"%{query}%", exclude_user_id)
+        )
+        results = cur.fetchall()
+        return {"results": results}
+    finally:
+        cur.close()
+        conn.close()
 

@@ -6,6 +6,7 @@ from app.core.database import init_db
 from app.api.auth import router as auth_router
 from app.api.users import router as users_router
 from app.api.users import router as login_router
+from app.api.friends import router as friends_router
 
 app = FastAPI()
 
@@ -22,6 +23,7 @@ app.add_middleware(
 app.include_router(users_router, prefix="/users", tags=["users"])
 app.include_router(auth_router, prefix="/auth", tags=["auth"])
 app.include_router(login_router, prefix="/login", tags=["login"])  # prefix는 선택
+app.include_router(friends_router, prefix="/friends", tags=["friends"])
 
 @app.get("/")
 def read_root():
