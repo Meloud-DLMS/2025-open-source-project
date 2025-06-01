@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';  // 추가
+import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
 import Header from '../components/Header';
 import '../style/Auth.css';
 
 export default function Join({ isLoggedIn, setIsLoggedIn, username, setUsername }) {
-  const navigate = useNavigate();  // 추가
+  const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [form, setForm] = useState({ id: '', name: '', pw: '', confirmPw: ''});
   const [error, setError] = useState('');
@@ -30,7 +30,6 @@ export default function Join({ isLoggedIn, setIsLoggedIn, username, setUsername 
           headers: {
             'Content-Type': 'application/json',
           },
-          credentials: 'include',
           body: JSON.stringify({
             user_id: id,
             name: name,
