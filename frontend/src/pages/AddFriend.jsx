@@ -10,21 +10,43 @@ export default function AddFriend({ isLoggedIn, setIsLoggedIn, username, setUser
   const [results, setResults] = useState([]);
   const [message, setMessage] = useState('');
 
-  const handleSearch = () => {
-    const dummy = [
-      { id: 1, name: '홍길동', email: 'hong@example.com' },
-      { id: 2, name: '김철수', email: 'kim@example.com' },
-    ];
-    const filtered = dummy.filter(user =>
-      user.name.includes(query) || user.email.includes(query)
-    );
-    setResults(filtered);
+  const handleSearch = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/users/search?query=${query}&exclude_user_id=${username}`);
+      const data = await response.json();
+      setResults(data.results);
+    } catch (error) {
+      console.error("Search error:", error);
+    }
   };
 
-  const handleRequest = (name) => {
-    setMessage(`Sent a friend request to ${name}`);
+  const handleRequest = async (friendName, friendId) => {
+    try {
+      const response = await fetch("http://localhost:8000/friends/add-friend", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          user_id: username,     // 로그인한 사용자
+          friend_id: friendId    // 친구로 추가할 사용자
+        })
+      });
+  
+      if (response.ok) {
+        setMessage(`✅ Sent a friend request to ${friendName}`);
+      } else {
+        const err = await response.json();
+        setMessage(`❌ ${err.detail}`);
+      }
+    } catch (error) {
+      console.error("Friend request error:", error);
+      setMessage("❌ 요청 중 오류 발생");
+    }
+  
     setTimeout(() => setMessage(''), 3000);
   };
+  
 
   return (
     <div className="page-background">
@@ -57,10 +79,10 @@ export default function AddFriend({ isLoggedIn, setIsLoggedIn, username, setUser
 
         <ul className="search-results">
           {results.map(user => (
-            <li key={user.id} className="friend-card">
-              <p>{user.name}</p>
-              <p>{user.email}</p>
-              <button onClick={() => handleRequest(user.name)}>Request</button>
+            <li key={user.user_id} className="friend-card">
+              <p>{user.full_name}</p>
+              <p>{user.user_id}</p>
+              <button onClick={() => handleRequest(user.full_name, user.user_id)}>Request</button>
             </li>
           ))}
         </ul>
