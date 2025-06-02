@@ -18,15 +18,7 @@ const UndeletableAccountPage = ({ isLoggedIn, setIsLoggedIn }) => {
         fetch("http://localhost:8000/accountShow")
             .then(res => res.json())
             .then(data => {
-                // data가 배열인지 확인
-                console.log("I have fetched\n");
-                if (Array.isArray(data)) {
-                    setAccounts(data);
-                } else if (data && Array.isArray(data.data)) {
-                    setAccounts(data.data); // data.data가 배열인 경우
-                } else {
-                    setAccounts([]); // 데이터가 없거나 잘못된 경우 빈 배열로
-                }
+                setAccounts(data);
             })
             .catch(err => {
                 console.error("데이터 fetch 오류:", err);
