@@ -1,6 +1,6 @@
 # app/api/friends.py
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query, Depends, Body
 from pydantic import BaseModel
 from app.core.database import get_db_connection
 
@@ -37,36 +37,58 @@ async def add_friend(request: FriendRequest):
         cur.close()
         conn.close()
 
+    
 @router.get("/friend-list")
-async def get_friend_list(user_id: str):
+def get_friend_list(user_id: str = Query(...)):
     conn = get_db_connection()
     if not conn:
         raise HTTPException(status_code=500, detail="DB 연결 실패")
-
     try:
         cur = conn.cursor(dictionary=True)
 
-        # 친구 ID 목록을 가져오기
-        cur.execute("""
-            SELECT friend_id 
-            FROM friend_list 
-            WHERE user_id = %s
-        """, (user_id,))
-        friend_ids = [row["friend_id"] for row in cur.fetchall()]
+        # 친구 ID 조회
+        cur.execute("SELECT friend_id FROM friend_list WHERE user_id = %s", (user_id,))
+        rows = cur.fetchall()
+        if not rows:
+            return []
 
-        if not friend_ids:
-            return {"friends": []}
-
-        # friend_ids에 해당하는 사용자 정보 조회
+        friend_ids = [row["friend_id"] for row in rows]
         format_strings = ','.join(['%s'] * len(friend_ids))
+
+        # 친구 정보 가져오기
         cur.execute(f"""
-            SELECT user_id, full_name, email 
+            SELECT user_id, full_name 
             FROM users 
             WHERE user_id IN ({format_strings})
         """, tuple(friend_ids))
-        friends = cur.fetchall()
 
-        return {"friends": friends}
+        friends_info = cur.fetchall()
+        return friends_info
+    finally:
+        cur.close()
+        conn.close()
+    
+class DeleteFriendRequest(BaseModel):
+    user_id: str
+    friend_id: str
+
+@router.delete("/remove-friend")
+async def remove_friend(request: DeleteFriendRequest = Body(...)):
+    conn = get_db_connection()
+    if not conn:
+        raise HTTPException(status_code=500, detail="DB 연결 실패")
+    
+    try:
+        cur = conn.cursor()
+
+        # 양방향 삭제
+        cur.execute("DELETE FROM friend_list WHERE user_id=%s AND friend_id=%s", 
+                    (request.user_id, request.friend_id))
+        cur.execute("DELETE FROM friend_list WHERE user_id=%s AND friend_id=%s", 
+                    (request.friend_id, request.user_id))
+
+        conn.commit()
+        return {"message": "친구 삭제 완료!"}
     finally:
         cur.close()
         conn.close()
