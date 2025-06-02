@@ -21,6 +21,8 @@ class LoginForm(BaseModel):
     user_id: str
     password: str
 
+
+
 FriendList = """
 CREATE TABLE IF NOT EXISTS friend_list (
     user_id VARCHAR(50) NOT NULL,
@@ -48,9 +50,11 @@ Email = """
 AccountList = """
     CREATE TABLE IF NOT EXISTS AccountList(
     `user_id` VARCHAR(50) NOT NULL,
+    `site_URL` VARCHAR(50) NOT NULL,
     `site_name` VARCHAR(45) NOT NULL,
     `is_auto` ENUM('Y', 'N') NOT NULL DEFAULT 'N',
     `is_deleted` ENUM('Y', 'N') NOT NULL DEFAULT 'N',
+    `note` VARCHAR(50) NOT NULL,
     PRIMARY KEY (`user_id`, `site_name`),
     CONSTRAINT `fk_account_user_id`
     FOREIGN KEY (`user_id`)

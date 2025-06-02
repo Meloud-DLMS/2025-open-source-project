@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
 import Header from '../components/Header';
@@ -11,11 +11,16 @@ const AccountDeleteRequestPage = ({ isLoggedIn, setIsLoggedIn, username, setUser
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
-    const accounts = [
-        { id: 1, url: 'eis.cbnu.ac.kr', company: '충북대학교', note: '' },
-        { id: 2, url: 'millie.co.kr', company: '밀리의서재', note: '' },
-        { id: 3, url: 'playstation.co.kr', company: '플레이스테이션', note: '' }
-    ];
+    const [accounts, setAccounts] = useState([]);
+
+    // 서버에서 계정 데이터 전체를 받아와 accounts에 저장
+    useEffect(() => {
+        fetch("http://localhost:8000/accountShow")
+            .then(res => res.json())
+            .then(data => {
+                setAccounts(data); // 받아온 전체 데이터를 accounts에 저장
+            });
+    }, []);
 
     const navigate = useNavigate();
     const handleNavigate = (tab) => {
@@ -29,9 +34,38 @@ const AccountDeleteRequestPage = ({ isLoggedIn, setIsLoggedIn, username, setUser
             prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
         );
     };
-
-    const handleSubmit = () => {
+        const handleSubmit = () => {
         if (checkedItems.length > 0) {
+            // 체크된 첫 번째 계정의 id를 이용해 해당 계정 객체 찾기
+            const checkedAccount = accounts.find(acc => acc.id === checkedItems[0]);
+            if (!checkedAccount) {
+                alert("선택된 계정 정보를 찾을 수 없습니다.");
+                return;
+            }
+            // fetch로 삭제 요청을 보냄
+            fetch("http://localhost:8000/deleteAccountByString", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ site_URL: checkedAccount.site_URL })
+            })
+            .then(res => res.json())
+            .then(data => {
+                // 성공/실패 처리
+                console.log(data);
+                if (data.status === "success") {
+                    alert("삭제 요청이 완료되었습니다!");
+                    // 필요하다면 목록 갱신 등 추가 작업
+                    // setAccounts(accounts.filter(acc => acc.site_URL !== checkedAccount.site_URL));
+                    // setCheckedItems([]);
+                } else {
+                    alert("삭제 요청 실패: " + data.message);
+                }
+            })
+            .catch(error => {
+                alert("삭제 요청 중 에러 발생: " + error);
+            });
+
+            // (원래 있던 페이지 이동 코드)
             navigate('/account/delete-final');
         }
     };
@@ -89,16 +123,20 @@ const AccountDeleteRequestPage = ({ isLoggedIn, setIsLoggedIn, username, setUser
                         <tbody>
                             {accounts.map((acc) => (
                                 <tr key={acc.id}>
-                                    <td>
-                                        <input
-                                            type="checkbox"
-                                            checked={checkedItems.includes(acc.id)}
-                                            onChange={() => handleCheck(acc.id)}
-                                        />
-                                    </td>
-                                    <td>{acc.url}</td>
-                                    <td>{acc.company}</td>
-                                    <td>{acc.note}</td>
+                                    {acc.is_auto === 'Y' && (
+                                        <>
+                                            <td>
+                                            <input
+                                                type="checkbox"
+                                                checked={checkedItems.includes(acc.id)}
+                                                onChange={() => handleCheck(acc.id)}
+                                            />
+                                            </td>
+                                            <td>{acc.site_URL }</td>
+                                            <td>{acc.site_name}</td>
+                                            <td>{acc.note}</td>
+                                        </>
+                                    )}
                                 </tr>
                             ))}
                         </tbody>
