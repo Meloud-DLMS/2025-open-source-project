@@ -48,6 +48,14 @@ html, body {
     color: #fff !important;
     text-decoration: none !important;
   }
+
+  .home-nav {
+  display: flex;
+  justify-content: center;     /* 메뉴 버튼을 가로 중앙 정렬 */
+  gap: 30px;                   /* 버튼 사이 간격 */
+  flex: 1;                     /* 공간을 균등하게 차지하도록 */
+}
+
   .home-nav a {
     color: #fff;
     text-decoration: none;
