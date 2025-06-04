@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
 import styles from '../style/AccountDeleteRequestPage.module.css';
@@ -12,11 +12,19 @@ const UndeletableAccountPage = ({ isLoggedIn, setIsLoggedIn }) => {
 
     const navigate = useNavigate();
 
-    const accounts = [
-        { id: 1, url: 'accounts.kakao.com', company: '(주)카카오', note: '민원처리 시 불이익 발생 웹사이트' },
-        { id: 2, url: 'baemin.com', company: '(주)우아한형제들', note: '개인정보 미수집 웹사이트' },
-        { id: 3, url: 'card.nonghyup.com', company: 'NH농협카드', note: '민원처리 시 불이익 발생 웹사이트' }
-    ];
+    const [accounts, setAccounts] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:8000/accountShow")
+            .then(res => res.json())
+            .then(data => {
+                setAccounts(data);
+            })
+            .catch(err => {
+                console.error("데이터 fetch 오류:", err);
+                setAccounts([]);
+            });
+    }, []);
 
     const handleNavigate = (tab) => {
         if (tab === 'deletable') {
@@ -91,16 +99,20 @@ const UndeletableAccountPage = ({ isLoggedIn, setIsLoggedIn }) => {
                         <tbody>
                             {accounts.map((acc) => (
                                 <tr key={acc.id}>
-                                    <td>
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedItem === acc.id}
-                                            onChange={() => handleSelect(acc.id)}
-                                        />
-                                    </td>
-                                    <td>{acc.url}</td>
-                                    <td>{acc.company}</td>
-                                    <td>{acc.note}</td>
+                                    {acc.is_deleted === 'Y' && (
+                                        <>
+                                            <td>
+                                            <input
+                                                type="checkbox"
+                                                checked={selectedItem === acc.id}
+                                                onChange={() => handleSelect(acc.id)}
+                                            />
+                                            </td>
+                                            <td>{acc.site_URL}</td>
+                                            <td>{acc.site_name}</td>
+                                            <td>{acc.note}</td>
+                                        </>
+                                    )} 
                                 </tr>
                             ))}
                         </tbody>

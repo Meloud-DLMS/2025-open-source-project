@@ -1,12 +1,14 @@
+from fastapi import FastAPI, Request
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.core.database import init_db
+from app.core.database import init_db,AccountShow,delete_account_by_site_url
 
 # 순환참조 방지: 각 router를 직접 가져오기
 from app.api.auth import router as auth_router
 from app.api.users import router as users_router
 from app.api.users import router as login_router
 from app.api.friends import router as friends_router
+
 
 app = FastAPI()
 
@@ -32,6 +34,24 @@ def read_root():
 @app.on_event("startup")
 async def startup_event():
     init_db()
+
+@app.get('/accountShow')
+def AutoAccountShow():
+    print("dataFetched")
+    data = AccountShow()
+    return data
+
+# # 3. 문자열 기준으로 레코드를 삭제하는 엔드포인트
+@app.post("/deleteAccountByString")
+async def delete_account_by_string(request: Request):
+
+    data = await request.json()
+    site_url = data.get("site_URL")
+    # 여기서 분리된 함수 호출
+    result = delete_account_by_site_url(site_url)
+    return result
+
+
 
 # source venv/bin/activate
 # uvicorn server:app --reload
