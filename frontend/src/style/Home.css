@@ -196,13 +196,13 @@ html, body {
     flex-direction: column;
   }
   .card-icon {
-    width: 60px;
-    height: 60px;
+    width: 100px;
+    height: 100px;
     opacity: 0.7;
     margin: 0 auto 20px;
   }
   .card h3 {
-    font-size: 20px;
+    font-size: 30px;
     margin-bottom: 20px;
     color: #ccc;
   }
@@ -228,34 +228,13 @@ html, body {
     transition: transform 0.3s;
     cursor: pointer;
   }
-  .card-icon {
-    width: 60px;
-    height: 60px;
-    opacity: 0.7;
-    margin-bottom: 20px;
-  }
-  .card h3 {
-    font-size: 20px;
-    margin-bottom: 20px;
-    color: #ccc;
-  }
-  .card p {
-    font-size: 1em;
-    color: #ccc;
-    margin-bottom: 30px;
-    flex-grow: 1;
-  }
+  
   .card-arrow {
     position: absolute;
     bottom: 20px;
     right: 20px;
     font-size: 24px;
     color: #ccc;
-  }
-  .card:hover,
-  .card.highlight {
-    background: rgba(0, 0, 0, 0.8);
-    transform: scale(1.05);
   }
   
   @media (max-width: 768px) {

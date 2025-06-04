@@ -90,19 +90,19 @@ const handleTopMemorialClick = () => {
           <div className="card" onClick={() => navigate('/account')} style={{ cursor: 'pointer' }}>
             <img src={accountIcon} alt="Account Icon" className="card-icon" />
             <h3>Check My Account</h3>
-            <p>서비스 설명 또는 추가 정보</p>
+            <p>Manage and delete your accounts.</p>
             <span className="card-arrow">&gt;</span>
           </div>
           <div className="card" onClick={() => navigate('/will/write')} style={{ cursor: 'pointer' }}>
             <img src={willIcon} alt="Will Icon" className="card-icon" />
             <h3>Preparation of Will</h3>
-            <p>서비스 설명 또는 추가 정보</p>
+            <p>Write and store your digital will.</p>
             <span className="card-arrow">&gt;</span>
           </div>
           <div className="card" onClick={handleCardMemorialClick} style={{ cursor: 'pointer' }}>
             <img src={memorialIcon} alt="Memorial Icon" className="card-icon" />
             <h3>Memorial Space</h3>
-            <p>서비스 설명 또는 추가 정보</p>
+            <p>Leave a tribute among the stars.</p>
             <a href="#" className="card-arrow">&gt;</a>
           </div>
         </section>
