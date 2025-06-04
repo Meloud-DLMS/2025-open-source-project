@@ -1,4 +1,10 @@
-# React + Vite
+# MELOUD
+This repository contains the code developed for the Open Source Basic Project course in the first semester of 2025.
+## Project Introduction
+MELOUD is a web platform that helps delete a user's accounts from other websites after their death.
+It also allows users to leave a digital will for loved ones and provides a memorial page where friends and family can share messages.
+
+## React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
