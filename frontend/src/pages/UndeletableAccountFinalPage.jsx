@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
 import Header from '../components/Header';
 import styles from '../style/UndeletableAccountFinalPage.module.css';
-import backgroundImage from '../assets/images/main.jpg';
+import backgroundImage from '../assets/images/backgroundAccountManage.jpg';
 
 const UndeletableAccountFinalPage = ({ isLoggedIn, setIsLoggedIn, username, setUsername }) => {
     const [formData, setFormData] = useState({

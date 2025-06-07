@@ -186,3 +186,7 @@
     background-color: #777;
     cursor: not-allowed;
 }
+
+.inputGroup input {
+    max-width: 300px; 
+}
