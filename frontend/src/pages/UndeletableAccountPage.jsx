@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
-import styles from '../style/AccountDeleteRequestPage.module.css';
-import backgroundImage from '../assets/images/main.jpg';
+import Header from '../components/Header';
+import styles from '../style/AccountDeleteRequestPage.module.css'; // 기존과 동일한 스타일 파일 사용
+import backgroundImage from '../assets/images/backgroundAccountManage.jpg';
 
-const UndeletableAccountPage = ({ isLoggedIn, setIsLoggedIn }) => {
+const UndeletableAccountPage = ({ isLoggedIn, setIsLoggedIn, username, setUsername }) => {
     const [selectedTab, setSelectedTab] = useState('undeletable');
     const [selectedItem, setSelectedItem] = useState(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -47,18 +48,16 @@ const UndeletableAccountPage = ({ isLoggedIn, setIsLoggedIn }) => {
                 isLoggedIn={isLoggedIn}
                 handleLogin={() => setIsLoggedIn(true)}
                 handleLogout={() => setIsLoggedIn(false)}
+                username={username}
+            />
+
+            <Header
+                toggleSidebar={toggleSidebar}
+                isLoggedIn={isLoggedIn}
+                username={username}
             />
 
             <div className={styles.overlay}></div>
-
-            <div className={styles.header}>
-                <div className={styles.logo} onClick={() => navigate('/')}>
-                    MELOUD
-                </div>
-                <div className={styles.profileButton} onClick={toggleSidebar}>
-                    Profile
-                </div>
-            </div>
 
             <div className={styles.innerContent}>
                 <h2 className={styles.title}>사후 웹사이트 회원 탈퇴 신청</h2>

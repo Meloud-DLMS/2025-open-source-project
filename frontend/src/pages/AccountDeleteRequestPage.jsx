@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
 import Header from '../components/Header';
 import styles from '../style/AccountDeleteRequestPage.module.css';
-import backgroundImage from '../assets/images/main.jpg';
+import backgroundImage from '../assets/images/backgroundAccountManage.jpg';
 
 const AccountDeleteRequestPage = ({ isLoggedIn, setIsLoggedIn, username, setUsername }) => {
     const [selectedTab, setSelectedTab] = useState('deletable');

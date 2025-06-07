@@ -1,9 +1,11 @@
+
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
 import Header from '../components/Header';
 import styles from '../style/AccountDeleteFinalPage.module.css';
-import backgroundImage from '../assets/images/main.jpg';
+import backgroundImage from '../assets/images/backgroundAccountManage.jpg';
 
 const AccountDeleteFinalPage = ({ isLoggedIn, setIsLoggedIn, username, setUsername }) => {
     const navigate = useNavigate();
@@ -148,5 +150,4 @@ const AccountDeleteFinalPage = ({ isLoggedIn, setIsLoggedIn, username, setUserna
         </div>
     );
 };
-
 export default AccountDeleteFinalPage;
