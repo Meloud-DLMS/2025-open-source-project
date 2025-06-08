@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
 import Header from '../components/Header';
@@ -13,11 +13,15 @@ const UndeletableAccountPage = ({ isLoggedIn, setIsLoggedIn, username, setUserna
 
     const navigate = useNavigate();
 
-    const accounts = [
-        { id: 1, url: 'accounts.kakao.com', company: '(주)카카오', note: '민원처리 시 불이익 발생 웹사이트' },
-        { id: 2, url: 'baemin.com', company: '(주)우아한형제들', note: '개인정보 미수집 웹사이트' },
-        { id: 3, url: 'card.nonghyup.com', company: 'NH농협카드', note: '민원처리 시 불이익 발생 웹사이트' }
-    ];
+    const [accounts, setAccounts] = useState([]);
+    
+    useEffect(() => {
+            fetch("http://localhost:8000/accountShow")
+                .then(res => res.json())
+                .then(data => {
+                    setAccounts(data); // 받아온 전체 데이터를 accounts에 저장
+                });
+        }, []);
 
     const handleNavigate = (tab) => {
         if (tab === 'deletable') {
@@ -28,13 +32,34 @@ const UndeletableAccountPage = ({ isLoggedIn, setIsLoggedIn, username, setUserna
     };
 
     const handleSelect = (id) => {
-        setSelectedItem(id);
+        setSelectedItem(prev => prev === id ? null : id);
     };
 
     const handleSubmit = () => {
-        if (selectedItem) {
-            navigate('/account/undeletable-final');
+        if (selectedItem.length === 0) {
+            alert("선택된 항목이 없습니다.");
+            return;
         }
+        fetch("http://localhost:8000/requestAccountByString", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            // 예시: site_URL_list라는 이름으로 배열을 보냄
+            body: JSON.stringify({
+                site_URL:selectedItem // selectedItem은 문자열(단일 site_URL)
+            })
+        })
+        .then((res) => {
+            if (!res.ok) throw new Error("요청 실패");
+            return res.json();
+        })
+        .then((data) => {
+            navigate('/account/undeletable-final');
+        })
+        .catch((error) => {
+            alert("요청 처리 중 오류가 발생했습니다: " + error.message);
+        });
     };
 
     return (
@@ -90,16 +115,20 @@ const UndeletableAccountPage = ({ isLoggedIn, setIsLoggedIn, username, setUserna
                         <tbody>
                             {accounts.map((acc) => (
                                 <tr key={acc.id}>
-                                    <td>
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedItem === acc.id}
-                                            onChange={() => handleSelect(acc.id)}
-                                        />
-                                    </td>
-                                    <td>{acc.url}</td>
-                                    <td>{acc.company}</td>
-                                    <td>{acc.note}</td>
+                                    {acc.is_auto === 'N' && (
+                                        <>
+                                            <td>
+                                            <input
+                                                type="checkbox"
+                                                checked={selectedItem === acc.site_URL}
+                                                onChange={() => handleSelect(acc.site_URL)}
+                                            />
+                                            </td>
+                                            <td>{acc.site_URL }</td>
+                                            <td>{acc.site_name}</td>
+                                            <td>{acc.note}</td>
+                                        </>
+                                    )}
                                 </tr>
                             ))}
                         </tbody>

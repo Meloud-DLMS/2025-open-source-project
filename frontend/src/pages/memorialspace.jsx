@@ -1,5 +1,5 @@
 // pages/memorialspace.jsx
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Sidebar from '../components/SideBar';
 import '../style/memorialspace.css';
 import moonImage from '../../public/assets/moon.png';
@@ -32,7 +32,7 @@ const generateStar = (isNew = false, starData = {}) => {
         y = Math.random() * 100;
     }
     return {
-        id: Math.random(),
+        id: `star_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`, 
         size,
         x,
         y,
@@ -63,6 +63,41 @@ function MemorialSpace({ isLoggedIn, setIsLoggedIn, username }) {
     const [currentPrivateStar, setCurrentPrivateStar] = useState(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+    useEffect(() => {
+        const fetchStars = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/MemorialShow', {
+                    method: 'GET',
+                    credentials: 'include', // 인증 세션 유지
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error(`서버 응답 오류: ${response.status}`);
+                }
+                const result = await response.json();
+                // [수정] 서버에서 받은 data 배열을 stars로 변환
+                setStars(result.data.map(star => ({
+                    id: star.star_id, // 서버의 star_id를 프론트 id로 사용
+                    size: star.size,
+                    x: star.x,
+                    y: star.y,
+                    isNew: false,
+                    title: star.title,
+                    content: star.content,
+                    author: star.author,
+                    photos: [], // DB에 사진이 없으므로 빈 배열
+                    isPublic: star.isPublic !== undefined ? star.isPublic : true,
+                    password: star.password || '',
+                })));
+            } catch (error) {
+                console.error('별 데이터 로딩 실패:', error);
+            }
+        };
+        fetchStars();
+    }, []); // 컴포넌트 마운트 시 1회 실행
+
     const addStar = () => {
         const newStar = generateStar(true, {
             title,
@@ -81,27 +116,69 @@ function MemorialSpace({ isLoggedIn, setIsLoggedIn, username }) {
         setIsPublic(true);
         setPassword('');
         setShowForm(false);
+
+        return newStar;
     };
 
     const handleFileChange = (e) => {
         setPhotos([...e.target.files]);
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (!title && !content && !author && photos.length === 0) {
-            alert('제목, 내용, 작성자 또는 사진 중 최소 하나는 입력해야 합니다.');
-            return;
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!title && !content && !author && photos.length === 0) {
+        alert('제목, 내용, 작성자 또는 사진 중 최소 하나는 입력해야 합니다.');
+        return;
+    }
+    if (!author) {
+        alert('작성자 이름을 입력해주세요.');
+        return;
+    }
+    if (!isPublic && !password) {
+        alert('비공개 시 비밀번호를 설정해야 합니다.');
+        return;
+    }
+
+    // 별 추가
+    const newStar = addStar();
+
+    const data = {
+        star_id: newStar.id,
+        title: newStar.title,
+        content: newStar.content,
+        author: newStar.author,
+        isPublic: newStar.isPublic,
+        password: newStar.password,
+        x: newStar.x,
+        y: newStar.y,
+        size: newStar.size
+    }
+
+    // 별 데이터 서버로 전송
+        try {
+            // 별을 추가한 직후의 최신 stars를 보내려면 addStar의 setStars 콜백에서 처리하거나,
+            // addStar 함수가 별을 추가한 후의 stars 배열을 반환하게 구조를 바꿔야 합니다.
+            // 여기서는 별 추가 직전의 stars가 전송되는 한계가 있으니 참고하세요.
+            const response = await fetch('http://localhost:8000/api/stars', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify(data) // 별 추가 직전의 stars 배열
+            });
+
+            if(!response.ok) {
+                throw new Error('서버로 데이터 전송에 실패했습니다.');
+            }
+
+            const result = await response.json();
+            alert('별 데이터가 성공적으로 서버에 전송되었습니다!');
+            console.log(newStar);
+        } catch (error) {
+            alert(`에러 발생: ${error.message}`);
         }
-        if (!author) {
-            alert('작성자 이름을 입력해주세요.');
-            return;
-        }
-        if (!isPublic && !password) {
-            alert('비공개 시 비밀번호를 설정해야 합니다.');
-            return;
-        }
-        addStar();
     };
 
     const handleStarClick = (star) => {

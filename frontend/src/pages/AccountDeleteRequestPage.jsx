@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
 import Header from '../components/Header';
@@ -11,11 +11,15 @@ const AccountDeleteRequestPage = ({ isLoggedIn, setIsLoggedIn, username, setUser
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
-    const accounts = [
-        { id: 1, url: 'eis.cbnu.ac.kr', company: '충북대학교', note: '' },
-        { id: 2, url: 'millie.co.kr', company: '밀리의서재', note: '' },
-        { id: 3, url: 'playstation.co.kr', company: '플레이스테이션', note: '' }
-    ];
+    const [accounts, setAccounts] = useState([]);
+
+    useEffect(() => {
+            fetch("http://localhost:8000/accountShow")
+                .then(res => res.json())
+                .then(data => {
+                    setAccounts(data); // 받아온 전체 데이터를 accounts에 저장
+                });
+        }, []);
 
     const navigate = useNavigate();
     const handleNavigate = (tab) => {
@@ -32,7 +36,53 @@ const AccountDeleteRequestPage = ({ isLoggedIn, setIsLoggedIn, username, setUser
 
     const handleSubmit = () => {
         if (checkedItems.length > 0) {
-            navigate('/account/delete-final');
+            // 체크된 모든 계정 객체 찾기
+            const checkedAccounts = accounts.filter(acc => checkedItems.includes(String(acc.site_URL)));
+
+            if (checkedAccounts.length === 0) {
+                alert("선택된 계정 정보를 찾을 수 없습니다.");
+                return;
+            }
+
+            // 여러 계정 삭제 요청을 Promise.all로 처리
+            Promise.all(
+                checkedAccounts.map(account =>
+                    fetch("http://localhost:8000/deleteAccountByString", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ site_URL: account.site_URL })
+                    })
+                    .then(res => res.json())
+                    .then(data => ({
+                        site_URL: account.site_URL,
+                        status: data.status,
+                        message: data.message,
+                    }))
+                    .catch(error => ({
+                        site_URL: account.site_URL,
+                        status: "fail",
+                        message: error.toString(),
+                    }))
+                )
+            ).then(results => {
+                // 전체 결과 처리
+                const successCount = results.filter(r => r.status === "success").length;
+                const failResults = results.filter(r => r.status !== "success");
+
+                if (successCount > 0) {
+                    // 삭제된 계정 목록에서 제거
+                    // setAccounts(accounts.filter(acc => !checkedItems.includes(acc.id)));
+                    // setCheckedItems([]);
+                }
+                if (failResults.length > 0) {
+                    alert(
+                        failResults.map(r => `${r.site_URL}: ${r.message}`).join('\n')
+                    );
+                }
+
+                // (원래 있던 페이지 이동 코드)
+                navigate('/account/delete-final');
+            });
         }
     };
 
@@ -89,16 +139,20 @@ const AccountDeleteRequestPage = ({ isLoggedIn, setIsLoggedIn, username, setUser
                         <tbody>
                             {accounts.map((acc) => (
                                 <tr key={acc.id}>
-                                    <td>
-                                        <input
-                                            type="checkbox"
-                                            checked={checkedItems.includes(acc.id)}
-                                            onChange={() => handleCheck(acc.id)}
-                                        />
-                                    </td>
-                                    <td>{acc.url}</td>
-                                    <td>{acc.company}</td>
-                                    <td>{acc.note}</td>
+                                    {acc.is_auto === 'Y' && (
+                                        <>
+                                            <td>
+                                            <input
+                                                type="checkbox"
+                                                checked={checkedItems.includes(acc.site_URL)}
+                                                onChange={() => handleCheck(acc.site_URL)}
+                                            />
+                                            </td>
+                                            <td>{acc.site_URL }</td>
+                                            <td>{acc.site_name}</td>
+                                            <td>{acc.note}</td>
+                                        </>
+                                    )}
                                 </tr>
                             ))}
                         </tbody>
