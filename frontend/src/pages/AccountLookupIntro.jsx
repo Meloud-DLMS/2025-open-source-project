@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/SideBar';
 import Header from '../components/Header';
 import styles from '../style/AccountLookupIntro.module.css';
-import backgroundImage from '../assets/images/main.jpg';
+import backgroundImage from '../assets/images/backgroundAccountManage.jpg';
 
 const AccountLookupIntro = ({ isLoggedIn, setIsLoggedIn, username, setUsername,setAuthChecked }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);

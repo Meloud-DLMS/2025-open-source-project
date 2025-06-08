@@ -1,123 +1,38 @@
-import React, { useState } from 'react';
+
+
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../components/SideBar';
-import Header from '../components/Header';
-import styles from '../style/AccountDeleteRequestPage.module.css';
-import backgroundImage from '../assets/images/main.jpg';
+import styles from '../style/complete.module.css';
+import backgroundImage from '../assets/images/backgroundAccountManage.jpg';
+import mailImage from '../assets/images/mail.png';
 
-const UndeletableAccountPage = ({ isLoggedIn, setIsLoggedIn, username, setUsername }) => {
-    const [selectedTab, setSelectedTab] = useState('undeletable');
-    const [selectedItem, setSelectedItem] = useState(null);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-
+const UndeletableAccountComplete = () => {
     const navigate = useNavigate();
-
-    const accounts = [
-        { id: 1, url: 'accounts.kakao.com', company: '(주)카카오', note: '민원처리 시 불이익 발생 웹사이트' },
-        { id: 2, url: 'baemin.com', company: '(주)우아한형제들', note: '개인정보 미수집 웹사이트' },
-        { id: 3, url: 'card.nonghyup.com', company: 'NH농협카드', note: '민원처리 시 불이익 발생 웹사이트' }
-    ];
-
-    const handleNavigate = (tab) => {
-        if (tab === 'deletable') {
-            navigate('/account/delete-request');
-        } else if (tab === 'undeletable') {
-            navigate('/account/undeletable');
-        }
-    };
-
-    const handleSelect = (id) => {
-        setSelectedItem(id);
-    };
-
-    const handleSubmit = () => {
-        if (selectedItem) {
-            navigate('/account/undeletable-final');
-        }
-    };
 
     return (
         <div
             className={styles.wrapper}
             style={{ backgroundImage: `url(${backgroundImage})` }}
         >
-            <Sidebar
-                isOpen={isSidebarOpen}
-                toggleSidebar={toggleSidebar}
-                isLoggedIn={isLoggedIn}
-                handleLogin={() => setIsLoggedIn(true)}
-                handleLogout={() => setIsLoggedIn(false)}
-                username={username}
-            />
-
-            <Header
-                toggleSidebar={toggleSidebar}
-                isLoggedIn={isLoggedIn}
-                username={username}
-            />
-
             <div className={styles.overlay}></div>
 
-            <div className={styles.innerContent}>
-                <h2 className={styles.title}>사후 웹사이트 회원 탈퇴 신청</h2>
+            <div className={styles.logo} onClick={() => navigate('/')}>
+                MELOUD
+            </div>
 
-                <div className={styles.tabContainer}>
-                    <button
-                        className={`${styles.tab} ${selectedTab === 'deletable' ? styles.active : ''}`}
-                        onClick={() => handleNavigate('deletable')}
-                    >
-                        회원 탈퇴 신청 가능
-                    </button>
-                    <button
-                        className={`${styles.tab} ${selectedTab === 'undeletable' ? styles.active : ''}`}
-                        onClick={() => handleNavigate('undeletable')}
-                    >
-                        회원 탈퇴 신청 불가
-                    </button>
-                </div>
-
-                <div className={styles.container}>
-                    <table className={styles.table}>
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>웹사이트 URL</th>
-                                <th>사업자</th>
-                                <th>비고</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {accounts.map((acc) => (
-                                <tr key={acc.id}>
-                                    <td>
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedItem === acc.id}
-                                            onChange={() => handleSelect(acc.id)}
-                                        />
-                                    </td>
-                                    <td>{acc.url}</td>
-                                    <td>{acc.company}</td>
-                                    <td>{acc.note}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-
-                <div className={styles.buttonWrapper}>
-                    <button
-                        className={styles.submitButton}
-                        disabled={!selectedItem}
-                        onClick={handleSubmit}
-                    >
-                        삭제 요청 메일 작성
-                    </button>
-                </div>
+            <div className={styles.content}>
+                <img src={mailImage} alt="메일 저장 완료" className={styles.checkImage} />
+                <h2 className={styles.title}>사후 웹사이트 회원 탈퇴 요청메일 저장 완료</h2>
+                <p className={styles.description}>
+                    사망인증서가 인증되면 자동으로 메일이 전송됩니다<br />
+                    경우에 따라 발송되지 않을 수 있습니다
+                </p>
+                <button className={styles.homeButton} onClick={() => navigate('/')}>
+                    홈
+                </button>
             </div>
         </div>
     );
 };
 
-export default UndeletableAccountPage;
+export default UndeletableAccountComplete;

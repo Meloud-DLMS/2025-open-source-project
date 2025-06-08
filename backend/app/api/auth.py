@@ -39,8 +39,8 @@ async def login_for_access_token(
         key="access_token",
         value=access_token,
         httponly=True,   # JavaScript에서 접근 불가 → XSS 방지
-        secure=False,     # HTTPS 환경에서만 전송 (개발 환경에서는 False로 설정 가능)
-        samesite="lax",  # CSRF 방지 옵션
+        secure=True,     # HTTPS 환경에서만 전송 (개발 환경에서는 False로 설정 가능)
+        samesite="none",  # CSRF 방지 옵션
         path="/",
         max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60
     )
