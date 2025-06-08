@@ -2,6 +2,7 @@ import mysql.connector
 from mysql.connector import Error
 from .models import User_SCHEMA, FriendList, Email, AccountList, Will, Memorial, QuestionList, AnswerList
 
+
 def get_db_connection():
     try:
         conn = mysql.connector.connect(
@@ -81,7 +82,7 @@ def init_db():
                     "accounts.kakao.com",
                     "(주)카카오",
                     "N",
-                    "Y",
+                    "N",
                     "민원처리 시 불이익 발생 웹사이트"
                 ))
                 connection.commit()
@@ -93,7 +94,7 @@ def init_db():
                     "baemin.com",
                     "(주)우아한형제들",
                     "N",
-                    "Y",
+                    "N",
                     "개인정보 미수집 웹사이트"
                 ))
                 connection.commit()
@@ -105,7 +106,7 @@ def init_db():
                     "card.nonghyup.com",
                     "NH농협카드",
                     "N",
-                    "Y",
+                    "N",
                     "민원처리 시 불이익 발생 웹사이트"
                 ))
         connection.commit()
@@ -132,6 +133,21 @@ def AccountShow():
     finally:
         connection.close()
 
+def MemorialShow(user_id):
+    connection = get_db_connection()
+    if not connection:
+        return []
+    try:
+        with connection.cursor(dictionary=True) as cursor:  # dictionary=True로 하면 dict로 반환
+            cursor.execute("SELECT * FROM Memorial WHERE user_id = %s", (user_id,))
+            results = cursor.fetchall()  # 여러 행을 리스트로 반환
+            return results
+    except Error as e:
+        print(f"MemorialShow Error: {e}")
+        return []
+    finally:
+        connection.close()
+
 def delete_account_by_site_url(site_url: str) -> dict:
 
     if not site_url:
@@ -153,6 +169,60 @@ def delete_account_by_site_url(site_url: str) -> dict:
         return {"status": "fail", "message": str(e)}
     finally:
         connection.close()
+
+def update_is_deleted_by_site_url(site_url: str) -> dict:
+    """
+    단일 site_URL에 대해 is_deleted 값을 'Y'로 변경하는 함수
+    """
+    connection = get_db_connection()
+    if not connection:
+        return {"status": "fail", "message": "DB connection failed"}
+
+    try:
+        updated_count = 0
+        failed_urls = []
+        with connection.cursor() as cursor:
+            for site_url in site_url:
+                if not isinstance(site_url, str):
+                    failed_urls.append(site_url)
+                    continue
+                sql = """
+                    UPDATE AccountList
+                    SET is_deleted = 'Y'
+                    WHERE site_URL = %s
+                """
+                cursor.execute(sql, (site_url.strip(),))
+                if cursor.rowcount == 0:
+                    failed_urls.append(site_url)
+                updated_count += cursor.rowcount
+            connection.commit()
+        return {
+            "status": "success",
+            "updated_count": updated_count,
+            "total_items": len(site_url),
+            "failed_urls": failed_urls
+        }
+    except Exception as e:
+        print(f"Update Error: {e}")
+        return {"status": "fail", "message": str(e)}
+    finally:
+        connection.close()
+
+def save_star_to_db(star_id, user_id, title, content, author, is_public, password, x, y, size):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "INSERT INTO Memorial (star_id, user_id, title, content, author, is_public, password, x, y, size) "
+        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+        (star_id, user_id, title, content, author, is_public, password, x, y, size)
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
+
+
 
 # uvicorn server:app --reload
 # source venv/bin/activate

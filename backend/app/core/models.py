@@ -84,17 +84,25 @@ Will = """
 );"""
 
 Memorial = """
-    CREATE TABLE IF NOT EXISTS Memorial (
+CREATE TABLE IF NOT EXISTS Memorial (
+    `star_id` VARCHAR(50) NOT NULL PRIMARY KEY,
     `user_id` VARCHAR(50) NOT NULL,
-    `writer` VARCHAR(50) NOT NULL,
-    `memorial_body` VARCHAR(255) NULL,
-    PRIMARY KEY (`user_id`, `writer`),
+    `x` FLOAT NOT NULL,
+    `y` FLOAT NOT NULL,
+    `size` FLOAT NOT NULL,
+    `title` VARCHAR(50) NOT NULL,
+    `author` VARCHAR(50) NOT NULL,
+    `content` VARCHAR(255) NULL,
+    `is_public` BOOLEAN NOT NULL DEFAULT 1,
+    `password` VARCHAR(50) NOT NULL,
     CONSTRAINT `fk_memorial_user_id`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `user_auth_db`.`users` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
-);"""
+        FOREIGN KEY (`user_id`)
+        REFERENCES `users` (`user_id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+"""
+
 
 QuestionList = """
 CREATE TABLE IF NOT EXISTS question_list (
@@ -137,3 +145,14 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     user_id: Optional[str] = None
+
+class StarCreate(BaseModel):
+    star_id: str
+    title: str | None = None
+    content: str | None = None
+    author: str
+    isPublic: bool
+    password: str | None = None
+    x: float
+    y: float
+    size: float
