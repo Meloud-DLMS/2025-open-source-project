@@ -34,39 +34,57 @@ const AccountDeleteRequestPage = ({ isLoggedIn, setIsLoggedIn, username, setUser
             prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
         );
     };
-        const handleSubmit = () => {
+
+    const handleSubmit = () => {
         if (checkedItems.length > 0) {
-            // 체크된 첫 번째 계정의 id를 이용해 해당 계정 객체 찾기
-            const checkedAccount = accounts.find(acc => acc.id === checkedItems[0]);
-            if (!checkedAccount) {
+            // 체크된 모든 계정 객체 찾기
+            const checkedAccounts = accounts.filter(acc => checkedItems.includes(String(acc.site_URL)));
+
+            if (checkedAccounts.length === 0) {
                 alert("선택된 계정 정보를 찾을 수 없습니다.");
                 return;
             }
-            // fetch로 삭제 요청을 보냄
-            fetch("http://localhost:8000/deleteAccountByString", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ site_URL: checkedAccount.site_URL })
-            })
-            .then(res => res.json())
-            .then(data => {
-                // 성공/실패 처리
-                console.log(data);
-                if (data.status === "success") {
-                    alert("삭제 요청이 완료되었습니다!");
-                    // 필요하다면 목록 갱신 등 추가 작업
-                    // setAccounts(accounts.filter(acc => acc.site_URL !== checkedAccount.site_URL));
-                    // setCheckedItems([]);
-                } else {
-                    alert("삭제 요청 실패: " + data.message);
-                }
-            })
-            .catch(error => {
-                alert("삭제 요청 중 에러 발생: " + error);
-            });
 
-            // (원래 있던 페이지 이동 코드)
-            navigate('/account/delete-final');
+            // 여러 계정 삭제 요청을 Promise.all로 처리
+            Promise.all(
+                checkedAccounts.map(account =>
+                    fetch("http://localhost:8000/deleteAccountByString", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ site_URL: account.site_URL })
+                    })
+                    .then(res => res.json())
+                    .then(data => ({
+                        site_URL: account.site_URL,
+                        status: data.status,
+                        message: data.message,
+                    }))
+                    .catch(error => ({
+                        site_URL: account.site_URL,
+                        status: "fail",
+                        message: error.toString(),
+                    }))
+                )
+            ).then(results => {
+                // 전체 결과 처리
+                const successCount = results.filter(r => r.status === "success").length;
+                const failResults = results.filter(r => r.status !== "success");
+
+                if (successCount > 0) {
+                    alert(`${successCount}개 계정 삭제 요청이 완료되었습니다!`);
+                    // 삭제된 계정 목록에서 제거
+                    // setAccounts(accounts.filter(acc => !checkedItems.includes(acc.id)));
+                    // setCheckedItems([]);
+                }
+                if (failResults.length > 0) {
+                    alert(
+                        failResults.map(r => `${r.site_URL}: ${r.message}`).join('\n')
+                    );
+                }
+
+                // (원래 있던 페이지 이동 코드)
+                navigate('/account/delete-final');
+            });
         }
     };
 
@@ -128,8 +146,8 @@ const AccountDeleteRequestPage = ({ isLoggedIn, setIsLoggedIn, username, setUser
                                             <td>
                                             <input
                                                 type="checkbox"
-                                                checked={checkedItems.includes(acc.id)}
-                                                onChange={() => handleCheck(acc.id)}
+                                                checked={checkedItems.includes(acc.site_URL)}
+                                                onChange={() => handleCheck(acc.site_URL)}
                                             />
                                             </td>
                                             <td>{acc.site_URL }</td>

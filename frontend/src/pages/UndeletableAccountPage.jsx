@@ -6,7 +6,7 @@ import backgroundImage from '../assets/images/main.jpg';
 
 const UndeletableAccountPage = ({ isLoggedIn, setIsLoggedIn }) => {
     const [selectedTab, setSelectedTab] = useState('undeletable');
-    const [selectedItem, setSelectedItem] = useState(null);
+    const [selectedItem, setSelectedItem] = useState([]);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
@@ -15,16 +15,12 @@ const UndeletableAccountPage = ({ isLoggedIn, setIsLoggedIn }) => {
     const [accounts, setAccounts] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8000/accountShow")
-            .then(res => res.json())
-            .then(data => {
-                setAccounts(data);
-            })
-            .catch(err => {
-                console.error("데이터 fetch 오류:", err);
-                setAccounts([]);
-            });
-    }, []);
+            fetch("http://localhost:8000/accountShow")
+                .then(res => res.json())
+                .then(data => {
+                    setAccounts(data); // 받아온 전체 데이터를 accounts에 저장
+                });
+        }, []);
 
     const handleNavigate = (tab) => {
         if (tab === 'deletable') {
@@ -35,14 +31,39 @@ const UndeletableAccountPage = ({ isLoggedIn, setIsLoggedIn }) => {
     };
 
     const handleSelect = (id) => {
-        setSelectedItem(id);
+        setSelectedItem((prev) =>
+            prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+        );
     };
 
     const handleSubmit = () => {
-        if (selectedItem) {
-            navigate('/account/undeletable-final');
+        if (selectedItem.length === 0) {
+            alert("선택된 항목이 없습니다.");
+            return;
         }
+        fetch("http://localhost:8000/requestAccountByString", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            // 예시: site_URL_list라는 이름으로 배열을 보냄
+            body: JSON.stringify({
+                site_URL: selectedItem // selectedItem은 문자열(단일 site_URL)
+            })
+        })
+        .then((res) => {
+            if (!res.ok) throw new Error("요청 실패");
+            return res.json();
+        })
+        .then((data) => {
+            alert("요청이 완료되었습니다!");
+            navigate('/account/undeletable-final');
+        })
+        .catch((error) => {
+            alert("요청 처리 중 오류가 발생했습니다: " + error.message);
+        });
     };
+
 
     return (
         <div
@@ -99,20 +120,20 @@ const UndeletableAccountPage = ({ isLoggedIn, setIsLoggedIn }) => {
                         <tbody>
                             {accounts.map((acc) => (
                                 <tr key={acc.id}>
-                                    {acc.is_deleted === 'Y' && (
+                                    {acc.is_auto === 'N' && (
                                         <>
                                             <td>
                                             <input
                                                 type="checkbox"
-                                                checked={selectedItem === acc.id}
-                                                onChange={() => handleSelect(acc.id)}
+                                                checked={selectedItem.includes(acc.site_URL)}
+                                                onChange={() => handleSelect(acc.site_URL)}
                                             />
                                             </td>
-                                            <td>{acc.site_URL}</td>
+                                            <td>{acc.site_URL }</td>
                                             <td>{acc.site_name}</td>
                                             <td>{acc.note}</td>
                                         </>
-                                    )} 
+                                    )}
                                 </tr>
                             ))}
                         </tbody>
