@@ -16,8 +16,6 @@ const AccountLookupIntro = ({ isLoggedIn, setIsLoggedIn, username, setUsername,s
     };
     
     useEffect(() => {
-    // App.jsx에서 authChecked가 false일 때는 이 컴포넌트가 렌더링되지 않으므로,
-    // isLoggedIn만 체크하면 됨
     if (!setAuthChecked) {
       navigate('/login');
     }
