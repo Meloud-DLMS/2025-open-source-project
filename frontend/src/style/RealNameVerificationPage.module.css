@@ -1,4 +1,3 @@
-/* src/styles/RealNameVerificationPage.module.css */
 .wrapper {
     position: relative;
     width: 100%;
@@ -56,8 +55,7 @@
 .contentBox {
     position: relative;
     z-index: 1;
-    background: black;
-    color: white;
+    background: rgba(0, 0, 0, 0.8);
     width: 950px;
     margin: 160px auto 0;
     padding: 20px 50px;
