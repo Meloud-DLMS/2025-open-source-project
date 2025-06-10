@@ -39,8 +39,8 @@ It also allows users to leave a digital will for loved ones and provides a memor
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 Currently, two official plugins are available:
 
-### Start front
-  npm run dev
+### Start 
+  2025-open-source-project\frontend npm run dev
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
@@ -49,8 +49,8 @@ Currently, two official plugins are available:
 ### How to install package
   pip install -r requirment.txt
 
-### start the server
-  uvicorn server:app --reload
+### Start the server
+  2025-open-source-project\backend uvicorn server:app --reload
 
 
 
