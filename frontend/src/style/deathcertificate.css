@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'Geostar Fill Custom'; /* 이 폰트 이름을 CSS에서 사용합니다 */
+    src: url('/assets/GeostarFill-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* 전체 페이지 컨테이너 */
 .death-certificate-page {
     display: flex;
@@ -46,7 +53,7 @@
 }
 
 .page-title {
-    font-family: 'Geostar Fill', cursive; /* Geostar Fill 폰트 사용 */
+    font-family: 'Geostar Fill Custom', cursive; /* Geostar Fill 폰트 사용 */
     font-size: 56px;
     margin-bottom: 25px;
     color: #ffffff;
