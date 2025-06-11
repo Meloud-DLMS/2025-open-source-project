@@ -8,7 +8,7 @@ def get_db_connection():
         conn = mysql.connector.connect(
             host='localhost',
             user='root',
-            password='English124*'  ##################### mysql password 입력하세요!!!!!!!!!!!!!!!!!!!!!!!
+            password='password'  ##################### mysql password 입력하세요!!!!!!!!!!!!!!!!!!!!!!!
         )
         if conn.is_connected():
             print("MySQL connection succeed")
@@ -20,7 +20,7 @@ def get_db_connection():
             conn2 = mysql.connector.connect(
                 host='localhost',
                 user='root',
-                password='English124*',  ##################### mysql password 입력하세요!!!!!!!!!!!!!!!!!!!!!!!
+                password='password',  ##################### mysql password 입력하세요!!!!!!!!!!!!!!!!!!!!!!!
                 database=db_name
             )
             return conn2
